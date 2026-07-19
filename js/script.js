@@ -214,6 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
         imgEl.dataset.href = btn.dataset.href || '';
       }
       if (btn.dataset.color) document.body.style.setProperty('--bg', btn.dataset.color);
+      if (btn.dataset.fg) {
+        document.body.style.setProperty('--fg', btn.dataset.fg);
+        document.body.style.setProperty('--frame', btn.dataset.fg);
+      }
     }
 
     const activeBtn = tabButtons.find((b) => b.classList.contains('active'));

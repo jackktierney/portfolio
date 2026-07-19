@@ -57,7 +57,8 @@
         "label": "contact",
         "href": "contact.html"
       }
-    ]
+    ],
+    "fg": "#e8e5cc"
   },
   "simplePages": [
     {
@@ -76,7 +77,8 @@
           "label": "contact",
           "href": "contact.html"
         }
-      ]
+      ],
+      "fg": "#eedeac"
     }
   ],
   "contactPage": {
@@ -104,7 +106,8 @@
         "label": "home",
         "href": "index.html"
       }
-    ]
+    ],
+    "fg": "#e8e5cc"
   },
   "categories": [
     {
@@ -114,7 +117,8 @@
       "projects": [
         "zephyr",
         "bayefall"
-      ]
+      ],
+      "browserTitle": "PERSONAL"
     },
     {
       "id": "documentary",
@@ -124,7 +128,8 @@
         "cablestreet",
         "documentary-02",
         "documentary-03"
-      ]
+      ],
+      "browserTitle": "DOCUMENTARY"
     },
     {
       "id": "commercial",
@@ -134,7 +139,8 @@
         "childish",
         "chaseandstatus",
         "commercial-03"
-      ]
+      ],
+      "browserTitle": "COMMERCIAL"
     }
   ],
   "projects": [
@@ -158,10 +164,13 @@
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "54SxblKJLVg"
+        "youtubeId": "54SxblKJLVg",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>A PROJECT BY MURMUR COLLECTIVE — <a href=\"https://www.murmurcollective.co.uk\" target=\"_blank\" rel=\"noopener\">www.murmurcollective.co.uk</a></p>\n\n      <p>\n        Writer, Director, Editor — Jack Tierney<br>\n        Producer — Abbey Valentina<br>\n        Director of Photography — Lasse Tolboll<br>\n        Executive Producer — Billy Abbott<br>\n        Assistant Director — Josh Barnes<br>\n        Head of Art Department / Production Designer — Olive Jenkins<br>\n        Artist and Composer — Finnegan Tui<br>\n        Composer, Sound Artist, Mix Engineer — Jasper Trim<br>\n        Sound Design — Guy Newland<br>\n        Mix Engineer — Mike Trim<br>\n        Behind the Scenes and Production Assistant — Lily Bognuda<br>\n        1st Assistant Camera — Austen Lane<br>\n        2nd Assistant Camera and Gaffer — Sam Oxton<br>\n        Art Director — Lydia Martin<br>\n        Sound Recordist — Amber Amare, Dajain Daley<br>\n        Script Development — Rohanna Starling, Finnegan Tui<br>\n        Colourist — Jonny Tully<br>\n        Graphics and Artwork — Rob Shuttz<br>\n        Supporting Co-Producer — Giuseppe Floridia<br>\n        Supporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia<br>\n        DIT and Production Assistant — Luke Harrison-Derby<br>\n        B-Cam and Production Assistant — Sebastian Pinkham<br>\n        Head Chef — Rosie Nevill<br>\n        Off-Road Driver — Dom Rott<br>\n        Location Scout — Lowenna Banfield-Earp<br>\n        Production Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams<br>\n        Advert Editor — Sam Sutherland\n      </p>\n\n      <p>\n        Cast:<br>\n        Parmenides — Finnegan Tui<br>\n        Sunyata — Rubymoon Hilliard<br>\n        Young Parmenides — Caspian Ember Watson<br>\n        Old Parmenides — Paul \"Boggy\" Bognuda<br>\n        Young Sunyata — Isis Marie Carney<br>\n        Zephyr — Jhett Smart<br>\n        Friends — Tom Adams, Alex Morton<br>\n        Childhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas<br>\n        Mother — Emily Fawcett<br>\n        Grandmother — Nelly Minnema\n      </p>\n\n      <p>\n        Very Special Thanks To:<br>\n        Emanuele Floridia of Eywa Music Video Europe<br>\n        Panavision Cardiff<br>\n        YHA Accommodation<br>\n        Joseph Goldman of Film Co.<br>\n        Paul \"Boggy\" Bognuda<br>\n        Emily Fawcett<br>\n        Mike Trim<br>\n        Bariş Baliç<br>\n        Alice and Hetty Fruer Denham<br>\n        David and Judy Starling<br>\n        All of our generous Kickstarter supporters\n      </p>"
+      "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters",
+      "fg": "#e8e5cc"
     },
     {
       "id": "bayefall",
@@ -183,10 +192,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     },
     {
       "id": "cablestreet",
@@ -208,10 +220,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     },
     {
       "id": "documentary-02",
@@ -233,10 +248,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     },
     {
       "id": "documentary-03",
@@ -258,10 +276,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     },
     {
       "id": "childish",
@@ -283,10 +304,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     },
     {
       "id": "chaseandstatus",
@@ -308,10 +332,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     },
     {
       "id": "commercial-03",
@@ -333,10 +360,13 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": ""
+        "youtubeId": "",
+        "provider": "youtube",
+        "bunnyEmbedUrl": ""
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "fg": "#e8e5cc"
     }
   ]
 }

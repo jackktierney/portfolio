@@ -11,11 +11,35 @@
       .replace(/>/g, '&gt;');
   }
 
+  // escapes a block of raw text but turns bare URLs / www.-style addresses
+  // into real links first, so plain pasted text can still carry a working link
+  function autoLink(raw) {
+    const urlRe = /((?:https?:\/\/|www\.)[^\s<]+)/gi;
+    let out = '';
+    let lastIndex = 0;
+    let m;
+    while ((m = urlRe.exec(raw))) {
+      let url = m[0];
+      let trail = '';
+      while (url.length && /[.,;:!?)]$/.test(url)) {
+        trail = url.slice(-1) + trail;
+        url = url.slice(0, -1);
+      }
+      out += esc(raw.slice(lastIndex, m.index));
+      const href = /^https?:\/\//i.test(url) ? url : 'https://' + url;
+      out += '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(url) + '</a>' + esc(trail);
+      lastIndex = m.index + m[0].length;
+    }
+    out += esc(raw.slice(lastIndex));
+    return out;
+  }
+
   // plain textarea text -> HTML: blank-line-separated blocks become <p>,
-  // single newlines inside a block become <br>
+  // single newlines inside a block become <br>, bare URLs become links —
+  // paste in ordinary text and it just works, no HTML required
   function textToHtml(text) {
     const blocks = String(text || '').split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
-    return blocks.map((b) => '<p>' + esc(b).replace(/\n/g, '<br>') + '</p>').join('\n\n      ');
+    return blocks.map((b) => '<p>' + autoLink(b).replace(/\n/g, '<br>') + '</p>').join('\n\n      ');
   }
 
   function folderOf(filePath) {
@@ -78,23 +102,29 @@
       + '</div>';
   }
 
-  function watchModal(title, youtubeId) {
-    const embedSrc = 'https://www.youtube.com/embed/' + esc(youtubeId) + '?autoplay=1';
+  function computeEmbedSrc(watch) {
+    if (watch && watch.provider === 'bunny') return watch.bunnyEmbedUrl || '';
+    return 'https://www.youtube.com/embed/' + ((watch && watch.youtubeId) || '') + '?autoplay=1';
+  }
+
+  function watchModal(title, watch) {
+    const embedSrc = computeEmbedSrc(watch);
     return '<div class="modal-overlay" id="watchModal">\n'
       + '  <div class="modal-box is-large">\n'
       + '    <div class="modal-video">\n'
-      + '      <iframe id="watchIframe" src="" data-embed-src="' + embedSrc + '" title="' + esc(title) + ' — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n'
+      + '      <iframe id="watchIframe" src="" data-embed-src="' + esc(embedSrc) + '" title="' + esc(title) + ' — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n'
       + '    </div>\n'
       + '    <button type="button" class="modal-close">close</button>\n'
       + '  </div>\n'
       + '</div>';
   }
 
-  function page(title, bg, bodyInner, extraBodyClass) {
+  function page(title, bg, fg, bodyInner, extraBodyClass) {
+    const style = '--bg: ' + bg + '; --fg: ' + fg + '; --frame: ' + fg + ';';
     return '<!DOCTYPE html>\n'
       + '<html lang="en">\n'
       + head(title) + '\n'
-      + '<body' + (extraBodyClass ? ' class="' + extraBodyClass + '"' : '') + ' style="--bg: ' + bg + ';">\n\n'
+      + '<body' + (extraBodyClass ? ' class="' + extraBodyClass + '"' : '') + ' style="' + style + '">\n\n'
       + FLASH_SCRIPT + '\n\n'
       + bodyInner + '\n\n'
       + '<script src="js/script.js"></script>\n'
@@ -114,7 +144,7 @@
       + '    ' + linksRow(data.links) + '\n'
       + '  </p>\n'
       + '</div>';
-    return page(data.browserTitle || data.title, data.bg, inner);
+    return page(data.browserTitle || data.title, data.bg, data.fg || '#e8e5cc', inner);
   }
 
   function renderSimple(data) {
@@ -125,7 +155,7 @@
       + '  <p class="tagline">' + esc(data.text) + '</p>\n\n'
       + '  <p class="tagline">' + linksRow(data.links) + '</p>\n'
       + '</div>';
-    return page(data.title, data.bg, inner);
+    return page(data.title, data.bg, data.fg || '#e8e5cc', inner);
   }
 
   function renderContact(data) {
@@ -141,7 +171,7 @@
       + '  </p>\n'
       + '</div>\n\n'
       + textModal('emailModal', '<p>' + esc(data.email) + '</p>', false);
-    return page('contact', data.bg, inner);
+    return page('contact', data.bg, data.fg || '#e8e5cc', inner);
   }
 
   function renderCategory(tabsData, project, browserTitle) {
@@ -151,7 +181,8 @@
         + ' data-role="' + esc(t.role) + '"'
         + (t.image ? ' data-image="' + esc(t.image) + '"' : '')
         + ' data-href="' + esc(t.href) + '"'
-        + ' data-color="' + esc(t.color) + '">' + (i + 1) + '</button>';
+        + ' data-color="' + esc(t.color) + '"'
+        + ' data-fg="' + esc(t.fg) + '">' + (i + 1) + '</button>';
     }).join('\n      <span class="tab-dash">-</span>\n      ');
 
     const inner = '<div class="page">\n'
@@ -172,7 +203,7 @@
       + '    </div>\n'
       + '  </div>\n'
       + '</div>';
-    return page(browserTitle, project.bg, inner);
+    return page(browserTitle, project.bg, project.fg || '#e8e5cc', inner);
   }
 
   function renderProject(data, nextHref) {
@@ -206,11 +237,11 @@
       + '    </div>\n'
       + '  </div>\n'
       + '</div>\n\n'
-      + textModal('aboutModal', '<p>' + esc(data.about) + '</p>', false)
-      + (hasWatch ? '\n\n' + watchModal(data.title, data.watch.youtubeId) : '')
-      + '\n\n' + textModal('creditsModal', data.credits, hasWatch);
+      + textModal('aboutModal', textToHtml(data.about), false)
+      + (hasWatch ? '\n\n' + watchModal(data.title, data.watch) : '')
+      + '\n\n' + textModal('creditsModal', textToHtml(data.credits), hasWatch);
 
-    return page(data.title, data.bg, inner);
+    return page(data.title, data.bg, data.fg || '#e8e5cc', inner);
   }
 
   // ---- js/script.js -------------------------------------------------
@@ -424,6 +455,10 @@
     lines.push("        imgEl.dataset.href = btn.dataset.href || '';");
     lines.push('      }');
     lines.push("      if (btn.dataset.color) document.body.style.setProperty('--bg', btn.dataset.color);");
+    lines.push('      if (btn.dataset.fg) {');
+    lines.push("        document.body.style.setProperty('--fg', btn.dataset.fg);");
+    lines.push("        document.body.style.setProperty('--frame', btn.dataset.fg);");
+    lines.push('      }');
     lines.push('    }');
     lines.push('');
     lines.push("    const activeBtn = tabButtons.find((b) => b.classList.contains('active'));");
@@ -545,11 +580,12 @@
           image: proj.coverImage || '',
           href: proj.file,
           color: proj.bg,
+          fg: proj.fg || '#e8e5cc',
           active: i === 0,
         };
       });
       const firstProj = content.projects.find((p) => p.id === cat.projects[0]);
-      files[cat.file] = renderCategory(tabsData, firstProj, (cat.browserTitle || cat.label || cat.id).toUpperCase());
+      files[cat.file] = renderCategory(tabsData, firstProj, cat.browserTitle || cat.label || cat.id);
     });
 
     content.projects.forEach((proj, i) => {

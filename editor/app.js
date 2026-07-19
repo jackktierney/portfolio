@@ -45,6 +45,56 @@
     thumbCache: new Map(),   // path -> object URL
   };
 
+  const undoStack = [];
+  const redoStack = [];
+  const UNDO_LIMIT = 100;
+
+  function pushUndo() {
+    if (!state.content) return;
+    undoStack.push(JSON.stringify(state.content));
+    if (undoStack.length > UNDO_LIMIT) undoStack.shift();
+    redoStack.length = 0;
+    renderTopbar();
+  }
+
+  // wrap any content mutation in this: snapshots for undo, applies the
+  // change, marks the doc dirty. Widgets that need to batch many live
+  // updates into a single undo step (colour-picker dragging) call
+  // pushUndo() once up front and mutate state.content directly instead.
+  function mutate(fn) {
+    pushUndo();
+    fn();
+    markDirty();
+  }
+
+  function undo() {
+    if (!undoStack.length || !state.content) return;
+    redoStack.push(JSON.stringify(state.content));
+    state.content = JSON.parse(undoStack.pop());
+    state.dirty = true;
+    ensureViewValid();
+    renderAll();
+  }
+
+  function redo() {
+    if (!redoStack.length || !state.content) return;
+    undoStack.push(JSON.stringify(state.content));
+    state.content = JSON.parse(redoStack.pop());
+    state.dirty = true;
+    ensureViewValid();
+    renderAll();
+  }
+
+  function ensureViewValid() {
+    const v = state.view;
+    const c = state.content;
+    let ok = true;
+    if (v.type === 'simple') ok = !!findById(c.simplePages, v.id);
+    else if (v.type === 'category') ok = !!findById(c.categories, v.id);
+    else if (v.type === 'project') ok = !!findById(c.projects, v.id);
+    if (!ok) state.view = { type: 'landing' };
+  }
+
   function markDirty() {
     state.dirty = true;
     renderTopbar();
@@ -75,6 +125,117 @@
       .concat(c.categories.map((p) => p.id))
       .concat(c.projects.map((p) => p.id))
       .concat(['index', 'contact']);
+  }
+
+  // ---------------------------------------------------------------------
+  // colour helpers (hex <-> rgb <-> hsv) + saved favourites
+  // ---------------------------------------------------------------------
+  function hexToRgb(hex) {
+    let hstr = String(hex || '').replace('#', '').trim();
+    if (hstr.length === 3) hstr = hstr.split('').map((c) => c + c).join('');
+    if (!/^[0-9a-fA-F]{6}$/.test(hstr)) hstr = 'e8e5cc';
+    const num = parseInt(hstr, 16);
+    return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+  }
+
+  function rgbToHex(r, g, b) {
+    const c = (n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
+    return '#' + c(r) + c(g) + c(b);
+  }
+
+  function rgbToHsv(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+    let hue = 0;
+    if (d !== 0) {
+      if (max === r) hue = ((g - b) / d) % 6;
+      else if (max === g) hue = (b - r) / d + 2;
+      else hue = (r - g) / d + 4;
+      hue *= 60;
+      if (hue < 0) hue += 360;
+    }
+    const s = max === 0 ? 0 : d / max;
+    return { h: hue, s: s, v: max };
+  }
+
+  function hsvToRgb(hue, s, v) {
+    const c = v * s;
+    const x = c * (1 - Math.abs(((hue / 60) % 2) - 1));
+    const m = v - c;
+    let r, g, b;
+    if (hue < 60) { r = c; g = x; b = 0; }
+    else if (hue < 120) { r = x; g = c; b = 0; }
+    else if (hue < 180) { r = 0; g = c; b = x; }
+    else if (hue < 240) { r = 0; g = x; b = c; }
+    else if (hue < 300) { r = x; g = 0; b = c; }
+    else { r = c; g = 0; b = x; }
+    return { r: (r + m) * 255, g: (g + m) * 255, b: (b + m) * 255 };
+  }
+
+  function normalizeHex(v) {
+    let hstr = String(v || '').trim();
+    if (!hstr.startsWith('#')) hstr = '#' + hstr;
+    if (hstr.length === 4) hstr = '#' + hstr.slice(1).split('').map((c) => c + c).join('');
+    return /^#[0-9a-fA-F]{6}$/.test(hstr) ? hstr.toLowerCase() : null;
+  }
+
+  const FAVORITES_KEY = 'site-editor-favourite-colours-v1';
+  function loadFavorites() {
+    try { return JSON.parse(localStorage.getItem(FAVORITES_KEY)) || []; } catch (e) { return []; }
+  }
+  function addFavorite(hex) {
+    const list = loadFavorites().filter((x) => x !== hex);
+    list.unshift(hex);
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(list.slice(0, 24)));
+  }
+  function removeFavorite(hex) {
+    localStorage.setItem(FAVORITES_KEY, JSON.stringify(loadFavorites().filter((x) => x !== hex)));
+  }
+
+  // ---------------------------------------------------------------------
+  // drag-and-drop reordering — shared by image lists, link lists, category
+  // project lists, and the sidebar's project order
+  // ---------------------------------------------------------------------
+  let dragCtx = null;
+
+  function enableDrag(el, arr, index, onDone) {
+    el.draggable = true;
+    el.classList.add('is-draggable');
+    el.addEventListener('dragstart', (e) => {
+      dragCtx = { arr, from: index };
+      e.dataTransfer.effectAllowed = 'move';
+      try { e.dataTransfer.setData('text/plain', String(index)); } catch (err) { /* ignore */ }
+      setTimeout(() => el.classList.add('dragging'), 0);
+    });
+    el.addEventListener('dragend', () => {
+      el.classList.remove('dragging');
+      dragCtx = null;
+    });
+    el.addEventListener('dragover', (e) => {
+      if (!dragCtx || dragCtx.arr !== arr) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      el.classList.add('drag-over');
+    });
+    el.addEventListener('dragleave', () => el.classList.remove('drag-over'));
+    el.addEventListener('drop', (e) => {
+      e.preventDefault();
+      el.classList.remove('drag-over');
+      if (!dragCtx || dragCtx.arr !== arr) return;
+      const from = dragCtx.from;
+      const to = index;
+      dragCtx = null;
+      if (from === to) return;
+      mutate(() => {
+        const item = arr.splice(from, 1)[0];
+        arr.splice(to, 0, item);
+      });
+      (onDone || refreshPanel)();
+    });
+  }
+
+  function dragHandle() {
+    return h('span', { class: 'drag-handle', title: 'drag to reorder' }, ['⠿']);
   }
 
   // ---------------------------------------------------------------------
@@ -177,6 +338,8 @@
       state.dirHandle = handle;
       state.content = content;
       state.thumbCache = new Map();
+      undoStack.length = 0;
+      redoStack.length = 0;
       const files = SiteRender.renderSite(content);
       state.knownFiles = new Set(Object.keys(files));
       state.dirty = false;
@@ -244,6 +407,8 @@
     topbarEl.appendChild(h('div', { class: 'title' }, ['Site Editor']));
     if (state.dirHandle) {
       topbarEl.appendChild(h('span', { class: 'folder-name' }, [state.dirHandle.name]));
+      topbarEl.appendChild(h('button', { title: 'Undo (⌘Z)', disabled: undoStack.length === 0, onclick: undo }, ['↺ Undo']));
+      topbarEl.appendChild(h('button', { title: 'Redo (⌘⇧Z)', disabled: redoStack.length === 0, onclick: redo }, ['↻ Redo']));
       topbarEl.appendChild(h('button', { onclick: openFolder }, ['Switch folder']));
       topbarEl.appendChild(h('button', {
         class: 'primary',
@@ -301,8 +466,11 @@
     sidebarEl.appendChild(h('button', { class: 'add-item', onclick: addCategory }, ['+ add category']));
 
     sidebarEl.appendChild(h('h3', {}, ['Projects']));
-    c.projects.forEach((proj) => {
-      sidebarEl.appendChild(sidebarItem(proj.title || proj.id, { type: 'project', id: proj.id }, v.type === 'project' && v.id === proj.id));
+    sidebarEl.appendChild(h('div', { class: 'hint', style: 'margin: 0 16px 6px;' }, ['drag to reorder — this is also the order "next" cycles through']));
+    c.projects.forEach((proj, i) => {
+      const item = sidebarItem(proj.title || proj.id, { type: 'project', id: proj.id }, v.type === 'project' && v.id === proj.id);
+      enableDrag(item, c.projects, i, renderSidebar);
+      sidebarEl.appendChild(item);
     });
     sidebarEl.appendChild(h('button', { class: 'add-item', onclick: () => addProject(null) }, ['+ add project']));
   }
@@ -350,11 +518,9 @@
     opts = opts || {};
     const input = h(opts.multiline ? 'textarea' : 'input', {
       type: opts.multiline ? undefined : 'text',
-      value: opts.multiline ? undefined : value,
-      onchange: (e) => { onChange(e.target.value); markDirty(); },
-      oninput: opts.live ? (e) => { onChange(e.target.value); markDirty(); } : undefined,
+      onchange: (e) => { mutate(() => onChange(e.target.value)); },
     }, []);
-    if (opts.multiline) input.value = value || '';
+    input.value = value || '';
     const wrap = h('label', { class: 'field' }, [
       h('span', { class: 'field-label' }, [label]),
       input,
@@ -363,29 +529,11 @@
     return wrap;
   }
 
-  function colorField(label, value, onChange) {
-    const swatch = h('input', {
-      type: 'color',
-      value: /^#[0-9a-fA-F]{6}$/.test(value) ? value : '#4a4e42',
-      onchange: (e) => { textInput.value = e.target.value; onChange(e.target.value); markDirty(); },
-    }, []);
-    const textInput = h('input', {
-      type: 'text',
-      value: value,
-      style: 'width: 110px; margin-left: 8px;',
-      onchange: (e) => { swatch.value = e.target.value; onChange(e.target.value); markDirty(); },
-    }, []);
-    return h('label', { class: 'field' }, [
-      h('span', { class: 'field-label' }, [label]),
-      h('div', { class: 'row' }, [swatch, textInput]),
-    ]);
-  }
-
   function checkboxField(label, checked, onChange) {
     const input = h('input', {
       type: 'checkbox',
       checked: checked,
-      onchange: (e) => { onChange(e.target.checked); markDirty(); refreshPanel(); },
+      onchange: (e) => { mutate(() => onChange(e.target.checked)); refreshPanel(); },
     }, []);
     return h('label', { class: 'field', style: 'display:flex; align-items:center; gap:8px;' }, [
       input,
@@ -395,12 +543,137 @@
 
   function selectField(label, value, options, onChange) {
     const select = h('select', {
-      onchange: (e) => { onChange(e.target.value); markDirty(); refreshPanel(); },
+      onchange: (e) => { mutate(() => onChange(e.target.value)); refreshPanel(); },
     }, options.map((opt) => h('option', { value: opt.value, selected: opt.value === value }, [opt.label])));
     return h('label', { class: 'field' }, [
       h('span', { class: 'field-label' }, [label]),
       select,
     ]);
+  }
+
+  // ---- advanced colour field: big swatch + hex + hue/sv picker + favourites ----
+  function colorField(label, value, onChange) {
+    const safeValue = normalizeHex(value) || '#4a4e42';
+    const startRgb = hexToRgb(safeValue);
+    let hsv = rgbToHsv(startRgb.r, startRgb.g, startRgb.b);
+
+    const wrap = h('label', { class: 'field color-field' }, [h('span', { class: 'field-label' }, [label])]);
+
+    const swatchBtn = h('button', { type: 'button', class: 'color-swatch-btn' }, []);
+    const hexInput = h('input', { type: 'text', class: 'color-hex-input' }, []);
+    wrap.appendChild(h('div', { class: 'color-row' }, [swatchBtn, hexInput]));
+
+    const popover = h('div', { class: 'color-popover' }, []);
+    popover.style.display = 'none';
+    wrap.appendChild(popover);
+
+    const svSquare = h('div', { class: 'sv-square' }, []);
+    const svCursor = h('div', { class: 'sv-cursor' }, []);
+    svSquare.appendChild(svCursor);
+
+    const hueSlider = h('div', { class: 'hue-slider' }, []);
+    const hueHandle = h('div', { class: 'hue-handle' }, []);
+    hueSlider.appendChild(hueHandle);
+
+    const favRow = h('div', { class: 'color-favorites' }, []);
+
+    popover.appendChild(svSquare);
+    popover.appendChild(hueSlider);
+    popover.appendChild(favRow);
+
+    function currentHex() {
+      const rgb = hsvToRgb(hsv.h, hsv.s, hsv.v);
+      return rgbToHex(rgb.r, rgb.g, rgb.b);
+    }
+
+    function paint() {
+      const hexNow = currentHex();
+      svSquare.style.background = 'linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, hsl(' + hsv.h.toFixed(0) + ',100%,50%))';
+      svCursor.style.left = (hsv.s * 100) + '%';
+      svCursor.style.top = ((1 - hsv.v) * 100) + '%';
+      hueHandle.style.left = (hsv.h / 360 * 100) + '%';
+      swatchBtn.style.background = hexNow;
+      hexInput.value = hexNow;
+    }
+    paint();
+
+    function renderFavorites() {
+      clear(favRow);
+      loadFavorites().forEach((fav) => {
+        favRow.appendChild(h('button', {
+          type: 'button', class: 'fav-swatch', style: 'background:' + fav + ';', title: fav + ' (right-click to remove)',
+          onclick: () => {
+            const rgb = hexToRgb(fav);
+            hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+            paint();
+            mutate(() => onChange(currentHex()));
+          },
+          oncontextmenu: (e) => { e.preventDefault(); removeFavorite(fav); renderFavorites(); },
+        }, []));
+      });
+      favRow.appendChild(h('button', {
+        type: 'button', class: 'fav-add', title: 'Save current colour as a favourite',
+        onclick: () => { addFavorite(currentHex()); renderFavorites(); },
+      }, ['+']));
+    }
+    renderFavorites();
+
+    function setFromEventSv(e) {
+      const rect = svSquare.getBoundingClientRect();
+      const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
+      const y = Math.min(Math.max(e.clientY - rect.top, 0), rect.height);
+      hsv.s = rect.width ? x / rect.width : 0;
+      hsv.v = rect.height ? 1 - y / rect.height : 0;
+    }
+    function setFromEventHue(e) {
+      const rect = hueSlider.getBoundingClientRect();
+      const x = Math.min(Math.max(e.clientX - rect.left, 0), rect.width);
+      hsv.h = rect.width ? (x / rect.width) * 360 : 0;
+    }
+
+    let dragTarget = null;
+    function onPointerMove(e) {
+      if (!dragTarget) return;
+      if (dragTarget === 'sv') setFromEventSv(e); else setFromEventHue(e);
+      paint();
+      onChange(currentHex());
+      markDirty();
+    }
+    function onPointerUp() {
+      dragTarget = null;
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+    }
+    function beginDrag(target, e) {
+      pushUndo(); // one undo step for the whole drag gesture, however many pixels it covers
+      dragTarget = target;
+      onPointerMove(e);
+      window.addEventListener('pointermove', onPointerMove);
+      window.addEventListener('pointerup', onPointerUp);
+    }
+    svSquare.addEventListener('pointerdown', (e) => beginDrag('sv', e));
+    hueSlider.addEventListener('pointerdown', (e) => beginDrag('hue', e));
+
+    hexInput.addEventListener('change', () => {
+      const norm = normalizeHex(hexInput.value);
+      if (!norm) { hexInput.value = currentHex(); return; }
+      const rgb = hexToRgb(norm);
+      hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+      paint();
+      mutate(() => onChange(currentHex()));
+    });
+
+    swatchBtn.addEventListener('click', () => {
+      const willOpen = popover.style.display === 'none';
+      document.querySelectorAll('.color-popover').forEach((p) => { p.style.display = 'none'; });
+      popover.style.display = willOpen ? 'block' : 'none';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!wrap.contains(e.target)) popover.style.display = 'none';
+    });
+
+    return wrap;
   }
 
   // ---- single image field (drop-to-replace) ----
@@ -417,8 +690,7 @@
     async function handleFiles(files) {
       const paths = await importImages(files, entityId);
       if (paths.length) {
-        onChange(paths[0]);
-        markDirty();
+        mutate(() => onChange(paths[0]));
         refreshPanel();
       }
     }
@@ -439,7 +711,7 @@
     return wrap;
   }
 
-  // ---- ordered multi-image field (grid / rotation sets) ----
+  // ---- ordered multi-image field (grid / rotation sets) — drag to reorder ----
   function imageListField(label, arr, entityId, opts) {
     opts = opts || {};
     const max = opts.max || 999;
@@ -450,20 +722,16 @@
 
     arr.forEach((path, i) => {
       if (!path) return;
-      const thumb = h('div', { class: 'thumb' }, [path ? '' : 'empty']);
+      const thumb = h('div', { class: 'thumb' }, []);
       getThumbUrl(path).then((url) => { if (url) thumb.style.backgroundImage = "url('" + url + "')"; });
 
-      const controls = h('div', { class: 'controls' }, [
-        h('button', { class: 'small', title: 'move earlier', disabled: i === 0, onclick: () => { arr.splice(i - 1, 0, arr.splice(i, 1)[0]); markDirty(); refreshPanel(); } }, ['◀']),
-        h('button', { class: 'small', title: 'move later', disabled: i === arr.length - 1, onclick: () => { arr.splice(i + 1, 0, arr.splice(i, 1)[0]); markDirty(); refreshPanel(); } }, ['▶']),
-        h('button', { class: 'small danger', title: 'remove', onclick: () => { arr.splice(i, 1); markDirty(); refreshPanel(); } }, ['×']),
-      ]);
-
-      list.appendChild(h('div', { class: 'image-tile' }, [
+      const tile = h('div', { class: 'image-tile' }, [
+        h('div', { class: 'tile-top' }, [dragHandle(), h('button', { class: 'small danger', title: 'remove', onclick: () => { mutate(() => arr.splice(i, 1)); refreshPanel(); } }, ['×'])]),
         thumb,
         h('div', { class: 'path' }, [baseName(path)]),
-        controls,
-      ]));
+      ]);
+      enableDrag(tile, arr, i);
+      list.appendChild(tile);
     });
 
     const dz = h('div', { class: 'dropzone' }, ['drop images here, or click to choose']);
@@ -473,11 +741,12 @@
       const room = max - arr.filter(Boolean).length;
       const toImport = Array.from(files).slice(0, Math.max(room, 0));
       const paths = await importImages(toImport, entityId);
-      paths.forEach((p) => {
-        const emptySlot = arr.indexOf('');
-        if (emptySlot !== -1) arr[emptySlot] = p; else arr.push(p);
+      mutate(() => {
+        paths.forEach((p) => {
+          const emptySlot = arr.indexOf('');
+          if (emptySlot !== -1) arr[emptySlot] = p; else arr.push(p);
+        });
       });
-      markDirty();
       refreshPanel();
     }
 
@@ -496,28 +765,31 @@
     return wrap;
   }
 
-  // ---- links list (label/href pairs) ----
-  function linksListField(label, arr, opts) {
-    opts = opts || {};
+  // ---- links list (label/href pairs) — drag to reorder ----
+  function linksListField(label, arr) {
     const wrap = h('label', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
     const list = h('div', {}, []);
     arr.forEach((link, i) => {
-      const labelInput = h('input', { type: 'text', value: link.label, placeholder: 'label', style: 'width:110px;', onchange: (e) => { link.label = e.target.value; markDirty(); } }, []);
-      const hrefInput = h('input', { type: 'text', value: link.href, placeholder: 'href', class: 'grow-input', onchange: (e) => { link.href = e.target.value; markDirty(); } }, []);
+      const labelInput = h('input', { type: 'text', placeholder: 'label', style: 'width:110px;', onchange: (e) => { mutate(() => { link.label = e.target.value; }); } }, []);
+      labelInput.value = link.label;
+      const hrefInput = h('input', { type: 'text', placeholder: 'href', class: 'grow-input', onchange: (e) => { mutate(() => { link.href = e.target.value; }); } }, []);
+      hrefInput.value = link.href;
       const extLabel = h('label', { style: 'font-size:11px; color:var(--fg-dim); display:flex; align-items:center; gap:4px; white-space:nowrap;' }, [
-        h('input', { type: 'checkbox', checked: !!link.external, onchange: (e) => { link.external = e.target.checked; markDirty(); } }, []),
+        h('input', { type: 'checkbox', checked: !!link.external, onchange: (e) => { mutate(() => { link.external = e.target.checked; }); } }, []),
         'external',
       ]);
-      list.appendChild(h('div', { class: 'list-row' }, [
-        labelInput, hrefInput, extLabel,
-        h('button', { class: 'small danger', onclick: () => { arr.splice(i, 1); markDirty(); refreshPanel(); } }, ['×']),
-      ]));
+      const row = h('div', { class: 'list-row' }, [
+        dragHandle(), labelInput, hrefInput, extLabel,
+        h('button', { class: 'small danger', onclick: () => { mutate(() => arr.splice(i, 1)); refreshPanel(); } }, ['×']),
+      ]);
+      enableDrag(row, arr, i);
+      list.appendChild(row);
     });
     wrap.appendChild(list);
     wrap.appendChild(h('button', {
       class: 'small',
       style: 'margin-top:6px;',
-      onclick: () => { arr.push({ label: 'link', href: '#' }); markDirty(); refreshPanel(); },
+      onclick: () => { mutate(() => arr.push({ label: 'link', href: '#' })); refreshPanel(); },
     }, ['+ add link']));
     return wrap;
   }
@@ -533,6 +805,7 @@
     card.appendChild(textField('Displayed name (large heading)', d.title, (v) => { d.title = v; }));
     card.appendChild(textField('Browser tab title', d.browserTitle || '', (v) => { d.browserTitle = v; }));
     card.appendChild(colorField('Background colour', d.bg, (v) => { d.bg = v; }));
+    card.appendChild(colorField('Element colour (font + border)', d.fg, (v) => { d.fg = v; }));
     wrap.appendChild(card);
 
     const imgCard = h('div', { class: 'card' }, []);
@@ -553,6 +826,7 @@
     const card = h('div', { class: 'card' }, []);
     card.appendChild(textField('Browser tab title', page.title, (v) => { page.title = v; }));
     card.appendChild(colorField('Background colour', page.bg, (v) => { page.bg = v; }));
+    card.appendChild(colorField('Element colour (font + border)', page.fg, (v) => { page.fg = v; }));
     card.appendChild(textField('Body text', page.text, (v) => { page.text = v; }, { multiline: true }));
     wrap.appendChild(card);
 
@@ -574,6 +848,7 @@
     const card = h('div', { class: 'card' }, []);
     card.appendChild(textField('Intro line', d.intro, (v) => { d.intro = v; }));
     card.appendChild(colorField('Background colour', d.bg, (v) => { d.bg = v; }));
+    card.appendChild(colorField('Element colour (font + border)', d.fg, (v) => { d.fg = v; }));
     card.appendChild(textField('Email address', d.email, (v) => { d.email = v; }));
     wrap.appendChild(card);
 
@@ -596,21 +871,23 @@
     const wrap = h('div', {}, [panelHeader(cat.label || cat.id, cat.file + ' — a tabbed hub page linking to its projects')]);
 
     const card = h('div', { class: 'card' }, []);
-    card.appendChild(textField('Name (shown in the home page nav & browser tab)', cat.label, (v) => { cat.label = v; }));
+    card.appendChild(textField('Name (shown in the home page nav)', cat.label, (v) => { cat.label = v; }));
+    card.appendChild(textField('Browser tab title', cat.browserTitle || '', (v) => { cat.browserTitle = v; }));
     wrap.appendChild(card);
 
     const listCard = h('div', { class: 'card' }, []);
-    listCard.appendChild(h('div', { class: 'field-label', style: 'margin-bottom:8px;' }, ['Projects in this category, in tab order — tab 1 sets the page\'s photo, title and colour']));
+    listCard.appendChild(h('div', { class: 'field-label', style: 'margin-bottom:8px;' }, ['Projects in this category, in tab order — drag to reorder. Tab 1 sets the page\'s photo, title and colours']));
     const list = h('div', {}, []);
     cat.projects.forEach((pid, i) => {
       const proj = findById(c.projects, pid);
-      list.appendChild(h('div', { class: 'list-row' }, [
+      const row = h('div', { class: 'list-row' }, [
+        dragHandle(),
         h('span', { class: 'swatch', style: 'background:' + (proj ? proj.bg : '#000') }, []),
         h('span', { class: 'grow-input' }, [proj ? proj.title : pid + ' (missing)']),
-        h('button', { class: 'small', disabled: i === 0, onclick: () => { cat.projects.splice(i - 1, 0, cat.projects.splice(i, 1)[0]); markDirty(); refreshPanel(); } }, ['◀']),
-        h('button', { class: 'small', disabled: i === cat.projects.length - 1, onclick: () => { cat.projects.splice(i + 1, 0, cat.projects.splice(i, 1)[0]); markDirty(); refreshPanel(); } }, ['▶']),
         h('button', { class: 'small danger', onclick: () => removeProjectFromCategory(cat, pid) }, ['remove']),
-      ]));
+      ]);
+      enableDrag(row, cat.projects, i);
+      list.appendChild(row);
     });
     listCard.appendChild(list);
 
@@ -620,7 +897,7 @@
         unassigned.map((p) => h('option', { value: p.id }, [p.title]))
       ));
       select.addEventListener('change', () => {
-        if (select.value) { cat.projects.push(select.value); markDirty(); refreshPanel(); }
+        if (select.value) { mutate(() => cat.projects.push(select.value)); refreshPanel(); }
       });
       listCard.appendChild(h('div', { style: 'margin-top:10px;' }, [select]));
     }
@@ -640,10 +917,11 @@
     card.appendChild(textField('Title', proj.title, (v) => { proj.title = v; }));
     card.appendChild(textField('Role', proj.role, (v) => { proj.role = v; }));
     card.appendChild(colorField('Background colour', proj.bg, (v) => { proj.bg = v; }));
+    card.appendChild(colorField('Element colour (font + border)', proj.fg, (v) => { proj.fg = v; }));
     wrap.appendChild(card);
 
     const gridCard = h('div', { class: 'card' }, []);
-    gridCard.appendChild(imageListField('Grid photos (3×3)', proj.grid, proj.id, { max: 9 }));
+    gridCard.appendChild(imageListField('Grid photos (3×3) — drag to reorder', proj.grid, proj.id, { max: 9 }));
     const coverOptions = proj.grid.filter(Boolean).map((p) => ({ value: p, label: baseName(p) }));
     if (coverOptions.length) {
       gridCard.appendChild(selectField('Tab thumbnail (used on the category page)', proj.coverImage, coverOptions, (v) => { proj.coverImage = v; }));
@@ -664,15 +942,26 @@
     const watchCard = h('div', { class: 'card' }, []);
     watchCard.appendChild(checkboxField('Has a "watch" video popup', proj.watch.enabled, (v) => { proj.watch.enabled = v; }));
     if (proj.watch.enabled) {
-      watchCard.appendChild(textField('YouTube video ID', proj.watch.youtubeId, (v) => { proj.watch.youtubeId = v; }, { hint: 'The part after watch?v= in the YouTube URL.' }));
+      watchCard.appendChild(selectField('Video source', proj.watch.provider || 'youtube', [
+        { value: 'youtube', label: 'YouTube' },
+        { value: 'bunny', label: 'Bunny Stream' },
+      ], (v) => { proj.watch.provider = v; }));
+      if ((proj.watch.provider || 'youtube') === 'youtube') {
+        watchCard.appendChild(textField('YouTube video ID', proj.watch.youtubeId || '', (v) => { proj.watch.youtubeId = v; }, { hint: 'The part after watch?v= in the YouTube URL.' }));
+      } else {
+        watchCard.appendChild(textField('Bunny Stream embed URL', proj.watch.bunnyEmbedUrl || '', (v) => { proj.watch.bunnyEmbedUrl = v; }, { hint: 'Paste the embed link from Bunny Stream\'s share panel (e.g. https://iframe.mediadelivery.net/embed/...).' }));
+      }
     }
     wrap.appendChild(watchCard);
 
     const textCard = h('div', { class: 'card' }, []);
-    textCard.appendChild(textField('About text', proj.about, (v) => { proj.about = v; }, { multiline: true }));
-    textCard.appendChild(textField('Credits', SiteRender.textToHtml ? proj.credits : proj.credits, (v) => { proj.credits = v; }, {
+    textCard.appendChild(textField('About text', proj.about, (v) => { proj.about = v; }, {
       multiline: true,
-      hint: 'This is raw HTML (as in the original site) — use <br> for line breaks and blank lines between blocks.',
+      hint: 'Plain text — a blank line starts a new paragraph.',
+    }));
+    textCard.appendChild(textField('Credits', proj.credits, (v) => { proj.credits = v; }, {
+      multiline: true,
+      hint: 'Plain text — a blank line starts a new paragraph, and web addresses (www... or https://...) automatically become clickable links.',
     }));
     wrap.appendChild(textCard);
 
@@ -696,28 +985,30 @@
   function addSimplePage() {
     const name = prompt('Page name (e.g. "faq")?');
     if (!name) return;
+    const addNav = confirm('Add a link to "' + name + '" in the home page navigation?');
     const id = uniqueId(slugify(name), allEntityIds());
     const page = {
       id,
       file: id + '.html',
       title: name,
       bg: '#3a4238',
+      fg: '#e8e5cc',
       image: '',
       text: '',
       links: [{ label: 'home', href: 'index.html' }],
     };
-    state.content.simplePages.push(page);
-    if (confirm('Add a link to "' + name + '" in the home page navigation?')) {
-      state.content.landing.links.push({ label: name.toLowerCase(), href: page.file });
-    }
-    markDirty();
+    mutate(() => {
+      state.content.simplePages.push(page);
+      if (addNav) state.content.landing.links.push({ label: name, href: page.file });
+    });
     setView({ type: 'simple', id });
   }
 
   function deleteSimplePage(page) {
-    state.content.simplePages = state.content.simplePages.filter((p) => p.id !== page.id);
-    state.content.landing.links = state.content.landing.links.filter((l) => l.href !== page.file);
-    markDirty();
+    mutate(() => {
+      state.content.simplePages = state.content.simplePages.filter((p) => p.id !== page.id);
+      state.content.landing.links = state.content.landing.links.filter((l) => l.href !== page.file);
+    });
     setView({ type: 'landing' });
   }
 
@@ -729,11 +1020,12 @@
       title,
       role: 'Role',
       bg: '#3a424c',
+      fg: '#e8e5cc',
       coverImage: '',
       grid: ['', '', '', '', '', '', '', '', ''],
-      watch: { enabled: false, youtubeId: '' },
+      watch: { enabled: false, provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '' },
       about: 'About text placeholder — replace with the real project description.',
-      credits: '<p>Credits placeholder — replace with the real crew/cast list.</p>',
+      credits: 'Credits placeholder — replace with the real crew/cast list.',
     };
   }
 
@@ -741,34 +1033,43 @@
     const name = prompt('Project title?');
     if (!name) return;
     const proj = makeProjectDefaults(name);
-    state.content.projects.push(proj);
-    if (category) category.projects.push(proj.id);
-    markDirty();
+    mutate(() => {
+      state.content.projects.push(proj);
+      if (category) category.projects.push(proj.id);
+    });
     setView({ type: 'project', id: proj.id });
   }
 
   function removeProjectFromCategory(cat, pid) {
-    cat.projects = cat.projects.filter((id) => id !== pid);
-    if (cat.projects.length === 0) {
+    let removed = false;
+    mutate(() => {
+      cat.projects = cat.projects.filter((id) => id !== pid);
+      if (cat.projects.length === 0) {
+        state.content.categories = state.content.categories.filter((c) => c.id !== cat.id);
+        state.content.landing.links = state.content.landing.links.filter((l) => l.href !== cat.file);
+        removed = true;
+      }
+    });
+    if (removed) {
       alert('"' + cat.label + '" has no projects left, so it has been removed. The project itself was kept.');
-      deleteCategory(cat, true);
-      return;
+      setView({ type: 'landing' });
+    } else {
+      refreshPanel();
     }
-    markDirty();
-    refreshPanel();
   }
 
   function deleteProject(proj) {
-    state.content.projects = state.content.projects.filter((p) => p.id !== proj.id);
-    state.content.categories.forEach((cat) => {
-      cat.projects = cat.projects.filter((id) => id !== proj.id);
+    let emptyLabels = [];
+    mutate(() => {
+      state.content.projects = state.content.projects.filter((p) => p.id !== proj.id);
+      state.content.categories.forEach((cat) => { cat.projects = cat.projects.filter((id) => id !== proj.id); });
+      const empties = state.content.categories.filter((cat) => cat.projects.length === 0);
+      emptyLabels = empties.map((c) => c.label);
+      state.content.categories = state.content.categories.filter((cat) => cat.projects.length > 0);
     });
-    const empties = state.content.categories.filter((cat) => cat.projects.length === 0);
-    state.content.categories = state.content.categories.filter((cat) => cat.projects.length > 0);
-    if (empties.length) {
-      alert('Removed empty categor' + (empties.length > 1 ? 'ies' : 'y') + ': ' + empties.map((c) => c.label).join(', '));
+    if (emptyLabels.length) {
+      alert('Removed empty categor' + (emptyLabels.length > 1 ? 'ies' : 'y') + ': ' + emptyLabels.join(', '));
     }
-    markDirty();
     setView({ type: 'landing' });
   }
 
@@ -777,27 +1078,41 @@
     if (!name) return;
     const firstProjectName = prompt('Title of its first project?', name);
     if (!firstProjectName) return;
+    const addNav = confirm('Add "' + name + '" to the home page navigation?');
     const id = uniqueId(slugify(name), allEntityIds());
     const proj = makeProjectDefaults(firstProjectName);
-    state.content.projects.push(proj);
-    const cat = { id, file: id + '.html', label: name.toLowerCase(), projects: [proj.id] };
-    state.content.categories.push(cat);
-    if (confirm('Add "' + name + '" to the home page navigation?')) {
-      state.content.landing.links.push({ label: name.toLowerCase(), href: cat.file });
-    }
-    markDirty();
+    const cat = { id, file: id + '.html', label: name, browserTitle: name, projects: [proj.id] };
+    mutate(() => {
+      state.content.projects.push(proj);
+      state.content.categories.push(cat);
+      if (addNav) state.content.landing.links.push({ label: name, href: cat.file });
+    });
     setView({ type: 'category', id });
   }
 
-  function deleteCategory(cat, skipConfirmMessage) {
-    state.content.categories = state.content.categories.filter((c) => c.id !== cat.id);
-    state.content.landing.links = state.content.landing.links.filter((l) => l.href !== cat.file);
-    markDirty();
-    if (!skipConfirmMessage) setView({ type: 'landing' });
-    else refreshPanel();
+  function deleteCategory(cat) {
+    mutate(() => {
+      state.content.categories = state.content.categories.filter((c) => c.id !== cat.id);
+      state.content.landing.links = state.content.landing.links.filter((l) => l.href !== cat.file);
+    });
+    setView({ type: 'landing' });
   }
 
   // -----------------------------------------------------------------
+  // keyboard shortcuts — Cmd/Ctrl+Z undo, +Shift redo; yields to native
+  // undo while actively typing in a text field
+  // -----------------------------------------------------------------
+  window.addEventListener('keydown', (e) => {
+    const meta = e.metaKey || e.ctrlKey;
+    if (!meta || e.key.toLowerCase() !== 'z') return;
+    const active = document.activeElement;
+    const isTextEditable = active && (active.tagName === 'TEXTAREA'
+      || (active.tagName === 'INPUT' && ['text', 'email', 'url'].indexOf(active.type) !== -1));
+    if (isTextEditable) return;
+    e.preventDefault();
+    if (e.shiftKey) redo(); else undo();
+  });
+
   window.addEventListener('beforeunload', (e) => {
     if (state.dirty) { e.preventDefault(); e.returnValue = ''; }
   });
