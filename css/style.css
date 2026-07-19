@@ -1,0 +1,437 @@
+/* ===================================================================
+   Base — moss/cream, typewriter, lo-fi personal-web look
+   Rough pass: colours/spacing/font all live here, easy to retune.
+=================================================================== */
+:root {
+  --bg: #4a4e42;
+  --fg: #e8e5cc;
+  --frame: #e8e5cc;
+  --dark: #2e2f27;
+  --font-mono: "Special Elite", "Courier New", Courier, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+/* ===================================================================
+   E-reader "refresh" flash — injected by js/script.js on every page,
+   triggered on load and on any link/button click that changes the page.
+=================================================================== */
+.flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* full pulse — used on a "cold" load (typed URL, refresh, back/forward)
+   where there's no previous page's flash to continue from */
+.flash-overlay.is-flashing-full {
+  animation: flash-full 0.83s ease-in-out;
+}
+
+/* ramp up only — played on the page you're leaving, right before navigation */
+.flash-overlay.is-flashing-in {
+  animation: flash-in 0.38s ease-in-out forwards;
+}
+
+/* ramp down only — played on the page you're arriving at, continuing
+   the peak the previous page left off at, so the two halves read as
+   one single flash that straddles the page change */
+.flash-overlay.is-flashing-out {
+  animation: flash-out 0.45s ease-in-out forwards;
+}
+
+@keyframes flash-full {
+  0%   { opacity: 0; }
+  45%  { opacity: 0.92; }
+  100% { opacity: 0; }
+}
+
+@keyframes flash-in {
+  from { opacity: 0; }
+  to   { opacity: 0.92; }
+}
+
+@keyframes flash-out {
+  from { opacity: 0.92; }
+  to   { opacity: 0; }
+}
+
+/* ===================================================================
+   Page / frame
+=================================================================== */
+.page {
+  max-width: 640px;
+  width: 100%;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.frame {
+  background: var(--frame);
+  padding: 10px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+
+/* tab-switch rise: the whole frame (border + photo, moving as one unit)
+   climbs out and fades as the flash ramps to its peak (see RAMP_MS in
+   js/script.js), then the swapped-in frame starts a beat below its slot,
+   invisible, and rises + fades back in as the flash ramps back down */
+.frame.is-rising-out {
+  transition: transform 0.38s ease, opacity 0.38s ease;
+  transform: translateY(-16px);
+  opacity: 0;
+}
+
+.frame.is-rising-in {
+  transition: none;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.frame-img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background-color: #b9bb9f;
+  background-position: center;
+
+  /* placeholder texture shown until a page overrides background-image/-size
+     inline with a real photo (see index.html / contact.html) */
+  background-image:
+    radial-gradient(circle, rgba(0,0,0,0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, #d9d6bd 0%, #d9d6bd 55%, #6f725e 55%, #4c4f3f 100%);
+  background-size: 3px 3px, cover;
+}
+
+/* ===================================================================
+   Intro text (top) + tagline links (bottom)
+=================================================================== */
+.intro {
+  margin: 0 0 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.tagline {
+  margin: 16px 0 0;
+  font-size: 15.6px; /* 13px + 20% */
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.tagline a,
+.tagline button {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  margin-right: 12px;
+  white-space: nowrap;
+}
+
+.tagline button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.tagline a:hover,
+.tagline button:hover {
+  color: #fff;
+}
+
+/* ===================================================================
+   Project page — polybar topbar (title/role left, nav right) over a
+   3x3 grid of true 16:9 stills, in one hairline-bordered card
+=================================================================== */
+.project-page {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polybar-card {
+  width: 100%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+.polybar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 52px;
+  padding: 0 20px;
+  font-family: var(--font-mono);
+  font-size: 15.6px;
+  letter-spacing: 0.01em;
+}
+
+.polybar-left,
+.polybar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.polybar-left {
+  font-size: 17.2px;
+}
+
+.polybar-div { opacity: 0.4; }
+.polybar-seg { color: var(--fg); }
+.title-seg { opacity: 1; }
+.role-seg { opacity: 1; }
+
+.polybar-right a {
+  color: var(--fg);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.polybar-right a:hover { color: #fff; }
+
+/* CSS grid auto-sizes each row from the cell's own aspect-ratio — every
+   tile is a real 16:9 crop, not a flex-stretch approximation */
+.rice-grid {
+  background: var(--frame);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 8px;
+}
+
+.rice-grid .cell {
+  aspect-ratio: 16 / 9;
+  background-position: center;
+  background-size: cover;
+  background-color: #b9bb9f;
+}
+
+.rice-grid .cell.is-clickable {
+  cursor: pointer;
+}
+
+.project-title {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: normal;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.project-role {
+  margin: 10px 0 0;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* ===================================================================
+   Solo-image project page (test.html) — title/role above a single
+   clickable image, links below; same .page/.frame as landing/contact
+=================================================================== */
+.solo-header {
+  margin-bottom: 16px;
+}
+
+.frame-img {
+  position: relative; /* so a local flash / grain can sit above just this element */
+}
+
+.frame-img.is-clickable {
+  cursor: pointer;
+}
+
+/* local flash — plays only over the photo itself (see #photoFlash in
+   test.html), instead of the full-screen #flashOverlay, when the image
+   swaps on click */
+.local-flash {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.local-flash.is-flashing-full {
+  animation: flash-full 0.83s ease-in-out;
+}
+
+/* ===================================================================
+   Grain texture — opt-in via <body class="has-grain">. Sits above the
+   background/text but below the photo frame, so everything except the
+   photos gets textured.
+=================================================================== */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.08;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+.has-grain .frame {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===================================================================
+   Watch popup — embedded video, dotted-border box in the site's own
+   visual language rather than a generic white lightbox
+=================================================================== */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 500;
+}
+
+.modal-overlay.is-open {
+  display: flex;
+}
+
+.modal-box {
+  width: 100%;
+  max-width: 720px;
+  background: var(--bg);
+  border: 1px dashed var(--fg);
+  padding: 16px;
+}
+
+/* watch popup is 20% bigger than the about/credits text popups */
+.modal-box.is-large {
+  max-width: 864px;
+}
+
+.modal-video {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.modal-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* about / credits — same box, plain text instead of a video, same
+   16:9 footprint so the popup reads as "the same size" either way */
+.modal-text {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow-y: auto;
+  padding: 4px;
+  font-size: 15.6px;
+  line-height: 1.7;
+}
+
+.modal-close {
+  display: block;
+  margin: 12px 0 0;
+  font: inherit;
+  font-size: 15.6px;
+  color: var(--fg);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.modal-close:hover {
+  color: #fff;
+}
+
+/* ===================================================================
+   Tabbed solo page (documentary.html / commercial.html) — numbered
+   tab list to the left of the image, switching between sub-projects
+=================================================================== */
+/* tabs are positioned absolutely (see .tabs below) so they float in the
+   margin instead of taking up flex space — the image stays the same size
+   and position as on every other page, tabs or not */
+.solo-row {
+  position: relative;
+}
+
+.solo-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 15.6px;
+}
+
+.tabs button {
+  font: inherit;
+  color: var(--fg);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.45;
+}
+
+.tabs button.active {
+  opacity: 1;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.tabs .tab-dash {
+  opacity: 0.4;
+}
+

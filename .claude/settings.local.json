@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(kill %1)",
+      "Bash(jobs)",
+      "Bash(curl -s https://fearoffun.neocities.org/)",
+      "Bash(curl -sv https://fearoffun.neocities.org/)",
+      "Bash(curl -s -m 15 https://fearoffun.neocities.org/ -o /private/tmp/claude-501/-Users-jacktierney-Desktop-WEBSITE/4d97c05b-3253-4b37-ab49-bbb3e7eaed16/scratchpad/fearoffun.html -w \"HTTP_CODE:%{http_code} SIZE:%{size_download}\\\\n\")"
+    ]
+  }
+}

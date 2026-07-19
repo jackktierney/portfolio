@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>tripping over treetop canopies</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="flash-overlay" id="flashOverlay"></div>
+<script>
+(function () {
+  var el = document.getElementById('flashOverlay');
+  function applyFlash() {
+    el.classList.remove('is-flashing-full', 'is-flashing-in', 'is-flashing-out');
+    void el.offsetWidth; // restart the animation
+    if (sessionStorage.getItem('flashPending')) {
+      sessionStorage.removeItem('flashPending');
+      el.classList.add('is-flashing-out');
+    } else {
+      el.classList.add('is-flashing-full');
+    }
+  }
+  applyFlash();
+  // bfcache restore (browser back/forward) doesn't re-run this script — without
+  // this, a flash frozen mid-animation when you navigated away stays stuck
+  // frozen on that frame when you come back
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) applyFlash();
+  });
+})();
+</script>
+
+<div class="page">
+  <h1 class="project-title" style="margin: 0 0 8px; font-size: clamp(19px, 3.4vw, 29px);">Jack Tierney</h1>
+
+  <div class="frame">
+    <!-- image picked at random from assets/images/landing/ on every load — see js/script.js -->
+    <div class="frame-img" id="landingImg"></div>
+  </div>
+
+  <p class="tagline">
+    <a href="about.html">about</a>
+    <a href="personal.html">personal</a>
+    <a href="documentary.html">documentary</a>
+    <a href="commercial.html">commercial</a>
+    <a href="contact.html">contact</a>
+  </p>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

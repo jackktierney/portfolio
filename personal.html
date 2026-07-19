@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PERSONAL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="--bg: #2b3440;">
+
+<div class="flash-overlay" id="flashOverlay"></div>
+<script>
+(function () {
+  var el = document.getElementById('flashOverlay');
+  function applyFlash() {
+    el.classList.remove('is-flashing-full', 'is-flashing-in', 'is-flashing-out');
+    void el.offsetWidth; // restart the animation
+    if (sessionStorage.getItem('flashPending')) {
+      sessionStorage.removeItem('flashPending');
+      el.classList.add('is-flashing-out');
+    } else {
+      el.classList.add('is-flashing-full');
+    }
+  }
+  applyFlash();
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) applyFlash();
+  });
+})();
+</script>
+
+<div class="page">
+  <div class="solo-row">
+    <div class="tabs">
+      <button type="button" class="active" data-title="ZEPHYR" data-role="Director" data-image="assets/images/zephyr-cover.jpg" data-href="zephyr.html" data-color="#2b3440">1</button>
+      <span class="tab-dash">-</span>
+      <button type="button" data-title="BAYE FALL" data-role="ROLE" data-image="assets/images/bayefall-1.jpg" data-href="bayefall.html" data-color="#4a5259">2</button>
+    </div>
+
+    <div class="solo-main">
+      <div class="solo-header">
+        <h1 class="project-title">ZEPHYR</h1>
+        <p class="project-role">Director</p>
+      </div>
+
+      <div class="frame">
+        <div class="frame-img is-clickable" style="background-image: url('assets/images/zephyr-cover.jpg'); background-size: cover;"></div>
+      </div>
+
+      <p class="tagline"><a href="#" class="enter-link">enter project</a> <a href="index.html">home</a></p>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

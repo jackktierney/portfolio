@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design prototype — font / grid / grain / transition tests</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Special+Elite&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --moss: #3f4a3a;
+    --bark: #4d3f30;
+    --dusk: #2e2f28;
+    --cream: #e8e2d0;
+    --amber: #c98a4b;
+    --line: #e8e2d055;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--moss);
+    color: var(--cream);
+    font-family: 'VT323', 'ms gothic', monospace;
+    font-size: 18px;
+  }
+
+  /* ============ dev-only scaffolding labels (not part of final site) ============ */
+  .dev-label {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffffff99;
+    background: #000;
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+  }
+  .dev-section {
+    padding: 60px 24px;
+    border-bottom: 2px dashed #ffffff30;
+  }
+  .dev-note {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    color: #ffffffaa;
+    max-width: 640px;
+    line-height: 1.5;
+    margin: 0 auto 30px;
+  }
+
+  /* ============ film grain overlay (site-wide) ============ */
+  #grain {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    opacity: 0.06;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+  /* Note: an earlier version of this animated the grain position on an infinite
+     CSS loop. Turbulence filters are expensive to repaint every frame, and it
+     visibly janked scrolling — keeping grain static avoids that cost entirely
+     while still reading as "grainy" at this low an opacity. */
+
+  /* ============ e-reader flash overlay ============ */
+  #flash {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: var(--cream);
+    opacity: 0;
+  }
+  #flash.go {
+    animation: eink-flash 0.42s steps(1);
+  }
+  @keyframes eink-flash {
+    0%   { opacity: 0; }
+    10%  { opacity: 1; background: var(--cream); }
+    22%  { opacity: 1; background: var(--dusk); }
+    34%  { opacity: 1; background: var(--cream); }
+    46%  { opacity: 1; background: var(--dusk); }
+    60%  { opacity: 1; background: var(--cream); }
+    100% { opacity: 0; }
+  }
+
+  a { color: var(--cream); text-decoration: underline dotted; }
+  a:hover { text-decoration: underline dotted var(--amber); color: var(--amber); }
+
+  h1, h2, h3 { font-weight: normal; margin: 0; }
+
+  /* ============ section 1: font comparison ============ */
+  .font-demo {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .font-demo .col { margin-bottom: 50px; }
+  .font-demo .col:last-child { margin-bottom: 0; }
+  .font-demo .label { font-size: 13px; opacity: 0.7; margin-bottom: 10px; }
+  .font-a { font-family: 'VT323', monospace; font-size: 22px; }
+  .font-b { font-family: 'Special Elite', monospace; font-size: 16px; }
+  .font-demo .nav-row { margin: 10px 0; font-size: 0.9em; }
+  .font-demo h2 { font-size: 2.2em; margin-bottom: 10px; }
+  .font-b h2 { font-size: 1.6em; }
+  .font-demo p { line-height: 1.6; opacity: 0.85; }
+
+  /* ============ section 3: 3x3 grid ============ */
+  .grid-wrap { max-width: 640px; margin: 0 auto; }
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    aspect-ratio: 1 / 1;
+    background: var(--dusk);
+  }
+  .cell {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(155deg, #5b6350, #3a4032);
+    filter: grayscale(0.4) contrast(1.05);
+    transition: 0.3s;
+    display: flex;
+    align-items: flex-end;
+    padding: 8px;
+  }
+  .cell::after {
+    content: attr(data-n);
+    font-size: 12px;
+    opacity: 0.5;
+  }
+  .cell:hover {
+    filter: grayscale(0) contrast(1.15);
+    transform: rotate(0.6deg) scale(1.02);
+    z-index: 2;
+  }
+  .cell.n1 { background: linear-gradient(155deg,#6b5a44,#3a2f22); }
+  .cell.n2 { background: linear-gradient(155deg,#5a6b4a,#2e3a24); }
+  .cell.n3 { background: linear-gradient(155deg,#4a5a5b,#232f30); }
+  .cell.n5 { background: linear-gradient(155deg,#6b4a3a,#2f1f18); }
+  .cell.n7 { background: linear-gradient(155deg,#556b46,#22301b); }
+  .cell.n9 { background: linear-gradient(155deg,#4a4438,#231f1a); }
+
+  .center-cell {
+    background: var(--dusk);
+    filter: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 10px;
+    padding: 14px;
+  }
+  .center-cell:hover { filter: none; transform: none; }
+  .handwritten-title {
+    font-family: 'Caveat', cursive;
+    font-size: 2.4em;
+    line-height: 1;
+    color: var(--cream);
+  }
+  .role-line { font-size: 0.85em; opacity: 0.75; }
+  .center-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 6px;
+    font-size: 0.85em;
+  }
+  .center-actions button {
+    background: none;
+    border: none;
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 1em;
+    text-decoration: underline dotted;
+    cursor: pointer;
+    padding: 0;
+  }
+  .center-actions button:hover { color: var(--amber); text-decoration-color: var(--amber); }
+
+  /* modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: #00000080;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal-box {
+    background: var(--moss);
+    border: 1px solid var(--line);
+    max-width: 420px;
+    width: 90%;
+    padding: 20px;
+    position: relative;
+  }
+  .modal-box h3 { margin-bottom: 10px; font-family: 'VT323', monospace; font-size: 1.6em; }
+  .modal-box .close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    cursor: pointer;
+    font-size: 1.2em;
+    opacity: 0.7;
+  }
+  .modal-box .close:hover { opacity: 1; color: var(--amber); }
+  .modal-box iframe { width: 100%; height: 220px; border: none; background: #000; }
+
+  /* ============ section 4: page transition demo ============ */
+  .mock-page {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    min-height: 220px;
+  }
+  .mock-controls { margin-top: 24px; }
+  .mock-controls button {
+    background: none;
+    border: 1px solid var(--line);
+    color: var(--cream);
+    font-family: inherit;
+    font-size: 1em;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin: 0 6px;
+  }
+  .mock-controls button:hover { border-color: var(--amber); color: var(--amber); }
+  #mockImg {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: linear-gradient(155deg,#5a6b4a,#2e3a24);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+
+<div id="grain"></div>
+<div id="flash"></div>
+
+<!-- ===================== SECTION 1: FONT COMPARISON ===================== -->
+<div class="dev-section">
+  <div class="dev-label">Test 1 — Typography: Option A vs Option B</div>
+  <div class="dev-note">Everything below the dev-label is what the real site would show. Option A = pixel/bitmap (VT323, stand-in for a Greybeard-style font). Option B = typewriter (Special Elite).</div>
+  <div class="font-demo">
+    <div class="col font-a">
+      <div class="label">OPTION A — pixel / bitmap</div>
+      <div class="nav-row">about &nbsp;🞶&nbsp; zephyr &nbsp;🞶&nbsp; baye fall &nbsp;🞶&nbsp; commercial &nbsp;🞶&nbsp; contact</div>
+      <h2>your name</h2>
+      <p>a short line of body copy set in the pixel/bitmap direction, to see how it reads at running-text sizes rather than just in a headline.</p>
+    </div>
+    <div class="col font-b">
+      <div class="label">OPTION B — typewriter</div>
+      <div class="nav-row">about &nbsp;🞶&nbsp; zephyr &nbsp;🞶&nbsp; baye fall &nbsp;🞶&nbsp; commercial &nbsp;🞶&nbsp; contact</div>
+      <h2>your name</h2>
+      <p>a short line of body copy set in the typewriter direction, to see how it reads at running-text sizes rather than just in a headline.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== SECTION 2: GRAIN NOTE ===================== -->
+<div class="dev-section">
+  <div class="dev-label">Test 2 — Film grain overlay</div>
+  <div class="dev-note">The grain is already applied across this entire prototype (it's a fixed full-viewport layer, id="grain") — look closely at any flat colour panel on this page and you'll see it. Opacity and animation speed are both easy to dial up/down once you've seen it live.</div>
+</div>
+
+<!-- ===================== SECTION 3: 3x3 GRID TEMPLATE ===================== -->
+<div class="dev-section">
+  <div class="dev-label">Test 3 — Project page grid (ZEPHYR / Baye Fall template)</div>
+  <div class="dev-note">8 photo cells + 1 center text cell, La Haine-style. Placeholder colour blocks stand in for real photos. Hover a photo cell to see the grayscale→colour treatment. Click WATCH / ABOUT / CREDITS to see the popup pattern.</div>
+  <div class="grid-wrap">
+    <div class="grid3">
+      <div class="cell n1" data-n="01"></div>
+      <div class="cell n2" data-n="02"></div>
+      <div class="cell n3" data-n="03"></div>
+      <div class="cell n4" data-n="04"></div>
+      <div class="cell center-cell">
+        <div class="handwritten-title">ZEPHYR</div>
+        <div class="role-line">ROLE: director / cinematographer</div>
+        <div class="center-actions">
+          <button onclick="openModal('watch')">WATCH</button>
+          <button onclick="openModal('about')">ABOUT</button>
+          <button onclick="openModal('credits')">CREDITS</button>
+        </div>
+      </div>
+      <div class="cell n5" data-n="05"></div>
+      <div class="cell n6" data-n="06"></div>
+      <div class="cell n7" data-n="07"></div>
+      <div class="cell n8" data-n="08"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal">
+  <div class="modal-box">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ===================== SECTION 4: E-READER FLASH TRANSITION ===================== -->
+<div class="dev-section" style="border-bottom:none;">
+  <div class="dev-label">Test 4 — Page transition ("e-reader flash")</div>
+  <div class="dev-note">Click between the two mock pages below to see the flash/invert transition that would play when navigating between real pages on the site.</div>
+  <div class="mock-page">
+    <h2 id="mockTitle">home</h2>
+    <div id="mockImg">image placeholder</div>
+    <div class="mock-controls">
+      <button onclick="goTo('home')">home</button>
+      <button onclick="goTo('project')">zephyr</button>
+      <button onclick="goTo('contact')">contact</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const modalContent = {
+    watch: '<h3>WATCH</h3><iframe src="about:blank"></iframe><p style="font-size:13px;opacity:.7;margin-top:8px;">Video embed goes here (Vimeo/YouTube iframe).</p>',
+    about: '<h3>ABOUT</h3><p style="font-size:14px;line-height:1.6;">Project description copy goes here — concept, medium, year, context.</p>',
+    credits: '<h3>CREDITS</h3><p style="font-size:14px;line-height:1.6;">Director — Name<br>DP — Name<br>Edit — Name<br>Sound — Name</p>'
+  };
+  function openModal(key) {
+    document.getElementById('modalContent').innerHTML = modalContent[key];
+    document.getElementById('modal').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+  document.getElementById('modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') closeModal();
+  });
+
+  const mockPages = {
+    home: { title: 'home', bg: 'linear-gradient(155deg,#5a6b4a,#2e3a24)' },
+    project: { title: 'zephyr', bg: 'linear-gradient(155deg,#6b5a44,#3a2f22)' },
+    contact: { title: 'contact', bg: 'linear-gradient(155deg,#4a4a4a,#232323)' }
+  };
+  function goTo(key) {
+    const flash = document.getElementById('flash');
+    flash.classList.remove('go');
+    void flash.offsetWidth; // restart animation
+    flash.classList.add('go');
+    setTimeout(() => {
+      document.getElementById('mockTitle').textContent = mockPages[key].title;
+      document.getElementById('mockImg').style.background = mockPages[key].bg;
+    }, 190);
+  }
+</script>
+
+</body>
+</html>

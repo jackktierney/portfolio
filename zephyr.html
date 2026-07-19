@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEPHYR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body style="--bg: #2b3440;">
+
+<div class="flash-overlay" id="flashOverlay"></div>
+<script>
+(function () {
+  var el = document.getElementById('flashOverlay');
+  function applyFlash() {
+    el.classList.remove('is-flashing-full', 'is-flashing-in', 'is-flashing-out');
+    void el.offsetWidth; // restart the animation
+    if (sessionStorage.getItem('flashPending')) {
+      sessionStorage.removeItem('flashPending');
+      el.classList.add('is-flashing-out');
+    } else {
+      el.classList.add('is-flashing-full');
+    }
+  }
+  applyFlash();
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) applyFlash();
+  });
+})();
+</script>
+
+<div class="project-page">
+  <div class="polybar-card">
+    <div class="rice-grid">
+      <div class="cell" style="background-image: url('assets/images/zephyr-1.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-2.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-3.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-4.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-5.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-6.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-7.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-8.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/zephyr-cover.jpg');"></div>
+    </div>
+
+    <div class="polybar">
+      <div class="polybar-left">
+        <span class="polybar-seg title-seg">ZEPHYR</span>
+        <span class="polybar-div">│</span>
+        <span class="polybar-seg role-seg">Director</span>
+      </div>
+      <div class="polybar-right">
+        <a href="#" class="modal-trigger" id="watchLink">watch</a>
+        <span class="polybar-div">│</span>
+        <a href="#" class="modal-trigger" id="aboutLink">about</a>
+        <span class="polybar-div">│</span>
+        <a href="#" class="modal-trigger" id="creditsLink">credits</a>
+        <span class="polybar-div">│</span>
+        <a href="bayefall.html">next</a>
+        <span class="polybar-div">│</span>
+        <a href="index.html">home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="aboutModal">
+  <div class="modal-box">
+    <div class="modal-text">
+      <p>About text placeholder — replace with the real project description.</p>
+    </div>
+    <button type="button" class="modal-close">close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="watchModal">
+  <div class="modal-box is-large">
+    <div class="modal-video">
+      <iframe id="watchIframe" src="" title="ZEPHYR — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <button type="button" class="modal-close">close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="creditsModal">
+  <div class="modal-box is-large">
+    <div class="modal-text">
+      <p>A PROJECT BY MURMUR COLLECTIVE — <a href="https://www.murmurcollective.co.uk" target="_blank" rel="noopener">www.murmurcollective.co.uk</a></p>
+
+      <p>
+        Writer, Director, Editor — Jack Tierney<br>
+        Producer — Abbey Valentina<br>
+        Director of Photography — Lasse Tolboll<br>
+        Executive Producer — Billy Abbott<br>
+        Assistant Director — Josh Barnes<br>
+        Head of Art Department / Production Designer — Olive Jenkins<br>
+        Artist and Composer — Finnegan Tui<br>
+        Composer, Sound Artist, Mix Engineer — Jasper Trim<br>
+        Sound Design — Guy Newland<br>
+        Mix Engineer — Mike Trim<br>
+        Behind the Scenes and Production Assistant — Lily Bognuda<br>
+        1st Assistant Camera — Austen Lane<br>
+        2nd Assistant Camera and Gaffer — Sam Oxton<br>
+        Art Director — Lydia Martin<br>
+        Sound Recordist — Amber Amare, Dajain Daley<br>
+        Script Development — Rohanna Starling, Finnegan Tui<br>
+        Colourist — Jonny Tully<br>
+        Graphics and Artwork — Rob Shuttz<br>
+        Supporting Co-Producer — Giuseppe Floridia<br>
+        Supporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia<br>
+        DIT and Production Assistant — Luke Harrison-Derby<br>
+        B-Cam and Production Assistant — Sebastian Pinkham<br>
+        Head Chef — Rosie Nevill<br>
+        Off-Road Driver — Dom Rott<br>
+        Location Scout — Lowenna Banfield-Earp<br>
+        Production Assistants — Paul "Boggy" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams<br>
+        Advert Editor — Sam Sutherland
+      </p>
+
+      <p>
+        Cast:<br>
+        Parmenides — Finnegan Tui<br>
+        Sunyata — Rubymoon Hilliard<br>
+        Young Parmenides — Caspian Ember Watson<br>
+        Old Parmenides — Paul "Boggy" Bognuda<br>
+        Young Sunyata — Isis Marie Carney<br>
+        Zephyr — Jhett Smart<br>
+        Friends — Tom Adams, Alex Morton<br>
+        Childhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas<br>
+        Mother — Emily Fawcett<br>
+        Grandmother — Nelly Minnema
+      </p>
+
+      <p>
+        Very Special Thanks To:<br>
+        Emanuele Floridia of Eywa Music Video Europe<br>
+        Panavision Cardiff<br>
+        YHA Accommodation<br>
+        Joseph Goldman of Film Co.<br>
+        Paul "Boggy" Bognuda<br>
+        Emily Fawcett<br>
+        Mike Trim<br>
+        Bariş Baliç<br>
+        Alice and Hetty Fruer Denham<br>
+        David and Judy Starling<br>
+        All of our generous Kickstarter supporters
+      </p>
+    </div>
+    <button type="button" class="modal-close">close</button>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
