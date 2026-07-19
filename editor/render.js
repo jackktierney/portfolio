@@ -162,6 +162,7 @@
       + '    <div class="solo-main">\n'
       + '      <div class="solo-header">\n'
       + '        <h1 class="project-title">' + esc(project.title) + '</h1>\n'
+      + '        <span class="solo-header-div">│</span>\n'
       + '        <p class="project-role">' + esc(project.role) + '</p>\n'
       + '      </div>\n\n'
       + '      <div class="frame">\n'
