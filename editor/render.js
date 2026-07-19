@@ -105,7 +105,7 @@
   function renderLanding(data) {
     const folder = folderOf(data.images[0]) || 'assets/images/landing';
     const inner = '<div class="page">\n'
-      + '  <h1 class="project-title" style="margin: 0 0 8px; font-size: clamp(19px, 3.4vw, 29px);">' + esc(data.title) + '</h1>\n\n'
+      + '  <h1 class="project-title" style="margin: 0 0 8px; font-size: clamp(19px, 3.4vw, 29px); text-transform: none;">' + esc(data.title) + '</h1>\n\n'
       + '  <div class="frame">\n'
       + '    <!-- image picked at random from ' + esc(folder) + '/ on every load — see js/script.js -->\n'
       + '    <div class="frame-img" id="landingImg"></div>\n'
@@ -168,7 +168,7 @@
       + '      <div class="frame">\n'
       + '        <div class="frame-img is-clickable" style="background-image: url(\'' + esc(project.coverImage) + '\'); background-size: cover;"></div>\n'
       + '      </div>\n\n'
-      + '      <p class="tagline"><a href="#" class="enter-link">enter project</a> <a href="index.html">home</a></p>\n'
+      + '      <p class="tagline"><a href="index.html">home</a> <a href="#" class="enter-link">enter project</a></p>\n'
       + '    </div>\n'
       + '  </div>\n'
       + '</div>';
@@ -431,6 +431,9 @@
     lines.push('');
     lines.push('    function switchToTab(btn) {');
     lines.push("      if (btn.classList.contains('active')) return;");
+    lines.push("      const fromIndex = tabButtons.findIndex((b) => b.classList.contains('active'));");
+    lines.push('      const toIndex = tabButtons.indexOf(btn);');
+    lines.push('      const forward = toIndex > fromIndex;');
     lines.push("      tabButtons.forEach((b) => b.classList.remove('active'));");
     lines.push("      btn.classList.add('active');");
     lines.push('');
@@ -451,17 +454,20 @@
     lines.push('        return;');
     lines.push('      }');
     lines.push('');
-    lines.push('      // the whole frame (border + photo, moving as one unit) rises out as');
-    lines.push('      // the flash climbs to its peak, hiding the swap; once swapped, it');
-    lines.push('      // starts a beat below its slot and rises into place as the flash');
-    lines.push('      // fades back out');
-    lines.push("      frameEl.classList.add('is-rising-out');");
+    lines.push('      // the whole frame (border + photo, moving as one unit) rises/falls out as');
+    lines.push('      // the flash climbs to its peak, hiding the swap; once swapped, it starts a');
+    lines.push('      // beat off its slot and eases into place as the flash fades back out —');
+    lines.push('      // advancing to a later tab moves upward (mirrors scrolling up), going');
+    lines.push('      // back to an earlier tab moves downward (mirrors scrolling down)');
+    lines.push("      const outClass = forward ? 'is-rising-out' : 'is-falling-out';");
+    lines.push("      const inClass = forward ? 'is-rising-in' : 'is-falling-in';");
+    lines.push('      frameEl.classList.add(outClass);');
     lines.push('      setTimeout(() => {');
     lines.push('        swap();');
-    lines.push("        frameEl.classList.remove('is-rising-out');");
-    lines.push("        frameEl.classList.add('is-rising-in');");
+    lines.push('        frameEl.classList.remove(outClass);');
+    lines.push('        frameEl.classList.add(inClass);');
     lines.push('        void frameEl.offsetWidth; // commit the snap before transitioning back to 0');
-    lines.push("        frameEl.classList.remove('is-rising-in');");
+    lines.push('        frameEl.classList.remove(inClass);');
     lines.push('      }, RAMP_MS);');
     lines.push('    }');
     lines.push('');
@@ -470,9 +476,10 @@
     lines.push('    });');
     lines.push('');
     lines.push('    // two-finger trackpad / mouse-wheel scroll steps through the tabs');
-    lines.push('    // instead of scrolling the page — scrolling forward (down) advances');
-    lines.push('    // to the next tab, scrolling back reverses to the previous one, each');
-    lines.push('    // using the same flash + rise transition as clicking a tab directly');
+    lines.push('    // instead of scrolling the page — scrolling up advances to the next');
+    lines.push('    // tab (image moves up), scrolling down reverses to the previous one');
+    lines.push('    // (image moves down), each using the same flash + rise/fall');
+    lines.push('    // transition as clicking a tab directly');
     lines.push('    let wheelLocked = false;');
     lines.push('    const WHEEL_LOCK_MS = 830; // covers the full flash+rise transition so one scroll gesture = one tab step');
     lines.push("    window.addEventListener('wheel', (e) => {");

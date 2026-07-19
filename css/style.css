@@ -121,6 +121,21 @@ a { color: inherit; }
   transform: translateY(16px);
 }
 
+/* tab-switch fall: mirror of the rise above, used when advancing to a
+   later tab — the frame drops and fades out, then the swapped-in frame
+   starts a beat above its slot and eases down into place */
+.frame.is-falling-out {
+  transition: transform 0.38s ease, opacity 0.38s ease;
+  transform: translateY(16px);
+  opacity: 0;
+}
+
+.frame.is-falling-in {
+  transition: none;
+  opacity: 0;
+  transform: translateY(-16px);
+}
+
 .frame-img {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -146,7 +161,7 @@ a { color: inherit; }
 }
 
 .tagline {
-  margin: 16px 0 0;
+  margin: 8px 0 0;
   font-size: 15.6px; /* 13px + 20% */
   line-height: 1.7;
   letter-spacing: 0.01em;
@@ -254,7 +269,7 @@ a { color: inherit; }
 .project-title {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: clamp(22px, 4vw, 34px);
+  font-size: clamp(19px, 3.4vw, 29px);
   font-weight: normal;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -262,7 +277,7 @@ a { color: inherit; }
 
 .project-role {
   margin: 0;
-  font-size: clamp(22px, 4vw, 34px);
+  font-size: clamp(19px, 3.4vw, 29px);
   letter-spacing: 0.02em;
   opacity: 0.75;
 }
@@ -275,7 +290,7 @@ a { color: inherit; }
   display: flex;
   align-items: baseline;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .solo-header-div { opacity: 1; }

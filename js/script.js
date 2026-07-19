@@ -221,6 +221,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function switchToTab(btn) {
       if (btn.classList.contains('active')) return;
+      const fromIndex = tabButtons.findIndex((b) => b.classList.contains('active'));
+      const toIndex = tabButtons.indexOf(btn);
+      const forward = toIndex > fromIndex;
       tabButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
 
@@ -241,17 +244,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      // the whole frame (border + photo, moving as one unit) rises out as
-      // the flash climbs to its peak, hiding the swap; once swapped, it
-      // starts a beat below its slot and rises into place as the flash
-      // fades back out
-      frameEl.classList.add('is-rising-out');
+      // the whole frame (border + photo, moving as one unit) rises/falls out as
+      // the flash climbs to its peak, hiding the swap; once swapped, it starts a
+      // beat off its slot and eases into place as the flash fades back out —
+      // advancing to a later tab moves upward (mirrors scrolling up), going
+      // back to an earlier tab moves downward (mirrors scrolling down)
+      const outClass = forward ? 'is-rising-out' : 'is-falling-out';
+      const inClass = forward ? 'is-rising-in' : 'is-falling-in';
+      frameEl.classList.add(outClass);
       setTimeout(() => {
         swap();
-        frameEl.classList.remove('is-rising-out');
-        frameEl.classList.add('is-rising-in');
+        frameEl.classList.remove(outClass);
+        frameEl.classList.add(inClass);
         void frameEl.offsetWidth; // commit the snap before transitioning back to 0
-        frameEl.classList.remove('is-rising-in');
+        frameEl.classList.remove(inClass);
       }, RAMP_MS);
     }
 
@@ -260,9 +266,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // two-finger trackpad / mouse-wheel scroll steps through the tabs
-    // instead of scrolling the page — scrolling forward (down) advances
-    // to the next tab, scrolling back reverses to the previous one, each
-    // using the same flash + rise transition as clicking a tab directly
+    // instead of scrolling the page — scrolling up advances to the next
+    // tab (image moves up), scrolling down reverses to the previous one
+    // (image moves down), each using the same flash + rise/fall
+    // transition as clicking a tab directly
     let wheelLocked = false;
     const WHEEL_LOCK_MS = 830; // covers the full flash+rise transition so one scroll gesture = one tab step
     window.addEventListener('wheel', (e) => {
