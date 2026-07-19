@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PERSONAL</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body style="--bg: #2b3440;">
@@ -26,6 +23,9 @@
     }
   }
   applyFlash();
+  // bfcache restore (browser back/forward) doesn't re-run this script — without
+  // this, a flash frozen mid-animation when you navigated away stays stuck
+  // frozen on that frame when you come back
   window.addEventListener('pageshow', function (e) {
     if (e.persisted) applyFlash();
   });
@@ -37,7 +37,7 @@
     <div class="tabs">
       <button type="button" class="active" data-title="ZEPHYR" data-role="Director" data-image="assets/images/zephyr-cover.jpg" data-href="zephyr.html" data-color="#2b3440">1</button>
       <span class="tab-dash">-</span>
-      <button type="button" data-title="BAYE FALL" data-role="ROLE" data-image="assets/images/bayefall-1.jpg" data-href="bayefall.html" data-color="#4a5259">2</button>
+      <button type="button" data-title="BAYE FALL" data-role="Role" data-image="assets/images/bayefall-1.jpg" data-href="bayefall.html" data-color="#4a5259">2</button>
     </div>
 
     <div class="solo-main">

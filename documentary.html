@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DOCUMENTARY</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body style="--bg: #57514a;">
@@ -26,6 +23,9 @@
     }
   }
   applyFlash();
+  // bfcache restore (browser back/forward) doesn't re-run this script — without
+  // this, a flash frozen mid-animation when you navigated away stays stuck
+  // frozen on that frame when you come back
   window.addEventListener('pageshow', function (e) {
     if (e.persisted) applyFlash();
   });
@@ -37,9 +37,9 @@
     <div class="tabs">
       <button type="button" class="active" data-title="THE BATTLE OF CABLE STREET" data-role="Editor" data-image="assets/images/documentary-1.jpg" data-href="cablestreet.html" data-color="#57514a">1</button>
       <span class="tab-dash">-</span>
-      <button type="button" data-title="DOCUMENTARY 02" data-role="ROLE" data-href="documentary-02.html" data-color="#3a424c">2</button>
+      <button type="button" data-title="DOCUMENTARY 02" data-role="Role" data-href="documentary-02.html" data-color="#3a424c">2</button>
       <span class="tab-dash">-</span>
-      <button type="button" data-title="DOCUMENTARY 03" data-role="ROLE" data-href="documentary-03.html" data-color="#3a424c">3</button>
+      <button type="button" data-title="DOCUMENTARY 03" data-role="Role" data-href="documentary-03.html" data-color="#3a424c">3</button>
     </div>
 
     <div class="solo-main">

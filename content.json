@@ -1,0 +1,342 @@
+{
+  "site": {
+    "title": "Jack Tierney",
+    "nav": [
+      {
+        "label": "about",
+        "href": "about.html"
+      },
+      {
+        "label": "personal",
+        "href": "personal.html"
+      },
+      {
+        "label": "documentary",
+        "href": "documentary.html"
+      },
+      {
+        "label": "commercial",
+        "href": "commercial.html"
+      },
+      {
+        "label": "contact",
+        "href": "contact.html"
+      }
+    ]
+  },
+  "landing": {
+    "file": "index.html",
+    "browserTitle": "tripping over treetop canopies",
+    "title": "Jack Tierney",
+    "bg": "#4a4e42",
+    "images": [
+      "assets/images/landing/3.jpg",
+      "assets/images/landing/2.jpg",
+      "assets/images/landing/4.jpg",
+      "assets/images/landing/1.jpg"
+    ],
+    "links": [
+      {
+        "label": "about",
+        "href": "about.html",
+        "external": false
+      },
+      {
+        "label": "personal",
+        "href": "personal.html"
+      },
+      {
+        "label": "documentary",
+        "href": "documentary.html"
+      },
+      {
+        "label": "commercial",
+        "href": "commercial.html"
+      },
+      {
+        "label": "contact",
+        "href": "contact.html"
+      }
+    ]
+  },
+  "simplePages": [
+    {
+      "id": "about",
+      "file": "about.html",
+      "title": "about",
+      "bg": "#3a4238",
+      "image": "assets/images/about/1.jpg",
+      "text": "I love creation. I'm primarily a director, but have experience editing and producing. this is the bit that I want to figure out what to write blah blah blahhh",
+      "links": [
+        {
+          "label": "home",
+          "href": "index.html"
+        },
+        {
+          "label": "contact",
+          "href": "contact.html"
+        }
+      ]
+    }
+  ],
+  "contactPage": {
+    "file": "contact.html",
+    "bg": "#5a5d61",
+    "intro": "gimme a shout",
+    "images": [
+      "assets/images/contact/1.jpg",
+      "assets/images/contact/2.jpg",
+      "assets/images/contact/3.jpg",
+      "assets/images/contact/4.jpg",
+      "assets/images/contact/5.jpg",
+      "assets/images/contact/6.jpg",
+      "assets/images/contact/7.jpg",
+      "assets/images/contact/8.jpg"
+    ],
+    "email": "jack@murmurcollective.co.uk",
+    "links": [
+      {
+        "label": "instagram",
+        "href": "https://instagram.com/jackktierney",
+        "external": true
+      },
+      {
+        "label": "home",
+        "href": "index.html"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "id": "personal",
+      "file": "personal.html",
+      "label": "personal",
+      "projects": [
+        "zephyr",
+        "bayefall"
+      ]
+    },
+    {
+      "id": "documentary",
+      "file": "documentary.html",
+      "label": "documentary",
+      "projects": [
+        "cablestreet",
+        "documentary-02",
+        "documentary-03"
+      ]
+    },
+    {
+      "id": "commercial",
+      "file": "commercial.html",
+      "label": "commercial",
+      "projects": [
+        "childish",
+        "chaseandstatus",
+        "commercial-03"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "zephyr",
+      "file": "zephyr.html",
+      "title": "ZEPHYR",
+      "role": "Director",
+      "bg": "#2b3440",
+      "coverImage": "assets/images/zephyr-cover.jpg",
+      "grid": [
+        "assets/images/zephyr-1.jpg",
+        "assets/images/zephyr-2.jpg",
+        "assets/images/zephyr-3.jpg",
+        "assets/images/zephyr-4.jpg",
+        "assets/images/zephyr-5.jpg",
+        "assets/images/zephyr-6.jpg",
+        "assets/images/zephyr-7.jpg",
+        "assets/images/zephyr-8.jpg",
+        "assets/images/zephyr-cover.jpg"
+      ],
+      "watch": {
+        "enabled": true,
+        "youtubeId": "54SxblKJLVg"
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>A PROJECT BY MURMUR COLLECTIVE — <a href=\"https://www.murmurcollective.co.uk\" target=\"_blank\" rel=\"noopener\">www.murmurcollective.co.uk</a></p>\n\n      <p>\n        Writer, Director, Editor — Jack Tierney<br>\n        Producer — Abbey Valentina<br>\n        Director of Photography — Lasse Tolboll<br>\n        Executive Producer — Billy Abbott<br>\n        Assistant Director — Josh Barnes<br>\n        Head of Art Department / Production Designer — Olive Jenkins<br>\n        Artist and Composer — Finnegan Tui<br>\n        Composer, Sound Artist, Mix Engineer — Jasper Trim<br>\n        Sound Design — Guy Newland<br>\n        Mix Engineer — Mike Trim<br>\n        Behind the Scenes and Production Assistant — Lily Bognuda<br>\n        1st Assistant Camera — Austen Lane<br>\n        2nd Assistant Camera and Gaffer — Sam Oxton<br>\n        Art Director — Lydia Martin<br>\n        Sound Recordist — Amber Amare, Dajain Daley<br>\n        Script Development — Rohanna Starling, Finnegan Tui<br>\n        Colourist — Jonny Tully<br>\n        Graphics and Artwork — Rob Shuttz<br>\n        Supporting Co-Producer — Giuseppe Floridia<br>\n        Supporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia<br>\n        DIT and Production Assistant — Luke Harrison-Derby<br>\n        B-Cam and Production Assistant — Sebastian Pinkham<br>\n        Head Chef — Rosie Nevill<br>\n        Off-Road Driver — Dom Rott<br>\n        Location Scout — Lowenna Banfield-Earp<br>\n        Production Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams<br>\n        Advert Editor — Sam Sutherland\n      </p>\n\n      <p>\n        Cast:<br>\n        Parmenides — Finnegan Tui<br>\n        Sunyata — Rubymoon Hilliard<br>\n        Young Parmenides — Caspian Ember Watson<br>\n        Old Parmenides — Paul \"Boggy\" Bognuda<br>\n        Young Sunyata — Isis Marie Carney<br>\n        Zephyr — Jhett Smart<br>\n        Friends — Tom Adams, Alex Morton<br>\n        Childhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas<br>\n        Mother — Emily Fawcett<br>\n        Grandmother — Nelly Minnema\n      </p>\n\n      <p>\n        Very Special Thanks To:<br>\n        Emanuele Floridia of Eywa Music Video Europe<br>\n        Panavision Cardiff<br>\n        YHA Accommodation<br>\n        Joseph Goldman of Film Co.<br>\n        Paul \"Boggy\" Bognuda<br>\n        Emily Fawcett<br>\n        Mike Trim<br>\n        Bariş Baliç<br>\n        Alice and Hetty Fruer Denham<br>\n        David and Judy Starling<br>\n        All of our generous Kickstarter supporters\n      </p>"
+    },
+    {
+      "id": "bayefall",
+      "file": "bayefall.html",
+      "title": "BAYE FALL",
+      "role": "Role",
+      "bg": "#4a5259",
+      "coverImage": "assets/images/bayefall-1.jpg",
+      "grid": [
+        "assets/images/bayefall-1.jpg",
+        "assets/images/bayefall-2.jpg",
+        "assets/images/bayefall-3.jpg",
+        "assets/images/bayefall-4.jpg",
+        "assets/images/bayefall-5.jpg",
+        "assets/images/bayefall-6.jpg",
+        "assets/images/bayefall-7.jpg",
+        "assets/images/bayefall-8.jpg",
+        "assets/images/bayefall-1.jpg"
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    },
+    {
+      "id": "cablestreet",
+      "file": "cablestreet.html",
+      "title": "THE BATTLE OF CABLE STREET",
+      "role": "Editor",
+      "bg": "#57514a",
+      "coverImage": "assets/images/documentary-1.jpg",
+      "grid": [
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg",
+        "assets/images/documentary-1.jpg"
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    },
+    {
+      "id": "documentary-02",
+      "file": "documentary-02.html",
+      "title": "DOCUMENTARY 02",
+      "role": "Role",
+      "bg": "#3a424c",
+      "coverImage": "",
+      "grid": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    },
+    {
+      "id": "documentary-03",
+      "file": "documentary-03.html",
+      "title": "DOCUMENTARY 03",
+      "role": "Role",
+      "bg": "#3a424c",
+      "coverImage": "",
+      "grid": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    },
+    {
+      "id": "childish",
+      "file": "childish.html",
+      "title": "CHILDISH",
+      "role": "Director",
+      "bg": "#7d715c",
+      "coverImage": "assets/images/commercial-1.jpg",
+      "grid": [
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg",
+        "assets/images/commercial-1.jpg"
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    },
+    {
+      "id": "chaseandstatus",
+      "file": "chaseandstatus.html",
+      "title": "CHASE & STATUS",
+      "role": "Producer",
+      "bg": "#232a33",
+      "coverImage": "assets/images/commercial-2.jpg",
+      "grid": [
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/commercial-2.jpg"
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    },
+    {
+      "id": "commercial-03",
+      "file": "commercial-03.html",
+      "title": "COMMERCIAL 03",
+      "role": "Role",
+      "bg": "#3a424c",
+      "coverImage": "",
+      "grid": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "watch": {
+        "enabled": false,
+        "youtubeId": ""
+      },
+      "about": "About text placeholder — replace with the real project description.",
+      "credits": "<p>Credits placeholder — replace with the real crew/cast list.</p>"
+    }
+  ]
+}

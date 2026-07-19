@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Butterbrotpapier";
+  src: url("../assets/fonts/butterbrotpapier.woff2") format("woff2"),
+       url("../assets/fonts/butterbrotpapier.woff") format("woff"),
+       url("../assets/fonts/butterbrotpapier.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ===================================================================
    Base — moss/cream, typewriter, lo-fi personal-web look
    Rough pass: colours/spacing/font all live here, easy to retune.
@@ -7,7 +17,7 @@
   --fg: #e8e5cc;
   --frame: #e8e5cc;
   --dark: #2e2f27;
-  --font-mono: "Special Elite", "Courier New", Courier, monospace;
+  --font-mono: "Butterbrotpapier", "Courier New", Courier, monospace;
 }
 
 * { box-sizing: border-box; }

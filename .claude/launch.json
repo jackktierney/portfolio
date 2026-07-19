@@ -8,10 +8,10 @@
       "port": 8642
     },
     {
-      "name": "sandbox-server",
+      "name": "static-server-2",
       "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8643", "--directory", "/private/tmp/claude-501/-Users-jacktierney-Desktop-WEBSITE/c3f03319-f998-4393-88f9-d26de5029f8b/scratchpad/sandbox"],
-      "port": 8643
+      "runtimeArgs": ["-m", "http.server", "8644"],
+      "port": 8644
     }
   ]
 }

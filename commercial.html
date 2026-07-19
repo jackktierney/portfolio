@@ -4,9 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>COMMERCIAL</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body style="--bg: #7d715c;">
@@ -26,6 +23,9 @@
     }
   }
   applyFlash();
+  // bfcache restore (browser back/forward) doesn't re-run this script — without
+  // this, a flash frozen mid-animation when you navigated away stays stuck
+  // frozen on that frame when you come back
   window.addEventListener('pageshow', function (e) {
     if (e.persisted) applyFlash();
   });
@@ -39,7 +39,7 @@
       <span class="tab-dash">-</span>
       <button type="button" data-title="CHASE &amp; STATUS" data-role="Producer" data-image="assets/images/commercial-2.jpg" data-href="chaseandstatus.html" data-color="#232a33">2</button>
       <span class="tab-dash">-</span>
-      <button type="button" data-title="COMMERCIAL 03" data-role="ROLE" data-href="commercial-03.html" data-color="#3a424c">3</button>
+      <button type="button" data-title="COMMERCIAL 03" data-role="Role" data-href="commercial-03.html" data-color="#3a424c">3</button>
     </div>
 
     <div class="solo-main">

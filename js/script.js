@@ -21,15 +21,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // same values so the outgoing ramp can be set to the destination's
   // colour instantly, with no lag, keeping the two halves of the flash
   // (ramp up here, ramp down on arrival) an exact, seamless match
+  //
+  // generated from content.json — do not hand-edit, run the editor's
+  // Save & Rebuild instead
   const DEFAULT_BG = getComputedStyle(document.body).getPropertyValue('--bg').trim();
   const PAGE_BG = {
     'index.html': '#4a4e42',
-    'zephyr.html': '#2b3440',
-    'contact.html': '#5a5d61',
     'about.html': '#3a4238',
+    'contact.html': '#5a5d61',
     'personal.html': '#2b3440',
     'documentary.html': '#57514a',
     'commercial.html': '#7d715c',
+    'zephyr.html': '#2b3440',
     'bayefall.html': '#4a5259',
     'cablestreet.html': '#57514a',
     'documentary-02.html': '#3a424c',
@@ -78,10 +81,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const landingImg = document.getElementById('landingImg');
   if (landingImg) {
     const landingPhotos = [
-      'assets/images/landing/1.jpg',
-      'assets/images/landing/2.jpg',
       'assets/images/landing/3.jpg',
+      'assets/images/landing/2.jpg',
       'assets/images/landing/4.jpg',
+      'assets/images/landing/1.jpg',
     ];
     const pick = landingPhotos[Math.floor(Math.random() * landingPhotos.length)];
     landingImg.style.backgroundImage = `url('${pick}')`;
@@ -167,10 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   wireModal('watchLink', 'watchModal', {
     onOpen: () => {
-      document.getElementById('watchIframe').src = 'https://www.youtube.com/embed/54SxblKJLVg?autoplay=1';
+      const iframe = document.getElementById('watchIframe');
+      if (iframe) iframe.src = iframe.dataset.embedSrc || iframe.src;
     },
     onClose: () => {
-      document.getElementById('watchIframe').src = ''; // stops playback
+      const iframe = document.getElementById('watchIframe');
+      if (iframe) iframe.src = ''; // stops playback
     },
   });
 
