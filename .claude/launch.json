@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8642"],
       "port": 8642
+    },
+    {
+      "name": "sandbox-server",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8643", "--directory", "/private/tmp/claude-501/-Users-jacktierney-Desktop-WEBSITE/c3f03319-f998-4393-88f9-d26de5029f8b/scratchpad/sandbox"],
+      "port": 8643
     }
   ]
 }
