@@ -202,6 +202,9 @@
     el.draggable = true;
     el.classList.add('is-draggable');
     el.addEventListener('dragstart', (e) => {
+      // let elements like the compact colour popover (which has its own
+      // pointerdown-based drag gesture) opt out of the row's native drag
+      if (e.target.closest && e.target.closest('.no-drag')) { e.preventDefault(); return; }
       dragCtx = { arr, from: index };
       e.dataTransfer.effectAllowed = 'move';
       try { e.dataTransfer.setData('text/plain', String(index)); } catch (err) { /* ignore */ }
@@ -306,18 +309,127 @@
     return name.replace(/[^a-zA-Z0-9._-]+/g, '-');
   }
 
-  // copies dropped/selected image files into assets/images/<entityId>/ and
-  // returns the list of site-relative paths written, in the order given
-  async function importImages(fileList, entityId) {
-    const written = [];
-    for (const file of Array.from(fileList)) {
-      if (!file.type || file.type.indexOf('image/') !== 0) continue;
-      const path = 'assets/images/' + entityId + '/' + sanitizeFilename(file.name);
-      await writeBlobFile(state.dirHandle, path, file);
-      state.thumbCache.delete(path);
-      written.push(path);
-    }
-    return written;
+  function baseNameNoExt(name) {
+    const base = baseName(name);
+    const dot = base.lastIndexOf('.');
+    return dot > 0 ? base.slice(0, dot) : base;
+  }
+
+  // ---------------------------------------------------------------------
+  // image import: crop-to-aspect-ratio + re-encode as an optimized JPEG,
+  // matched to whichever slot on the site the photo is going into
+  // ---------------------------------------------------------------------
+  const CROP_KINDS = {
+    // landing / about / contact / tabbed-category hero photo (.frame-img)
+    frame: { ratio: 16 / 10, outW: 1440, outH: 900, label: '16:10' },
+    // project page 3×3 grid cell (.rice-grid .cell)
+    grid: { ratio: 16 / 9, outW: 1440, outH: 810, label: '16:9' },
+  };
+
+  // shows a pan/zoom crop modal for one file, fixed to the given kind's
+  // aspect ratio, and resolves an optimized JPEG blob (or null if cancelled)
+  function openCropModal(file, kind) {
+    const spec = CROP_KINDS[kind];
+    const stageW = 480;
+    const stageH = Math.round(stageW / spec.ratio);
+
+    return new Promise((resolve) => {
+      const objectUrl = URL.createObjectURL(file);
+      const img = new Image();
+
+      let baseScale = 1;
+      let zoom = 1;
+      let tx = 0;
+      let ty = 0;
+
+      function scale() { return baseScale * zoom; }
+
+      function clamp() {
+        const dispW = img.naturalWidth * scale();
+        const dispH = img.naturalHeight * scale();
+        tx = Math.min(0, Math.max(stageW - dispW, tx));
+        ty = Math.min(0, Math.max(stageH - dispH, ty));
+      }
+
+      function paint() {
+        imgEl.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale() + ')';
+      }
+
+      function finish(blob) {
+        URL.revokeObjectURL(objectUrl);
+        overlay.remove();
+        resolve(blob);
+      }
+
+      function confirmCrop() {
+        const canvas = document.createElement('canvas');
+        canvas.width = spec.outW;
+        canvas.height = spec.outH;
+        const ctx = canvas.getContext('2d');
+        const sx = -tx / scale();
+        const sy = -ty / scale();
+        const sw = stageW / scale();
+        const sh = stageH / scale();
+        ctx.drawImage(img, sx, sy, sw, sh, 0, 0, spec.outW, spec.outH);
+        canvas.toBlob((blob) => finish(blob), 'image/jpeg', 0.85);
+      }
+
+      const imgEl = h('img', { class: 'crop-img', src: objectUrl, draggable: false }, []);
+      const stage = h('div', { class: 'crop-stage', style: 'width:' + stageW + 'px; height:' + stageH + 'px;' }, [imgEl]);
+      const zoomSlider = h('input', { type: 'range', min: '1', max: '3', step: '0.01', value: '1', class: 'crop-zoom' }, []);
+      const cancelBtn = h('button', { type: 'button', class: 'small', onclick: () => finish(null) }, ['Cancel']);
+      const useBtn = h('button', { type: 'button', class: 'primary small', onclick: confirmCrop }, ['Use photo']);
+      const modal = h('div', { class: 'crop-modal' }, [
+        h('div', { class: 'crop-title' }, ['Crop photo — ' + spec.label]),
+        stage,
+        h('div', { class: 'row', style: 'margin-top:12px;' }, [h('span', { class: 'hint', style: 'margin:0;' }, ['zoom']), zoomSlider]),
+        h('div', { class: 'row', style: 'margin-top:14px; justify-content:flex-end;' }, [cancelBtn, useBtn]),
+      ]);
+      const overlay = h('div', { class: 'crop-overlay' }, [modal]);
+      document.body.appendChild(overlay);
+
+      let dragging = false;
+      let last = null;
+      stage.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        last = { x: e.clientX, y: e.clientY };
+        stage.setPointerCapture(e.pointerId);
+      });
+      stage.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        tx += e.clientX - last.x;
+        ty += e.clientY - last.y;
+        last = { x: e.clientX, y: e.clientY };
+        clamp();
+        paint();
+      });
+      stage.addEventListener('pointerup', () => { dragging = false; });
+      zoomSlider.addEventListener('input', () => {
+        zoom = parseFloat(zoomSlider.value);
+        clamp();
+        paint();
+      });
+
+      img.onload = () => {
+        baseScale = Math.max(stageW / img.naturalWidth, stageH / img.naturalHeight);
+        tx = (stageW - img.naturalWidth * baseScale) / 2;
+        ty = (stageH - img.naturalHeight * baseScale) / 2;
+        paint();
+      };
+      img.src = objectUrl;
+    });
+  }
+
+  // shows the crop modal for a single file, then writes the optimized
+  // result into assets/images/<entityId>/ and returns its site-relative path
+  async function importAndCropImage(file, entityId, kind) {
+    if (!file || file.type.indexOf('image/') !== 0) return null;
+    const blob = await openCropModal(file, kind);
+    if (!blob) return null;
+    const path = 'assets/images/' + entityId + '/' + sanitizeFilename(baseNameNoExt(file.name)) + '.jpg';
+    await writeBlobFile(state.dirHandle, path, blob);
+    state.thumbCache.delete(path);
+    return path;
   }
 
   // ---------------------------------------------------------------------
@@ -552,20 +664,30 @@
   }
 
   // ---- advanced colour field: big swatch + hex + hue/sv picker + favourites ----
-  function colorField(label, value, onChange) {
+  // opts.compact: no field-label, small swatch, hex input lives in the popover
+  // instead of the row — for inline use in tight spaces like a list row
+  function colorField(label, value, onChange, opts) {
+    opts = opts || {};
     const safeValue = normalizeHex(value) || '#4a4e42';
     const startRgb = hexToRgb(safeValue);
     let hsv = rgbToHsv(startRgb.r, startRgb.g, startRgb.b);
 
-    const wrap = h('label', { class: 'field color-field' }, [h('span', { class: 'field-label' }, [label])]);
+    const wrap = h('label', { class: 'field color-field' + (opts.compact ? ' color-field-compact no-drag' : '') }, []);
+    if (!opts.compact) wrap.appendChild(h('span', { class: 'field-label' }, [label]));
 
-    const swatchBtn = h('button', { type: 'button', class: 'color-swatch-btn' }, []);
+    const swatchBtn = h('button', { type: 'button', class: 'color-swatch-btn' + (opts.compact ? ' small' : ''), title: opts.title || label }, []);
     const hexInput = h('input', { type: 'text', class: 'color-hex-input' }, []);
-    wrap.appendChild(h('div', { class: 'color-row' }, [swatchBtn, hexInput]));
+    if (opts.compact) {
+      wrap.appendChild(swatchBtn);
+    } else {
+      wrap.appendChild(h('div', { class: 'color-row' }, [swatchBtn, hexInput]));
+    }
 
     const popover = h('div', { class: 'color-popover' }, []);
     popover.style.display = 'none';
     wrap.appendChild(popover);
+
+    if (opts.compact) popover.appendChild(hexInput);
 
     const svSquare = h('div', { class: 'sv-square' }, []);
     const svCursor = h('div', { class: 'sv-cursor' }, []);
@@ -579,6 +701,25 @@
 
     popover.appendChild(svSquare);
     popover.appendChild(hueSlider);
+
+    if (window.EyeDropper) {
+      const dropBtn = h('button', {
+        type: 'button', class: 'small eyedropper-btn', title: 'Pick a colour from anywhere on screen',
+        onclick: async () => {
+          try {
+            const result = await new window.EyeDropper().open();
+            const rgb = hexToRgb(result.sRGBHex);
+            hsv = rgbToHsv(rgb.r, rgb.g, rgb.b);
+            paint();
+            pushUndo();
+            onChange(currentHex());
+            markDirty();
+          } catch (e) { /* user cancelled the eyedropper */ }
+        },
+      }, ['◉ pick colour from screen']);
+      popover.appendChild(dropBtn);
+    }
+
     popover.appendChild(favRow);
 
     function currentHex() {
@@ -688,9 +829,11 @@
     });
 
     async function handleFiles(files) {
-      const paths = await importImages(files, entityId);
-      if (paths.length) {
-        mutate(() => onChange(paths[0]));
+      const file = Array.from(files).find((f) => f.type.indexOf('image/') === 0);
+      if (!file) return;
+      const path = await importAndCropImage(file, entityId, 'frame');
+      if (path) {
+        mutate(() => onChange(path));
         refreshPanel();
       }
     }
@@ -711,7 +854,7 @@
     return wrap;
   }
 
-  // ---- ordered multi-image field (grid / rotation sets) — drag to reorder ----
+  // ---- ordered multi-image field (rotation sets) — drag to reorder ----
   function imageListField(label, arr, entityId, opts) {
     opts = opts || {};
     const max = opts.max || 999;
@@ -739,14 +882,17 @@
 
     async function handleFiles(files) {
       const room = max - arr.filter(Boolean).length;
-      const toImport = Array.from(files).slice(0, Math.max(room, 0));
-      const paths = await importImages(toImport, entityId);
-      mutate(() => {
-        paths.forEach((p) => {
-          const emptySlot = arr.indexOf('');
-          if (emptySlot !== -1) arr[emptySlot] = p; else arr.push(p);
-        });
-      });
+      const toImport = Array.from(files).filter((f) => f.type.indexOf('image/') === 0).slice(0, Math.max(room, 0));
+      // cropped one at a time — each photo gets its own pan/zoom pass
+      for (const file of toImport) {
+        const path = await importAndCropImage(file, entityId, 'frame');
+        if (path) {
+          mutate(() => {
+            const emptySlot = arr.indexOf('');
+            if (emptySlot !== -1) arr[emptySlot] = path; else arr.push(path);
+          });
+        }
+      }
       refreshPanel();
     }
 
@@ -761,6 +907,80 @@
     });
 
     wrap.appendChild(dz);
+    wrap.appendChild(fileInput);
+    return wrap;
+  }
+
+  // ---- project 3×3 grid field — laid out like the real .rice-grid so you can
+  // see how it'll actually look, drag cells to reorder, click/drop to fill ----
+  function gridImageField(label, arr, entityId) {
+    const wrap = h('label', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
+    const grid = h('div', { class: 'grid3x3' }, []);
+    const fileInput = h('input', { type: 'file', accept: 'image/*', style: 'display:none;' }, []);
+    let activeSlot = null;
+
+    async function fillSlot(file, slot) {
+      if (!file || file.type.indexOf('image/') !== 0) return;
+      const path = await importAndCropImage(file, entityId, 'grid');
+      if (path) {
+        mutate(() => { arr[slot] = path; });
+        refreshPanel();
+      }
+    }
+
+    fileInput.addEventListener('change', (e) => {
+      if (activeSlot !== null && e.target.files[0]) fillSlot(e.target.files[0], activeSlot);
+      fileInput.value = '';
+    });
+
+    for (let i = 0; i < 9; i++) {
+      const path = arr[i] || '';
+      const cell = h('div', { class: 'grid3x3-cell' + (path ? '' : ' empty') }, []);
+
+      if (path) {
+        const thumb = h('div', { class: 'grid3x3-thumb' }, []);
+        getThumbUrl(path).then((url) => { if (url) thumb.style.backgroundImage = "url('" + url + "')"; });
+        cell.appendChild(thumb);
+        cell.appendChild(h('div', { class: 'grid3x3-top no-drag' }, [
+          dragHandle(),
+          h('button', {
+            class: 'small danger', title: 'remove',
+            onclick: (e) => { e.stopPropagation(); mutate(() => { arr[i] = ''; }); refreshPanel(); },
+          }, ['×']),
+        ]));
+        enableDrag(cell, arr, i);
+      } else {
+        cell.appendChild(h('span', { class: 'grid3x3-add' }, ['+ add']));
+      }
+
+      cell.addEventListener('click', (e) => {
+        if (e.target.closest('.no-drag')) return;
+        activeSlot = i;
+        fileInput.click();
+      });
+      // external file drop (from Finder) — separate from the internal
+      // reorder drag above, which only engages when dragCtx is set
+      cell.addEventListener('dragover', (e) => {
+        if (dragCtx) return;
+        if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) {
+          e.preventDefault();
+          cell.classList.add('drag-over');
+        }
+      });
+      cell.addEventListener('dragleave', () => cell.classList.remove('drag-over'));
+      cell.addEventListener('drop', (e) => {
+        if (dragCtx) return;
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+          e.preventDefault();
+          cell.classList.remove('drag-over');
+          fillSlot(e.dataTransfer.files[0], i);
+        }
+      });
+
+      grid.appendChild(cell);
+    }
+
+    wrap.appendChild(grid);
     wrap.appendChild(fileInput);
     return wrap;
   }
@@ -880,12 +1100,14 @@
     const list = h('div', {}, []);
     cat.projects.forEach((pid, i) => {
       const proj = findById(c.projects, pid);
-      const row = h('div', { class: 'list-row' }, [
-        dragHandle(),
-        h('span', { class: 'swatch', style: 'background:' + (proj ? proj.bg : '#000') }, []),
-        h('span', { class: 'grow-input' }, [proj ? proj.title : pid + ' (missing)']),
-        h('button', { class: 'small danger', onclick: () => removeProjectFromCategory(cat, pid) }, ['remove']),
-      ]);
+      const rowChildren = [dragHandle()];
+      if (proj) {
+        rowChildren.push(colorField('', proj.bg, (v) => { proj.bg = v; }, { compact: true, title: 'Background colour' }));
+        rowChildren.push(colorField('', proj.fg || '#e8e5cc', (v) => { proj.fg = v; }, { compact: true, title: 'Element colour (font + border)' }));
+      }
+      rowChildren.push(h('span', { class: 'grow-input' }, [proj ? proj.title : pid + ' (missing)']));
+      rowChildren.push(h('button', { class: 'small danger', onclick: () => removeProjectFromCategory(cat, pid) }, ['remove']));
+      const row = h('div', { class: 'list-row' }, rowChildren);
       enableDrag(row, cat.projects, i);
       list.appendChild(row);
     });
@@ -921,7 +1143,7 @@
     wrap.appendChild(card);
 
     const gridCard = h('div', { class: 'card' }, []);
-    gridCard.appendChild(imageListField('Grid photos (3×3) — drag to reorder', proj.grid, proj.id, { max: 9 }));
+    gridCard.appendChild(gridImageField('Grid photos (3×3) — click a cell to fill it, drag to reorder', proj.grid, proj.id));
     const coverOptions = proj.grid.filter(Boolean).map((p) => ({ value: p, label: baseName(p) }));
     if (coverOptions.length) {
       gridCard.appendChild(selectField('Tab thumbnail (used on the category page)', proj.coverImage, coverOptions, (v) => { proj.coverImage = v; }));

@@ -158,9 +158,9 @@
         "assets/images/zephyr-4.jpg",
         "assets/images/zephyr-5.jpg",
         "assets/images/zephyr-6.jpg",
-        "assets/images/zephyr-7.jpg",
         "assets/images/zephyr-8.jpg",
-        "assets/images/zephyr-cover.jpg"
+        "assets/images/zephyr-cover.jpg",
+        "assets/images/zephyr-7.jpg"
       ],
       "watch": {
         "enabled": true,
