@@ -48,6 +48,10 @@
   const undoStack = [];
   const redoStack = [];
   const UNDO_LIMIT = 100;
+  // true while the crop modal is open — undo/redo are blocked during this
+  // window because a modal confirm swaps in a stale array reference from
+  // before the swap, silently dropping the newly-imported photo
+  let modalOpen = false;
 
   function pushUndo() {
     if (!state.content) return;
@@ -68,7 +72,7 @@
   }
 
   function undo() {
-    if (!undoStack.length || !state.content) return;
+    if (modalOpen || !undoStack.length || !state.content) return;
     redoStack.push(JSON.stringify(state.content));
     state.content = JSON.parse(undoStack.pop());
     state.dirty = true;
@@ -77,7 +81,7 @@
   }
 
   function redo() {
-    if (!redoStack.length || !state.content) return;
+    if (modalOpen || !redoStack.length || !state.content) return;
     undoStack.push(JSON.stringify(state.content));
     state.content = JSON.parse(redoStack.pop());
     state.dirty = true;
@@ -358,6 +362,7 @@
       function finish(blob) {
         URL.revokeObjectURL(objectUrl);
         overlay.remove();
+        modalOpen = false;
         resolve(blob);
       }
 
@@ -387,6 +392,7 @@
       ]);
       const overlay = h('div', { class: 'crop-overlay' }, [modal]);
       document.body.appendChild(overlay);
+      modalOpen = true;
 
       let dragging = false;
       let last = null;

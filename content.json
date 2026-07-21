@@ -30,10 +30,10 @@
     "title": "Jack Tierney",
     "bg": "#4a4e42",
     "images": [
-      "assets/images/landing/3.jpg",
-      "assets/images/landing/2.jpg",
-      "assets/images/landing/4.jpg",
-      "assets/images/landing/1.jpg"
+      "assets/images/landing/000068780001.jpg",
+      "assets/images/landing/000068780002.jpg",
+      "assets/images/landing/000068780007.jpg",
+      "assets/images/landing/000068780010.jpg"
     ],
     "links": [
       {
@@ -224,14 +224,14 @@
         "provider": "youtube",
         "bunnyEmbedUrl": ""
       },
-      "about": "About text placeholder — replace with the real project description.",
+      "about": "This short documentary was made with Yis and Graeme from Novo and Unite - an anti-racist and anti-facist union in East London. \n\nThe Battle of Cable Street is such an important moment in our history, and Yis brings it forward into relevance with clarity and grace. ",
       "credits": "Credits placeholder — replace with the real crew/cast list.",
       "fg": "#e8e5cc"
     },
     {
       "id": "documentary-02",
       "file": "documentary-02.html",
-      "title": "DOCUMENTARY 02",
+      "title": "The Nur Farmer of Glastonbury",
       "role": "Role",
       "bg": "#3a424c",
       "coverImage": "",
