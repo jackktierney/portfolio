@@ -426,13 +426,37 @@
     });
   }
 
+  async function fileExistsAtPath(rootHandle, path) {
+    try {
+      await readFileHandleAtPath(rootHandle, path);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // finds a free filename under assets/images/<entityId>/ — two source
+  // photos can share a name (camera/scanner exports are often numbered
+  // sequentially), and writing straight to a colliding name would silently
+  // overwrite an unrelated, already-placed photo
+  async function findUniqueImagePath(entityId, base) {
+    let candidate = 'assets/images/' + entityId + '/' + base + '.jpg';
+    let n = 1;
+    while (await fileExistsAtPath(state.dirHandle, candidate)) {
+      n += 1;
+      candidate = 'assets/images/' + entityId + '/' + base + '-' + n + '.jpg';
+    }
+    return candidate;
+  }
+
   // shows the crop modal for a single file, then writes the optimized
   // result into assets/images/<entityId>/ and returns its site-relative path
   async function importAndCropImage(file, entityId, kind) {
     if (!file || file.type.indexOf('image/') !== 0) return null;
     const blob = await openCropModal(file, kind);
     if (!blob) return null;
-    const path = 'assets/images/' + entityId + '/' + sanitizeFilename(baseNameNoExt(file.name)) + '.jpg';
+    const base = sanitizeFilename(baseNameNoExt(file.name)) || 'photo';
+    const path = await findUniqueImagePath(entityId, base);
     await writeBlobFile(state.dirHandle, path, blob);
     state.thumbCache.delete(path);
     return path;
@@ -678,7 +702,11 @@
     const startRgb = hexToRgb(safeValue);
     let hsv = rgbToHsv(startRgb.r, startRgb.g, startRgb.b);
 
-    const wrap = h('label', { class: 'field color-field' + (opts.compact ? ' color-field-compact no-drag' : '') }, []);
+    // div, not label — this field has several clickable descendants
+    // (swatch, hex input, eyedropper, favourites), and a bare label with no
+    // `for` implicitly re-fires a click on the first labelable descendant
+    // on every click anywhere in it
+    const wrap = h('div', { class: 'field color-field' + (opts.compact ? ' color-field-compact no-drag' : '') }, []);
     if (!opts.compact) wrap.appendChild(h('span', { class: 'field-label' }, [label]));
 
     const swatchBtn = h('button', { type: 'button', class: 'color-swatch-btn' + (opts.compact ? ' small' : ''), title: opts.title || label }, []);
@@ -825,7 +853,7 @@
 
   // ---- single image field (drop-to-replace) ----
   function singleImageField(label, currentPath, entityId, onChange) {
-    const wrap = h('label', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
+    const wrap = h('div', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
     const thumb = h('div', { class: 'thumb', style: 'width:160px; height:100px;' }, [currentPath ? '' : 'no image']);
     const dz = h('div', { class: 'dropzone', style: 'width:160px;' }, ['drop image here, or click to choose']);
     const fileInput = h('input', { type: 'file', accept: 'image/*', style: 'display:none;' }, []);
@@ -864,7 +892,7 @@
   function imageListField(label, arr, entityId, opts) {
     opts = opts || {};
     const max = opts.max || 999;
-    const wrap = h('label', { class: 'field' }, [h('span', { class: 'field-label' }, [label + ' (' + arr.filter(Boolean).length + (opts.max ? '/' + opts.max : '') + ')'])]);
+    const wrap = h('div', { class: 'field' }, [h('span', { class: 'field-label' }, [label + ' (' + arr.filter(Boolean).length + (opts.max ? '/' + opts.max : '') + ')'])]);
 
     const list = h('div', { class: 'image-list' }, []);
     wrap.appendChild(list);
@@ -920,10 +948,12 @@
   // ---- project 3×3 grid field — laid out like the real .rice-grid so you can
   // see how it'll actually look, drag cells to reorder, click/drop to fill ----
   function gridImageField(label, arr, entityId) {
-    const wrap = h('label', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
+    // div, not label — a bare <label> with no `for` implicitly re-fires a
+    // click on the first labelable descendant (here, cell 1's remove
+    // button) on every click anywhere inside it, which silently deleted an
+    // unrelated photo on almost any interaction with the grid
+    const wrap = h('div', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
     const grid = h('div', { class: 'grid3x3' }, []);
-    const fileInput = h('input', { type: 'file', accept: 'image/*', style: 'display:none;' }, []);
-    let activeSlot = null;
 
     async function fillSlot(file, slot) {
       if (!file || file.type.indexOf('image/') !== 0) return;
@@ -934,10 +964,19 @@
       }
     }
 
-    fileInput.addEventListener('change', (e) => {
-      if (activeSlot !== null && e.target.files[0]) fillSlot(e.target.files[0], activeSlot);
-      fileInput.value = '';
-    });
+    // one-off input per click, with the slot captured directly in its own
+    // closure — a single shared input+slot pair would race if two clicks
+    // land before the first file dialog resolves, silently overwriting
+    // whichever cell's slot got clicked last
+    function pickFileForSlot(slot) {
+      const input = h('input', { type: 'file', accept: 'image/*', style: 'display:none;' }, []);
+      input.addEventListener('change', () => {
+        if (input.files[0]) fillSlot(input.files[0], slot);
+        input.remove();
+      });
+      document.body.appendChild(input);
+      input.click();
+    }
 
     for (let i = 0; i < 9; i++) {
       const path = arr[i] || '';
@@ -956,14 +995,13 @@
         ]));
         enableDrag(cell, arr, i);
       } else {
-        cell.appendChild(h('span', { class: 'grid3x3-add' }, ['+ add']));
+        // click-to-fill only applies to empty cells — a filled cell is
+        // draggable, and binding a click handler there too raced against
+        // drag gestures (a short drag can still fire a click), sometimes
+        // popping the file picker for the wrong cell mid-reorder
+        cell.addEventListener('click', () => pickFileForSlot(i));
       }
 
-      cell.addEventListener('click', (e) => {
-        if (e.target.closest('.no-drag')) return;
-        activeSlot = i;
-        fileInput.click();
-      });
       // external file drop (from Finder) — separate from the internal
       // reorder drag above, which only engages when dragCtx is set
       cell.addEventListener('dragover', (e) => {
@@ -987,13 +1025,12 @@
     }
 
     wrap.appendChild(grid);
-    wrap.appendChild(fileInput);
     return wrap;
   }
 
   // ---- links list (label/href pairs) — drag to reorder ----
   function linksListField(label, arr) {
-    const wrap = h('label', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
+    const wrap = h('div', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
     const list = h('div', {}, []);
     arr.forEach((link, i) => {
       const labelInput = h('input', { type: 'text', placeholder: 'label', style: 'width:110px;', onchange: (e) => { mutate(() => { link.label = e.target.value; }); } }, []);
@@ -1150,11 +1187,15 @@
 
     const gridCard = h('div', { class: 'card' }, []);
     gridCard.appendChild(gridImageField('Grid photos (3×3) — click a cell to fill it, drag to reorder', proj.grid, proj.id));
-    const coverOptions = proj.grid.filter(Boolean).map((p) => ({ value: p, label: baseName(p) }));
-    if (coverOptions.length) {
-      gridCard.appendChild(selectField('Tab thumbnail (used on the category page)', proj.coverImage, coverOptions, (v) => { proj.coverImage = v; }));
-    }
     wrap.appendChild(gridCard);
+
+    const coverCard = h('div', { class: 'card' }, []);
+    // its own crop, not one borrowed from the grid — the category page
+    // shows this at 16:10 (.frame-img) while grid cells are 16:9, so a
+    // grid photo dropped in here unmodified would get a second, uncontrolled
+    // crop from the browser's own background-size:cover
+    coverCard.appendChild(singleImageField('Tab thumbnail (used on the category page)', proj.coverImage, proj.id, (v) => { proj.coverImage = v; }));
+    wrap.appendChild(coverCard);
 
     const catCard = h('div', { class: 'card' }, []);
     const currentCat = c.categories.find((cat) => cat.projects.includes(proj.id));

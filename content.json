@@ -30,10 +30,7 @@
     "title": "Jack Tierney",
     "bg": "#4a4e42",
     "images": [
-      "assets/images/landing/000068780001.jpg",
-      "assets/images/landing/000068780002.jpg",
-      "assets/images/landing/000068780007.jpg",
-      "assets/images/landing/000068780010.jpg"
+      "assets/images/landing/000068780001-2.jpg"
     ],
     "links": [
       {
@@ -292,15 +289,15 @@
       "bg": "#7d715c",
       "coverImage": "assets/images/commercial-1.jpg",
       "grid": [
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg",
-        "assets/images/commercial-1.jpg"
+        "assets/images/childish/Main_01_00_16_15.jpg",
+        "assets/images/childish/Main_01_00_26_01.jpg",
+        "assets/images/childish/Main_01_01_29_18.jpg",
+        "assets/images/childish/Main_01_03_20_04.jpg",
+        "assets/images/childish/Main_01_01_39_18.jpg",
+        "assets/images/childish/Main_01_04_00_04.jpg",
+        "assets/images/childish/Main_01_04_02_10.jpg",
+        "assets/images/childish/Main_01_05_07_22.jpg",
+        "assets/images/childish/Main_01_04_48_12.jpg"
       ],
       "watch": {
         "enabled": false,

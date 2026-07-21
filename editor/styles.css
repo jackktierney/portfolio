@@ -98,12 +98,12 @@ input[type="color"] {
   background: var(--bg);
 }
 
-label.field {
+.field {
   display: block;
   margin: 0 0 14px;
 }
 
-label.field > .field-label {
+.field > .field-label {
   display: block;
   font-size: 12px;
   color: var(--fg-dim);

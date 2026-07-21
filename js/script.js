@@ -81,10 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const landingImg = document.getElementById('landingImg');
   if (landingImg) {
     const landingPhotos = [
-      'assets/images/landing/000068780001.jpg',
-      'assets/images/landing/000068780002.jpg',
-      'assets/images/landing/000068780007.jpg',
-      'assets/images/landing/000068780010.jpg',
+      'assets/images/landing/000068780001-2.jpg',
     ];
     const pick = landingPhotos[Math.floor(Math.random() * landingPhotos.length)];
     landingImg.style.backgroundImage = `url('${pick}')`;
