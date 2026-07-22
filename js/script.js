@@ -31,13 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
     'contact.html': '#5a5d61',
     'personal.html': '#2b3440',
     'documentary.html': '#57514a',
-    'commercial.html': '#7d715c',
+    'commercial.html': '#613b0d',
     'zephyr.html': '#2b3440',
     'bayefall.html': '#4a5259',
     'cablestreet.html': '#57514a',
     'documentary-02.html': '#3a424c',
     'documentary-03.html': '#3a424c',
-    'childish.html': '#7d715c',
+    'childish.html': '#613b0d',
     'chaseandstatus.html': '#232a33',
     'commercial-03.html': '#3a424c',
   };
@@ -81,7 +81,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const landingImg = document.getElementById('landingImg');
   if (landingImg) {
     const landingPhotos = [
-      'assets/images/landing/000068780001-2.jpg',
+      'assets/images/landing/000068780001-3.jpg',
+      'assets/images/landing/000068780010-3.jpg',
+      'assets/images/landing/000068780007-3.jpg',
     ];
     const pick = landingPhotos[Math.floor(Math.random() * landingPhotos.length)];
     landingImg.style.backgroundImage = `url('${pick}')`;
@@ -92,14 +94,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactImg = document.getElementById('contactImg');
   if (contactImg) {
     const contactPhotos = [
-      'assets/images/contact/1.jpg',
-      'assets/images/contact/2.jpg',
-      'assets/images/contact/3.jpg',
-      'assets/images/contact/4.jpg',
-      'assets/images/contact/5.jpg',
-      'assets/images/contact/6.jpg',
-      'assets/images/contact/7.jpg',
-      'assets/images/contact/8.jpg',
+      'assets/images/contact/000065630001.jpg',
+      'assets/images/contact/000065630008.jpg',
+      'assets/images/contact/000065630010.jpg',
+      'assets/images/contact/000068580001.jpg',
+      'assets/images/contact/000068580002.jpg',
+      'assets/images/contact/000068580005.jpg',
+      'assets/images/contact/000068580006.jpg',
+      'assets/images/contact/000068580007.jpg',
     ];
     const pick = contactPhotos[Math.floor(Math.random() * contactPhotos.length)];
     contactImg.style.backgroundImage = `url('${pick}')`;

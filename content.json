@@ -30,7 +30,9 @@
     "title": "Jack Tierney",
     "bg": "#4a4e42",
     "images": [
-      "assets/images/landing/000068780001-2.jpg"
+      "assets/images/landing/000068780001-3.jpg",
+      "assets/images/landing/000068780010-3.jpg",
+      "assets/images/landing/000068780007-3.jpg"
     ],
     "links": [
       {
@@ -63,8 +65,8 @@
       "file": "about.html",
       "title": "about",
       "bg": "#3a4238",
-      "image": "assets/images/about/1.jpg",
-      "text": "I love creation. I'm primarily a director, but have experience editing and producing. this is the bit that I want to figure out what to write blah blah blahhh",
+      "image": "assets/images/about/2-2.jpg",
+      "text": "...",
       "links": [
         {
           "label": "home",
@@ -83,14 +85,14 @@
     "bg": "#5a5d61",
     "intro": "gimme a shout",
     "images": [
-      "assets/images/contact/1.jpg",
-      "assets/images/contact/2.jpg",
-      "assets/images/contact/3.jpg",
-      "assets/images/contact/4.jpg",
-      "assets/images/contact/5.jpg",
-      "assets/images/contact/6.jpg",
-      "assets/images/contact/7.jpg",
-      "assets/images/contact/8.jpg"
+      "assets/images/contact/000065630001.jpg",
+      "assets/images/contact/000065630008.jpg",
+      "assets/images/contact/000065630010.jpg",
+      "assets/images/contact/000068580001.jpg",
+      "assets/images/contact/000068580002.jpg",
+      "assets/images/contact/000068580005.jpg",
+      "assets/images/contact/000068580006.jpg",
+      "assets/images/contact/000068580007.jpg"
     ],
     "email": "jack@murmurcollective.co.uk",
     "links": [
@@ -147,17 +149,17 @@
       "title": "ZEPHYR",
       "role": "Director",
       "bg": "#2b3440",
-      "coverImage": "assets/images/zephyr-cover.jpg",
+      "coverImage": "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_29_42_22.Still025.jpg",
       "grid": [
-        "assets/images/zephyr-1.jpg",
         "assets/images/zephyr-2.jpg",
-        "assets/images/zephyr-3.jpg",
-        "assets/images/zephyr-4.jpg",
-        "assets/images/zephyr-5.jpg",
-        "assets/images/zephyr-6.jpg",
-        "assets/images/zephyr-8.jpg",
+        "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_12_31_22.Still009.jpg",
+        "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_06_03_00.Still004.jpg",
+        "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_26_17_10.Still021.jpg",
+        "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_01_15_14.Still001.jpg",
+        "assets/images/zephyr-7.jpg",
+        "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_29_42_22.Still025.jpg",
         "assets/images/zephyr-cover.jpg",
-        "assets/images/zephyr-7.jpg"
+        "assets/images/zephyr/220329_MASTER_4444_Zephyr_Promo_MURMUR_COLLECTIVE_36880_GRADE.mov.00_21_24_16.Still013.jpg"
       ],
       "watch": {
         "enabled": true,
@@ -165,7 +167,7 @@
         "provider": "youtube",
         "bunnyEmbedUrl": ""
       },
-      "about": "About text placeholder — replace with the real project description.",
+      "about": "This film means everything to me. My first time directing, and the project I loved the most from start to finish. It was a collaboration with my closest friend Finn, and an opportunity to do something completely honest and from the heart. \n\nWhilst we were describing it to people long before it was made, I would say sensation over sense, palpability over plausibility, and I've been blown away by how people responded to it. It didn't land well with most people, but that was always expected. \n\nIf you ever want to step into a strange reflective world of sound and light, then please indulge. ",
       "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters",
       "fg": "#e8e5cc"
     },
@@ -173,28 +175,28 @@
       "id": "bayefall",
       "file": "bayefall.html",
       "title": "BAYE FALL",
-      "role": "Role",
+      "role": "Filmmaker",
       "bg": "#4a5259",
       "coverImage": "assets/images/bayefall-1.jpg",
       "grid": [
-        "assets/images/bayefall-1.jpg",
+        "assets/images/bayefall/Main_01_00_21_16.jpg",
         "assets/images/bayefall-2.jpg",
-        "assets/images/bayefall-3.jpg",
-        "assets/images/bayefall-4.jpg",
-        "assets/images/bayefall-5.jpg",
-        "assets/images/bayefall-6.jpg",
-        "assets/images/bayefall-7.jpg",
+        "assets/images/bayefall/Main_01_00_29_23.jpg",
+        "assets/images/bayefall-1.jpg",
+        "assets/images/bayefall/Main_01_00_52_23.jpg",
         "assets/images/bayefall-8.jpg",
-        "assets/images/bayefall-1.jpg"
+        "assets/images/bayefall/Main_01_00_05_20.jpg",
+        "assets/images/bayefall/Main_01_01_16_07.jpg",
+        "assets/images/bayefall-5.jpg"
       ],
       "watch": {
-        "enabled": false,
+        "enabled": true,
         "youtubeId": "",
-        "provider": "youtube",
+        "provider": "bunny",
         "bunnyEmbedUrl": ""
       },
-      "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "about": "This is an ongoing project, this short video is our initial teaser. \n\nIt's a documentation of one night of working for the fishermen in Kafountine, Casamance, Senegal. I'm working on it with a close friend Spike Adams - we are currently in the process of figuring out which way feels right to continue sharing this story, and which of the many faces of the story we want to share. \n\nThe core of it for me is the fisherman and their songs, their work, their faith, their boldness and love in the face of real hard work and the mounting pressures from globalisation and exploitation from other nations around the world. ",
+      "credits": "Filmed by me\nEdited by me and Spike Adams\nSound design by Jasper Trim",
       "fg": "#e8e5cc"
     },
     {
@@ -222,18 +224,18 @@
         "bunnyEmbedUrl": ""
       },
       "about": "This short documentary was made with Yis and Graeme from Novo and Unite - an anti-racist and anti-facist union in East London. \n\nThe Battle of Cable Street is such an important moment in our history, and Yis brings it forward into relevance with clarity and grace. ",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "credits": "credits loading...",
       "fg": "#e8e5cc"
     },
     {
       "id": "documentary-02",
       "file": "documentary-02.html",
-      "title": "The Nur Farmer of Glastonbury",
-      "role": "Role",
+      "title": "The Nut Farmer of Glastonbury",
+      "role": "Co-Director",
       "bg": "#3a424c",
-      "coverImage": "",
+      "coverImage": "assets/images/documentary-02/Screenshot-2026-07-22-at-13.52.00.jpg",
       "grid": [
-        "",
+        "assets/images/documentary-02/Screenshot-2026-07-22-at-13.50.16.jpg",
         "",
         "",
         "",
@@ -249,8 +251,8 @@
         "provider": "youtube",
         "bunnyEmbedUrl": ""
       },
-      "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "about": "info coming soon",
+      "credits": "credits loading...",
       "fg": "#e8e5cc"
     },
     {
@@ -286,27 +288,27 @@
       "file": "childish.html",
       "title": "CHILDISH",
       "role": "Director",
-      "bg": "#7d715c",
-      "coverImage": "assets/images/commercial-1.jpg",
+      "bg": "#613b0d",
+      "coverImage": "assets/images/childish/Main_01_04_00_04.jpg",
       "grid": [
         "assets/images/childish/Main_01_00_16_15.jpg",
-        "assets/images/childish/Main_01_00_26_01.jpg",
-        "assets/images/childish/Main_01_01_29_18.jpg",
         "assets/images/childish/Main_01_03_20_04.jpg",
         "assets/images/childish/Main_01_01_39_18.jpg",
         "assets/images/childish/Main_01_04_00_04.jpg",
+        "assets/images/childish/Main_01_00_26_01.jpg",
         "assets/images/childish/Main_01_04_02_10.jpg",
         "assets/images/childish/Main_01_05_07_22.jpg",
-        "assets/images/childish/Main_01_04_48_12.jpg"
+        "assets/images/childish/Main_01_04_48_12.jpg",
+        "assets/images/childish/Main_01_01_29_18.jpg"
       ],
       "watch": {
-        "enabled": false,
+        "enabled": true,
         "youtubeId": "",
-        "provider": "youtube",
-        "bunnyEmbedUrl": ""
+        "provider": "bunny",
+        "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/1c44e422-eeb2-47ad-aaf9-5a47ca1d5280"
       },
-      "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "about": "Directing Planet Childish by TGFbros was a pleasure. \n\nSuch an amazing team all around (especially Abbey Valentina). They gave us free reign to create something bizarre, something free, and their audience responded really well to it. \n\nLong live Nathan and may he return to earth some day to pick up some more Aveeno. ",
+      "credits": "Credits Loading...",
       "fg": "#e8e5cc"
     },
     {
@@ -317,24 +319,24 @@
       "bg": "#232a33",
       "coverImage": "assets/images/commercial-2.jpg",
       "grid": [
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
-        "assets/images/commercial-2.jpg",
+        "",
+        "assets/images/chaseandstatus/thumb-4.jpg",
+        "",
+        "",
+        "assets/images/chaseandstatus/thumb-3.jpg",
+        "assets/images/chaseandstatus/thumb-2.jpg",
+        "",
+        "assets/images/chaseandstatus/thumb-5.jpg",
         "assets/images/commercial-2.jpg"
       ],
       "watch": {
-        "enabled": false,
+        "enabled": true,
         "youtubeId": "",
-        "provider": "youtube",
+        "provider": "bunny",
         "bunnyEmbedUrl": ""
       },
-      "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
+      "about": "I produced these videos (we made three of them) for Chase and Status, directed by the one and only Spike Adams. ",
+      "credits": "Director - Spike Adams (@spikeadamss)  \nProducer - Jack Tierney (@jackktierney)  \nProduction Company - Murmur Collective LTD (@murmurcollectiveuk)  \nExecutive Producer - Abbey Valentina (@abbey_valentina)  \nCreative Directors - SHOTLIKETHIS (@shotlikethis), Ben Carden-Jones (@bencardenjones)  \nLiDAR R&D - Eduardo Guida (@edguida)  \nDP - Carl Matthews (@carlmatthews_dp)  \nEditor - Samuel Sutherland (@longboijumps)  \n2nd Camera (LiDAR) - Luke Harrison-Darby (@l.kehd)  \nGaffer - Dylan Schultz-Soo (@dylansschultz), David Witchell (@david_witchell_dop)  \n1st AC - Onur Özen (@onur.oezden), Francois Earp (@fexefilming)  \nSpark - Ernie Dix (@ernied06), Jack White (@jackwhite2803), Myles Wilkinson-Gayle (@mgthedp)  \nProduction Assistant - Leopold Sandro (@theswedishman6), Charlie Repp (@charliereppo)  \nVideo Commissioner - Francesca Costa  \nS/A - Gardener Gagham, Ruby Storey, Angus Brown, Ruby Bastin, Iyare Kwei-Armah, Favian John-Kamen, Samuel Sutherland  \nLighting Rental - Matte Black London (@matteblacklondon)  \nLiDAR Rental - Yellow Cactus (@weareyellowcactus)  \nStudio - Metal Craft Studios  \nMedic - Anthony Hatton",
       "fg": "#e8e5cc"
     },
     {

@@ -35,14 +35,14 @@
 <div class="project-page">
   <div class="polybar-card">
     <div class="rice-grid">
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
+      <div class="cell"></div>
+      <div class="cell" style="background-image: url('assets/images/chaseandstatus/thumb-4.jpg');"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell" style="background-image: url('assets/images/chaseandstatus/thumb-3.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/chaseandstatus/thumb-2.jpg');"></div>
+      <div class="cell"></div>
+      <div class="cell" style="background-image: url('assets/images/chaseandstatus/thumb-5.jpg');"></div>
       <div class="cell" style="background-image: url('assets/images/commercial-2.jpg');"></div>
     </div>
 
@@ -53,6 +53,8 @@
         <span class="polybar-seg role-seg">Producer</span>
       </div>
       <div class="polybar-right">
+        <a href="#" class="modal-trigger" id="watchLink">watch</a>
+        <span class="polybar-div">│</span>
         <a href="#" class="modal-trigger" id="aboutLink">about</a>
         <span class="polybar-div">│</span>
         <a href="#" class="modal-trigger" id="creditsLink">credits</a>
@@ -68,16 +70,25 @@
 <div class="modal-overlay" id="aboutModal">
   <div class="modal-box">
     <div class="modal-text">
-      <p>About text placeholder — replace with the real project description.</p>
+      <p>I produced these videos (we made three of them) for Chase and Status, directed by the one and only Spike Adams.</p>
+    </div>
+    <button type="button" class="modal-close">close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="watchModal">
+  <div class="modal-box is-large">
+    <div class="modal-video">
+      <iframe id="watchIframe" src="" data-embed-src="" title="CHASE &amp; STATUS — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
     <button type="button" class="modal-close">close</button>
   </div>
 </div>
 
 <div class="modal-overlay" id="creditsModal">
-  <div class="modal-box">
+  <div class="modal-box is-large">
     <div class="modal-text">
-      <p>Credits placeholder — replace with the real crew/cast list.</p>
+      <p>Director - Spike Adams (@spikeadamss)  <br>Producer - Jack Tierney (@jackktierney)  <br>Production Company - Murmur Collective LTD (@murmurcollectiveuk)  <br>Executive Producer - Abbey Valentina (@abbey_valentina)  <br>Creative Directors - SHOTLIKETHIS (@shotlikethis), Ben Carden-Jones (@bencardenjones)  <br>LiDAR R&amp;D - Eduardo Guida (@edguida)  <br>DP - Carl Matthews (@carlmatthews_dp)  <br>Editor - Samuel Sutherland (@longboijumps)  <br>2nd Camera (LiDAR) - Luke Harrison-Darby (@l.kehd)  <br>Gaffer - Dylan Schultz-Soo (@dylansschultz), David Witchell (@david_witchell_dop)  <br>1st AC - Onur Özen (@onur.oezden), Francois Earp (@fexefilming)  <br>Spark - Ernie Dix (@ernied06), Jack White (@jackwhite2803), Myles Wilkinson-Gayle (@mgthedp)  <br>Production Assistant - Leopold Sandro (@theswedishman6), Charlie Repp (@charliereppo)  <br>Video Commissioner - Francesca Costa  <br>S/A - Gardener Gagham, Ruby Storey, Angus Brown, Ruby Bastin, Iyare Kwei-Armah, Favian John-Kamen, Samuel Sutherland  <br>Lighting Rental - Matte Black London (@matteblacklondon)  <br>LiDAR Rental - Yellow Cactus (@weareyellowcactus)  <br>Studio - Metal Craft Studios  <br>Medic - Anthony Hatton</p>
     </div>
     <button type="button" class="modal-close">close</button>
   </div>

@@ -35,24 +35,26 @@
 <div class="project-page">
   <div class="polybar-card">
     <div class="rice-grid">
-      <div class="cell" style="background-image: url('assets/images/bayefall-1.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall/Main_01_00_21_16.jpg');"></div>
       <div class="cell" style="background-image: url('assets/images/bayefall-2.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/bayefall-3.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/bayefall-4.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/bayefall-5.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/bayefall-6.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/bayefall-7.jpg');"></div>
-      <div class="cell" style="background-image: url('assets/images/bayefall-8.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall/Main_01_00_29_23.jpg');"></div>
       <div class="cell" style="background-image: url('assets/images/bayefall-1.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall/Main_01_00_52_23.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall-8.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall/Main_01_00_05_20.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall/Main_01_01_16_07.jpg');"></div>
+      <div class="cell" style="background-image: url('assets/images/bayefall-5.jpg');"></div>
     </div>
 
     <div class="polybar">
       <div class="polybar-left">
         <span class="polybar-seg title-seg">BAYE FALL</span>
         <span class="polybar-div">│</span>
-        <span class="polybar-seg role-seg">Role</span>
+        <span class="polybar-seg role-seg">Filmmaker</span>
       </div>
       <div class="polybar-right">
+        <a href="#" class="modal-trigger" id="watchLink">watch</a>
+        <span class="polybar-div">│</span>
         <a href="#" class="modal-trigger" id="aboutLink">about</a>
         <span class="polybar-div">│</span>
         <a href="#" class="modal-trigger" id="creditsLink">credits</a>
@@ -68,16 +70,29 @@
 <div class="modal-overlay" id="aboutModal">
   <div class="modal-box">
     <div class="modal-text">
-      <p>About text placeholder — replace with the real project description.</p>
+      <p>This is an ongoing project, this short video is our initial teaser.</p>
+
+      <p>It's a documentation of one night of working for the fishermen in Kafountine, Casamance, Senegal. I'm working on it with a close friend Spike Adams - we are currently in the process of figuring out which way feels right to continue sharing this story, and which of the many faces of the story we want to share.</p>
+
+      <p>The core of it for me is the fisherman and their songs, their work, their faith, their boldness and love in the face of real hard work and the mounting pressures from globalisation and exploitation from other nations around the world.</p>
+    </div>
+    <button type="button" class="modal-close">close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="watchModal">
+  <div class="modal-box is-large">
+    <div class="modal-video">
+      <iframe id="watchIframe" src="" data-embed-src="" title="BAYE FALL — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </div>
     <button type="button" class="modal-close">close</button>
   </div>
 </div>
 
 <div class="modal-overlay" id="creditsModal">
-  <div class="modal-box">
+  <div class="modal-box is-large">
     <div class="modal-text">
-      <p>Credits placeholder — replace with the real crew/cast list.</p>
+      <p>Filmed by me<br>Edited by me and Spike Adams<br>Sound design by Jasper Trim</p>
     </div>
     <button type="button" class="modal-close">close</button>
   </div>
