@@ -375,6 +375,7 @@ a { color: inherit; }
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
+  margin: 0 auto;
   background: #000;
 }
 

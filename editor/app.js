@@ -1226,6 +1226,7 @@
       }
       watchCard.appendChild(selectField('Video shape', proj.watch.aspectRatio || '16:9', [
         { value: '16:9', label: '16:9 — horizontal' },
+        { value: '4:3', label: '4:3 — classic' },
         { value: '9:16', label: '9:16 — vertical / reels' },
         { value: '4:5', label: '4:5 — portrait' },
         { value: '1:1', label: '1:1 — square' },

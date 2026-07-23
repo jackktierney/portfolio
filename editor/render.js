@@ -129,20 +129,25 @@
     return 'https://www.youtube.com/embed/' + youtubeVideoId(watch && watch.youtubeId) + '?autoplay=1';
   }
 
-  // "16:9" -> "16 / 9" for the CSS aspect-ratio property; falls back to
-  // 16:9 for anything missing or malformed
-  function cssAspectRatio(ratio) {
+  // "16:9" -> { w: 16, h: 9 }; falls back to 16:9 for anything missing
+  // or malformed
+  function parseRatio(ratio) {
     const match = String(ratio || '').match(/^(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)$/);
-    if (!match) return '16 / 9';
-    return match[1] + ' / ' + match[2];
+    if (!match) return { w: 16, h: 9 };
+    return { w: parseFloat(match[1]), h: parseFloat(match[2]) };
   }
 
   function watchModal(title, watch) {
     const embedSrc = computeEmbedSrc(watch);
-    const ratio = cssAspectRatio(watch && watch.aspectRatio);
+    const r = parseRatio(watch && watch.aspectRatio);
+    // width is normally the modal's full 100%, but for taller-than-wide
+    // videos (portrait, reels) that would make the popup absurdly tall —
+    // capping the height to 80% of the viewport and deriving width from
+    // that instead keeps every shape's popup on-screen and undistorted
+    const videoStyle = 'aspect-ratio: ' + r.w + ' / ' + r.h + '; width: min(100%, calc(80vh * ' + r.w + ' / ' + r.h + '));';
     return '<div class="modal-overlay" id="watchModal">\n'
       + '  <div class="modal-box is-large">\n'
-      + '    <div class="modal-video" style="aspect-ratio: ' + ratio + ';">\n'
+      + '    <div class="modal-video" style="' + videoStyle + '">\n'
       + '      <iframe id="watchIframe" src="" data-embed-src="' + esc(embedSrc) + '" title="' + esc(title) + ' — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n'
       + '    </div>\n'
       + '    <button type="button" class="modal-close">close</button>\n'
