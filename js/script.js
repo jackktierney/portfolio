@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'childish.html': '#613b0d',
     'chaseandstatus.html': '#232a33',
     'commercial-03.html': '#3a424c',
+    'alalake.html': '#3a424c',
   };
 
   // ramps up to peak here, then navigates — the next page picks up the

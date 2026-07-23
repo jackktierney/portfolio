@@ -1214,12 +1214,22 @@
       watchCard.appendChild(selectField('Video source', proj.watch.provider || 'youtube', [
         { value: 'youtube', label: 'YouTube' },
         { value: 'bunny', label: 'Bunny Stream' },
+        { value: 'instagram', label: 'Instagram' },
       ], (v) => { proj.watch.provider = v; }));
-      if ((proj.watch.provider || 'youtube') === 'youtube') {
-        watchCard.appendChild(textField('YouTube video ID', proj.watch.youtubeId || '', (v) => { proj.watch.youtubeId = v; }, { hint: 'The part after watch?v= in the YouTube URL.' }));
-      } else {
+      const provider = proj.watch.provider || 'youtube';
+      if (provider === 'youtube') {
+        watchCard.appendChild(textField('YouTube video ID', proj.watch.youtubeId || '', (v) => { proj.watch.youtubeId = v; }, { hint: 'Paste the video ID, a normal youtube.com/watch or youtu.be link, or even the whole "embed" code from Share — any of them work.' }));
+      } else if (provider === 'bunny') {
         watchCard.appendChild(textField('Bunny Stream embed URL', proj.watch.bunnyEmbedUrl || '', (v) => { proj.watch.bunnyEmbedUrl = v; }, { hint: 'Paste the embed link from Bunny Stream\'s share panel (e.g. https://iframe.mediadelivery.net/embed/...).' }));
+      } else {
+        watchCard.appendChild(textField('Instagram post/reel URL', proj.watch.instagramUrl || '', (v) => { proj.watch.instagramUrl = v; }, { hint: 'Paste the normal instagram.com/p/... or instagram.com/reel/... link — no need to find an embed link yourself.' }));
       }
+      watchCard.appendChild(selectField('Video shape', proj.watch.aspectRatio || '16:9', [
+        { value: '16:9', label: '16:9 — horizontal' },
+        { value: '9:16', label: '9:16 — vertical / reels' },
+        { value: '4:5', label: '4:5 — portrait' },
+        { value: '1:1', label: '1:1 — square' },
+      ], (v) => { proj.watch.aspectRatio = v; }));
     }
     wrap.appendChild(watchCard);
 
@@ -1292,7 +1302,7 @@
       fg: '#e8e5cc',
       coverImage: '',
       grid: ['', '', '', '', '', '', '', '', ''],
-      watch: { enabled: false, provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '' },
+      watch: { enabled: false, provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '', instagramUrl: '', aspectRatio: '16:9' },
       about: 'About text placeholder — replace with the real project description.',
       credits: 'Credits placeholder — replace with the real crew/cast list.',
     };

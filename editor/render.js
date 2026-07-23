@@ -102,16 +102,47 @@
       + '</div>';
   }
 
+  // pulls the /p/, /reel/ or /tv/ shortcode out of any Instagram URL
+  // (with or without a leading username, query string, or trailing slash)
+  // and turns it into that post's embeddable iframe URL
+  function instagramEmbedSrc(url) {
+    const match = String(url || '').match(/\/(p|reel|tv)\/([A-Za-z0-9_-]+)/);
+    if (!match) return '';
+    return 'https://www.instagram.com/' + match[1] + '/' + match[2] + '/embed';
+  }
+
+  // accepts a bare video ID, a youtube.com/watch or youtu.be URL, or a
+  // whole pasted <iframe> embed snippet, and pulls out just the 11-char ID
+  function youtubeVideoId(input) {
+    const raw = String(input || '').trim();
+    const patterns = [/embed\/([A-Za-z0-9_-]{11})/, /[?&]v=([A-Za-z0-9_-]{11})/, /youtu\.be\/([A-Za-z0-9_-]{11})/];
+    for (const re of patterns) {
+      const match = raw.match(re);
+      if (match) return match[1];
+    }
+    return raw;
+  }
+
   function computeEmbedSrc(watch) {
     if (watch && watch.provider === 'bunny') return watch.bunnyEmbedUrl || '';
-    return 'https://www.youtube.com/embed/' + ((watch && watch.youtubeId) || '') + '?autoplay=1';
+    if (watch && watch.provider === 'instagram') return instagramEmbedSrc(watch.instagramUrl);
+    return 'https://www.youtube.com/embed/' + youtubeVideoId(watch && watch.youtubeId) + '?autoplay=1';
+  }
+
+  // "16:9" -> "16 / 9" for the CSS aspect-ratio property; falls back to
+  // 16:9 for anything missing or malformed
+  function cssAspectRatio(ratio) {
+    const match = String(ratio || '').match(/^(\d+(?:\.\d+)?)\s*:\s*(\d+(?:\.\d+)?)$/);
+    if (!match) return '16 / 9';
+    return match[1] + ' / ' + match[2];
   }
 
   function watchModal(title, watch) {
     const embedSrc = computeEmbedSrc(watch);
+    const ratio = cssAspectRatio(watch && watch.aspectRatio);
     return '<div class="modal-overlay" id="watchModal">\n'
       + '  <div class="modal-box is-large">\n'
-      + '    <div class="modal-video">\n'
+      + '    <div class="modal-video" style="aspect-ratio: ' + ratio + ';">\n'
       + '      <iframe id="watchIframe" src="" data-embed-src="' + esc(embedSrc) + '" title="' + esc(title) + ' — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n'
       + '    </div>\n'
       + '    <button type="button" class="modal-close">close</button>\n'

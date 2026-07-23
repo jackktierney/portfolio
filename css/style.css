@@ -365,9 +365,10 @@ a { color: inherit; }
   padding: 16px;
 }
 
-/* watch popup is 20% bigger than the about/credits text popups */
+/* watch popup — 20% bigger than the about/credits text popups, and a
+   further 20% on top of that per a later size pass */
 .modal-box.is-large {
-  max-width: 864px;
+  max-width: 1038px;
 }
 
 .modal-video {

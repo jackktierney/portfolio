@@ -26,7 +26,7 @@
   },
   "landing": {
     "file": "index.html",
-    "browserTitle": "tripping over treetop canopies",
+    "browserTitle": "",
     "title": "Jack Tierney",
     "bg": "#4a4e42",
     "images": [
@@ -66,7 +66,7 @@
       "title": "about",
       "bg": "#3a4238",
       "image": "assets/images/about/2-2.jpg",
-      "text": "...",
+      "text": "I'm exploring through film. Primarily as a Director, occasionally as an Editor and Rollerblading Camera Operator. In my personal work I love to explore our relationships to work and land, to each other and to music, investigating and expressing those feeling untouched by words. WRITE THIS PROPERLY",
       "links": [
         {
           "label": "home",
@@ -115,7 +115,8 @@
       "label": "personal",
       "projects": [
         "zephyr",
-        "bayefall"
+        "bayefall",
+        "alalake"
       ],
       "browserTitle": "PERSONAL"
     },
@@ -165,7 +166,9 @@
         "enabled": true,
         "youtubeId": "54SxblKJLVg",
         "provider": "youtube",
-        "bunnyEmbedUrl": ""
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "This film means everything to me. My first time directing, and the project I loved the most from start to finish. It was a collaboration with my closest friend Finn, and an opportunity to do something completely honest and from the heart. \n\nWhilst we were describing it to people long before it was made, I would say sensation over sense, palpability over plausibility, and I've been blown away by how people responded to it. It didn't land well with most people, but that was always expected. \n\nIf you ever want to step into a strange reflective world of sound and light, then please indulge. ",
       "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters",
@@ -175,7 +178,7 @@
       "id": "bayefall",
       "file": "bayefall.html",
       "title": "BAYE FALL",
-      "role": "Filmmaker",
+      "role": "Director",
       "bg": "#4a5259",
       "coverImage": "assets/images/bayefall-1.jpg",
       "grid": [
@@ -193,7 +196,9 @@
         "enabled": true,
         "youtubeId": "",
         "provider": "bunny",
-        "bunnyEmbedUrl": ""
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "This is an ongoing project, this short video is our initial teaser. \n\nIt's a documentation of one night of working for the fishermen in Kafountine, Casamance, Senegal. I'm working on it with a close friend Spike Adams - we are currently in the process of figuring out which way feels right to continue sharing this story, and which of the many faces of the story we want to share. \n\nThe core of it for me is the fisherman and their songs, their work, their faith, their boldness and love in the face of real hard work and the mounting pressures from globalisation and exploitation from other nations around the world. ",
       "credits": "Filmed by me\nEdited by me and Spike Adams\nSound design by Jasper Trim",
@@ -221,7 +226,9 @@
         "enabled": false,
         "youtubeId": "",
         "provider": "youtube",
-        "bunnyEmbedUrl": ""
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "This short documentary was made with Yis and Graeme from Novo and Unite - an anti-racist and anti-facist union in East London. \n\nThe Battle of Cable Street is such an important moment in our history, and Yis brings it forward into relevance with clarity and grace. ",
       "credits": "credits loading...",
@@ -249,7 +256,9 @@
         "enabled": false,
         "youtubeId": "",
         "provider": "youtube",
-        "bunnyEmbedUrl": ""
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "info coming soon",
       "credits": "credits loading...",
@@ -277,7 +286,9 @@
         "enabled": false,
         "youtubeId": "",
         "provider": "youtube",
-        "bunnyEmbedUrl": ""
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "About text placeholder — replace with the real project description.",
       "credits": "Credits placeholder — replace with the real crew/cast list.",
@@ -289,7 +300,7 @@
       "title": "CHILDISH",
       "role": "Director",
       "bg": "#613b0d",
-      "coverImage": "assets/images/childish/Main_01_04_00_04.jpg",
+      "coverImage": "assets/images/childish/Main_01_04_00_04-2.jpg",
       "grid": [
         "assets/images/childish/Main_01_00_16_15.jpg",
         "assets/images/childish/Main_01_03_20_04.jpg",
@@ -305,7 +316,9 @@
         "enabled": true,
         "youtubeId": "",
         "provider": "bunny",
-        "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/1c44e422-eeb2-47ad-aaf9-5a47ca1d5280"
+        "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/1c44e422-eeb2-47ad-aaf9-5a47ca1d5280",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "Directing Planet Childish by TGFbros was a pleasure. \n\nSuch an amazing team all around (especially Abbey Valentina). They gave us free reign to create something bizarre, something free, and their audience responded really well to it. \n\nLong live Nathan and may he return to earth some day to pick up some more Aveeno. ",
       "credits": "Credits Loading...",
@@ -333,7 +346,9 @@
         "enabled": true,
         "youtubeId": "",
         "provider": "bunny",
-        "bunnyEmbedUrl": ""
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "I produced these videos (we made three of them) for Chase and Status, directed by the one and only Spike Adams. ",
       "credits": "Director - Spike Adams (@spikeadamss)  \nProducer - Jack Tierney (@jackktierney)  \nProduction Company - Murmur Collective LTD (@murmurcollectiveuk)  \nExecutive Producer - Abbey Valentina (@abbey_valentina)  \nCreative Directors - SHOTLIKETHIS (@shotlikethis), Ben Carden-Jones (@bencardenjones)  \nLiDAR R&D - Eduardo Guida (@edguida)  \nDP - Carl Matthews (@carlmatthews_dp)  \nEditor - Samuel Sutherland (@longboijumps)  \n2nd Camera (LiDAR) - Luke Harrison-Darby (@l.kehd)  \nGaffer - Dylan Schultz-Soo (@dylansschultz), David Witchell (@david_witchell_dop)  \n1st AC - Onur Özen (@onur.oezden), Francois Earp (@fexefilming)  \nSpark - Ernie Dix (@ernied06), Jack White (@jackwhite2803), Myles Wilkinson-Gayle (@mgthedp)  \nProduction Assistant - Leopold Sandro (@theswedishman6), Charlie Repp (@charliereppo)  \nVideo Commissioner - Francesca Costa  \nS/A - Gardener Gagham, Ruby Storey, Angus Brown, Ruby Bastin, Iyare Kwei-Armah, Favian John-Kamen, Samuel Sutherland  \nLighting Rental - Matte Black London (@matteblacklondon)  \nLiDAR Rental - Yellow Cactus (@weareyellowcactus)  \nStudio - Metal Craft Studios  \nMedic - Anthony Hatton",
@@ -342,9 +357,40 @@
     {
       "id": "commercial-03",
       "file": "commercial-03.html",
-      "title": "COMMERCIAL 03",
-      "role": "Role",
+      "title": "AIM",
+      "role": "Skating Camera Operator",
       "bg": "#3a424c",
+      "coverImage": "assets/images/commercial-03/thumb-1-2.jpg",
+      "grid": [
+        "assets/images/commercial-03/thumb-1.jpg",
+        "assets/images/commercial-03/thumb-5.jpg",
+        "assets/images/commercial-03/thumb-4.jpg",
+        "assets/images/commercial-03/thumb-2.jpg",
+        "assets/images/commercial-03/thumb-3.jpg",
+        "assets/images/commercial-03/Screenshot-2026-07-22-at-15.28.03.jpg",
+        "assets/images/commercial-03/Screenshot-2026-07-22-at-15.26.45.jpg",
+        "assets/images/commercial-03/Screenshot-2026-07-22-at-15.28.45.jpg",
+        "assets/images/commercial-03/Screenshot-2026-07-22-at-15.27.45.jpg"
+      ],
+      "watch": {
+        "enabled": true,
+        "youtubeId": "",
+        "provider": "instagram",
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "https://www.instagram.com/p/DXXNpxPsjvJ/",
+        "aspectRatio": "1:1"
+      },
+      "about": "A short commercial from the wonderful Sophia, DP'd by Max Brunner. \nI was rollerblading and operating to achieve some of the faster paced sequences in central London. ",
+      "credits": "Director – @sophia_ogilvie\nCreative Director – @francesco__loybell\n \nCreative Studio @milkmachine__\n \nProducer – @georgie.wesson\nExecutive Producer – @madcowpete\n \nDOP – @max__brunner__\nRoller Blade Op – @jackktierney\nFocus Puller – @tomadop\n2nd AC – @sebastianvjfilm\nCamera Trainee – @siennaunswortth\n \nCast\nHero – @georgesmale\nAIM Agent – @lukeseewhy\nAIM Agent – @ivetadrulyte\nTraffic Warden – @itsmesharea\n1st AD – @penelopezgnl\n3rd AD – @jonas1999\nSound Recordist – @alexander_audio_trench\nGaffer – @charlie_lodge\nSpark – @jampatboo\nSpark – @samuel___saunders\nSpark Trainee – @paul_adea\n \nCostume Designer – @emmawells__\nHMUA – @by.chautran\nHMUA – @vincasartistry\nRunner – @itsjackgood\nDriver – Mathew Hampton\n \nEditor – @amandaldn at @doma.works\nEdit Producer – @cree_buttercup\nColourist – @colourbymegan at @harborpictureco_uk\nHead of Colour Production – @charlesedmorris\nColour Producer – @sarahlbanksx\n \nMusic Producer – @empara_mi\nAdditional Music Production & Arrangement – @finnclarkson.wav\nSound Designer – James Saunders\n \nPhotographer – @oliver_jvbelll\nBTS – @lucyeva_\n \nExtras\n@lawrencechoto @brahmananda__",
+      "fg": "#e8e5cc"
+    },
+    {
+      "id": "alalake",
+      "file": "alalake.html",
+      "title": "Alalake",
+      "role": "Director",
+      "bg": "#3a424c",
+      "fg": "#e8e5cc",
       "coverImage": "",
       "grid": [
         "",
@@ -358,14 +404,15 @@
         ""
       ],
       "watch": {
-        "enabled": false,
-        "youtubeId": "",
+        "enabled": true,
         "provider": "youtube",
-        "bunnyEmbedUrl": ""
+        "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0Emnq2U6Kg?si=DF5LveF0H9npGHFQ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
       },
       "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
-      "fg": "#e8e5cc"
+      "credits": "Credits placeholder — replace with the real crew/cast list."
     }
   ]
 }
