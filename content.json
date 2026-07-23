@@ -66,7 +66,7 @@
       "title": "about",
       "bg": "#3a4238",
       "image": "assets/images/about/2-2.jpg",
-      "text": "I'm exploring through film. Primarily as a Director, occasionally as an Editor and Rollerblading Camera Operator. In my personal work I love to explore our relationships to work and land, to each other and to music, investigating and expressing those feeling untouched by words. WRITE THIS PROPERLY",
+      "text": "",
       "links": [
         {
           "label": "home",
@@ -116,7 +116,8 @@
       "projects": [
         "zephyr",
         "bayefall",
-        "alalake"
+        "alalake",
+        "bones"
       ],
       "browserTitle": "PERSONAL"
     },
@@ -126,8 +127,7 @@
       "label": "documentary",
       "projects": [
         "cablestreet",
-        "documentary-02",
-        "documentary-03"
+        "documentary-02"
       ],
       "browserTitle": "DOCUMENTARY"
     },
@@ -180,7 +180,7 @@
       "title": "BAYE FALL",
       "role": "Director",
       "bg": "#4a5259",
-      "coverImage": "assets/images/bayefall-1.jpg",
+      "coverImage": "assets/images/bayefall/thumb-1.jpg",
       "grid": [
         "assets/images/bayefall/Main_01_00_21_16.jpg",
         "assets/images/bayefall-2.jpg",
@@ -208,19 +208,19 @@
       "id": "cablestreet",
       "file": "cablestreet.html",
       "title": "THE BATTLE OF CABLE STREET",
-      "role": "Editor",
+      "role": "Incoming...",
       "bg": "#57514a",
       "coverImage": "assets/images/documentary-1.jpg",
       "grid": [
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg",
-        "assets/images/documentary-1.jpg"
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
       ],
       "watch": {
         "enabled": false,
@@ -238,7 +238,7 @@
       "id": "documentary-02",
       "file": "documentary-02.html",
       "title": "The Nut Farmer of Glastonbury",
-      "role": "Co-Director",
+      "role": "Incoming...",
       "bg": "#3a424c",
       "coverImage": "assets/images/documentary-02/Screenshot-2026-07-22-at-13.52.00.jpg",
       "grid": [
@@ -267,8 +267,8 @@
     {
       "id": "documentary-03",
       "file": "documentary-03.html",
-      "title": "DOCUMENTARY 03",
-      "role": "Role",
+      "title": "Stories of Hope",
+      "role": "Incoming...",
       "bg": "#3a424c",
       "coverImage": "",
       "grid": [
@@ -332,20 +332,20 @@
       "bg": "#232a33",
       "coverImage": "assets/images/commercial-2.jpg",
       "grid": [
-        "",
         "assets/images/chaseandstatus/thumb-4.jpg",
-        "",
-        "",
+        "assets/images/chaseandstatus/Screenshot-2026-07-23-at-14.45.45.jpg",
         "assets/images/chaseandstatus/thumb-3.jpg",
         "assets/images/chaseandstatus/thumb-2.jpg",
-        "",
-        "assets/images/chaseandstatus/thumb-5.jpg",
-        "assets/images/commercial-2.jpg"
+        "assets/images/chaseandstatus/Screenshot-2026-07-23-at-14.43.44.jpg",
+        "assets/images/chaseandstatus/Screenshot-2026-07-23-at-14.47.19.jpg",
+        "assets/images/commercial-2.jpg",
+        "assets/images/chaseandstatus/Screenshot-2026-07-23-at-14.42.35.jpg",
+        "assets/images/chaseandstatus/Screenshot-2026-07-23-at-14.45.07.jpg"
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "",
-        "provider": "bunny",
+        "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5_XDTCkfAYs?si=5B13vED89lZr12Yi\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+        "provider": "youtube",
         "bunnyEmbedUrl": "",
         "instagramUrl": "",
         "aspectRatio": "16:9"
@@ -389,6 +389,36 @@
       "file": "alalake.html",
       "title": "Alalake",
       "role": "Director",
+      "bg": "#9a4d17",
+      "fg": "#e8e5cc",
+      "coverImage": "assets/images/alalake/Screenshot-2026-07-23-at-15.00.47.jpg",
+      "grid": [
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.59.52.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.56.02.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.57.44.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.59.32.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.56.44.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.57.17.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-15.00.27.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.58.14.jpg",
+        "assets/images/alalake/Screenshot-2026-07-23-at-14.56.59.jpg"
+      ],
+      "watch": {
+        "enabled": true,
+        "provider": "youtube",
+        "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0Emnq2U6Kg?si=FAcn5C8-iHurpx5h\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+        "bunnyEmbedUrl": "",
+        "instagramUrl": "",
+        "aspectRatio": "16:9"
+      },
+      "about": "Alalake is a collaborative album by Jasper Trim and Mafu Conteh, alongside Musa Filly Jobarteh, Mariam Cham, Sidia Susso and many others. \n\nWe had a chance to shoot one music video for their song Monayeh, which translates roughly to 'let's not fight' ",
+      "credits": "Directed and edited by Jack Tierney\nColour Grade by Myth Shah"
+    },
+    {
+      "id": "bones",
+      "file": "bones.html",
+      "title": "Bones",
+      "role": "Director",
       "bg": "#3a424c",
       "fg": "#e8e5cc",
       "coverImage": "",
@@ -404,9 +434,9 @@
         ""
       ],
       "watch": {
-        "enabled": true,
+        "enabled": false,
         "provider": "youtube",
-        "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0Emnq2U6Kg?si=DF5LveF0H9npGHFQ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+        "youtubeId": "",
         "bunnyEmbedUrl": "",
         "instagramUrl": "",
         "aspectRatio": "16:9"

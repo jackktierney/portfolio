@@ -40,7 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'childish.html': '#613b0d',
     'chaseandstatus.html': '#232a33',
     'commercial-03.html': '#3a424c',
-    'alalake.html': '#3a424c',
+    'alalake.html': '#9a4d17',
+    'bones.html': '#3a424c',
   };
 
   // ramps up to peak here, then navigates — the next page picks up the
@@ -310,62 +311,5 @@ document.addEventListener('DOMContentLoaded', () => {
         enterProject();
       });
     }
-  }
-
-  // project-page "poster" fit — the page is designed to sit in one
-  // viewport with no scroll, but the exact height available varies by
-  // browser (chrome/toolbar height, font metrics, etc), so 100vh alone
-  // isn't reliable. Measure the card's real height at its natural width,
-  // and if it doesn't fit, shrink the width (which the grid + polybar
-  // scale from) using two sample points to solve for the width that
-  // exactly fits — rather than guessing at a fixed formula. Skipped on
-  // mobile, where this layout stacks and scrolling is expected.
-  const projectPage = document.querySelector('.project-page');
-  const polybarCard = document.querySelector('.polybar-card');
-  if (projectPage && polybarCard) {
-    const isMobile = () => window.innerWidth > 0 && window.innerWidth <= 700;
-
-    function fitProjectPage() {
-      if (isMobile()) {
-        polybarCard.style.width = '';
-        return;
-      }
-
-      const pageStyle = getComputedStyle(projectPage);
-      const budget = window.innerHeight
-        - parseFloat(pageStyle.paddingTop)
-        - parseFloat(pageStyle.paddingBottom);
-
-      polybarCard.style.width = ''; // reset to natural (CSS max-width) before measuring
-      const w0 = polybarCard.getBoundingClientRect().width;
-      const h0 = polybarCard.getBoundingClientRect().height;
-      if (w0 <= 0 || h0 <= 0 || h0 <= budget) return; // not laid out yet, or already fits
-
-      const w1 = w0 * 0.7;
-      polybarCard.style.width = w1 + 'px';
-      const h1 = polybarCard.getBoundingClientRect().height;
-
-      const slope = (h0 - h1) / (w0 - w1);
-      if (slope <= 0) { polybarCard.style.width = ''; return; }
-      const intercept = h0 - slope * w0;
-      const wFit = (budget - intercept) / slope;
-
-      polybarCard.style.width = Math.max(280, Math.min(w0, wFit)) + 'px';
-    }
-
-    // window.innerWidth/innerHeight (and therefore layout) aren't reliably
-    // populated yet at the moment this synchronous script runs — wait a
-    // couple of animation frames so a real paint has happened first.
-    requestAnimationFrame(() => requestAnimationFrame(fitProjectPage));
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(fitProjectPage);
-    }
-    window.addEventListener('load', fitProjectPage);
-
-    let resizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(fitProjectPage, 80);
-    });
   }
 });
