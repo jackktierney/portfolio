@@ -466,3 +466,92 @@ a { color: inherit; }
   opacity: 0.4;
 }
 
+/* ===================================================================
+   Mobile — the desktop layout is a "poster" designed to sit in one
+   viewport with no scroll (see the fit-to-viewport JS in js/script.js,
+   which disables itself below this same breakpoint). On a phone-sized
+   screen there isn't room for that, so this stacks everything into a
+   normal scrolling page instead — scrolling here is expected, not a bug.
+=================================================================== */
+@media (max-width: 700px) {
+  .page {
+    padding: 18px;
+  }
+
+  .project-page {
+    height: auto;
+    align-items: flex-start;
+    padding: 14px 10px;
+  }
+
+  .polybar-card {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* title/role + nav read as a header on mobile, so they sit above the
+     photos — reordered visually rather than in the markup, since the
+     grid still needs to come first in source for the desktop layout */
+  .polybar {
+    order: -1;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 0 4px 14px;
+  }
+
+  .polybar-left {
+    font-size: 15.6px;
+  }
+
+  .polybar-right {
+    font-size: 13.6px;
+    flex-wrap: wrap;
+  }
+
+  /* one photo per row, full width — a scrollable feed instead of a grid */
+  .rice-grid {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 4px;
+  }
+
+  .modal-overlay {
+    padding: 10px;
+  }
+
+  .modal-box {
+    padding: 12px;
+  }
+
+  .modal-box.is-large {
+    max-width: 100%;
+  }
+
+  /* desktop floats the tabs in the side margin, which there's no room for
+     on a phone — instead put solo-row into an actual row so the tabs sit
+     as a real column to the image's left, same position, no overlap */
+  .solo-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .solo-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tabs {
+    position: static;
+    flex-direction: column;
+    transform: none;
+    margin: 0;
+    flex-shrink: 0;
+    font-size: 13.6px;
+  }
+}
+

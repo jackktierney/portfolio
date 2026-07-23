@@ -12,22 +12,31 @@
   }
 
   // escapes a block of raw text but turns bare URLs / www.-style addresses
-  // into real links first, so plain pasted text can still carry a working link
+  // and @handles into real links first, so plain pasted text can still
+  // carry a working link — @handles link to Instagram, since that's what
+  // they mean everywhere on this site (credits, collaborator shout-outs).
+  // The @ must not be preceded by a word character or dot, so email
+  // addresses like jack@gmail.com are left alone (the "j" before @ blocks it).
   function autoLink(raw) {
-    const urlRe = /((?:https?:\/\/|www\.)[^\s<]+)/gi;
+    const re = /(?:https?:\/\/|www\.)[^\s<]+|(?<![\w.])@([a-zA-Z0-9._]{1,30})/gi;
     let out = '';
     let lastIndex = 0;
     let m;
-    while ((m = urlRe.exec(raw))) {
-      let url = m[0];
+    while ((m = re.exec(raw))) {
+      let match = m[0];
       let trail = '';
-      while (url.length && /[.,;:!?)]$/.test(url)) {
-        trail = url.slice(-1) + trail;
-        url = url.slice(0, -1);
+      while (match.length && /[.,;:!?)]$/.test(match)) {
+        trail = match.slice(-1) + trail;
+        match = match.slice(0, -1);
       }
       out += esc(raw.slice(lastIndex, m.index));
-      const href = /^https?:\/\//i.test(url) ? url : 'https://' + url;
-      out += '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(url) + '</a>' + esc(trail);
+      if (match.charAt(0) === '@') {
+        const handle = match.slice(1);
+        out += '<a href="https://www.instagram.com/' + esc(handle) + '/" target="_blank" rel="noopener">' + esc(match) + '</a>' + esc(trail);
+      } else {
+        const href = /^https?:\/\//i.test(match) ? match : 'https://' + match;
+        out += '<a href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(match) + '</a>' + esc(trail);
+      }
       lastIndex = m.index + m[0].length;
     }
     out += esc(raw.slice(lastIndex));
@@ -587,6 +596,63 @@
     lines.push('        enterProject();');
     lines.push('      });');
     lines.push('    }');
+    lines.push('  }');
+    lines.push('');
+    lines.push('  // project-page "poster" fit — the page is designed to sit in one');
+    lines.push('  // viewport with no scroll, but the exact height available varies by');
+    lines.push('  // browser (chrome/toolbar height, font metrics, etc), so 100vh alone');
+    lines.push("  // isn't reliable. Measure the card's real height at its natural width,");
+    lines.push("  // and if it doesn't fit, shrink the width (which the grid + polybar");
+    lines.push('  // scale from) using two sample points to solve for the width that');
+    lines.push('  // exactly fits — rather than guessing at a fixed formula. Skipped on');
+    lines.push('  // mobile, where this layout stacks and scrolling is expected.');
+    lines.push("  const projectPage = document.querySelector('.project-page');");
+    lines.push("  const polybarCard = document.querySelector('.polybar-card');");
+    lines.push('  if (projectPage && polybarCard) {');
+    lines.push('    const isMobile = () => window.innerWidth > 0 && window.innerWidth <= 700;');
+    lines.push('');
+    lines.push('    function fitProjectPage() {');
+    lines.push('      if (isMobile()) {');
+    lines.push("        polybarCard.style.width = '';");
+    lines.push('        return;');
+    lines.push('      }');
+    lines.push('');
+    lines.push('      const pageStyle = getComputedStyle(projectPage);');
+    lines.push('      const budget = window.innerHeight');
+    lines.push('        - parseFloat(pageStyle.paddingTop)');
+    lines.push('        - parseFloat(pageStyle.paddingBottom);');
+    lines.push('');
+    lines.push("      polybarCard.style.width = ''; // reset to natural (CSS max-width) before measuring");
+    lines.push('      const w0 = polybarCard.getBoundingClientRect().width;');
+    lines.push('      const h0 = polybarCard.getBoundingClientRect().height;');
+    lines.push('      if (w0 <= 0 || h0 <= 0 || h0 <= budget) return; // not laid out yet, or already fits');
+    lines.push('');
+    lines.push('      const w1 = w0 * 0.7;');
+    lines.push("      polybarCard.style.width = w1 + 'px';");
+    lines.push('      const h1 = polybarCard.getBoundingClientRect().height;');
+    lines.push('');
+    lines.push('      const slope = (h0 - h1) / (w0 - w1);');
+    lines.push("      if (slope <= 0) { polybarCard.style.width = ''; return; }");
+    lines.push('      const intercept = h0 - slope * w0;');
+    lines.push('      const wFit = (budget - intercept) / slope;');
+    lines.push('');
+    lines.push("      polybarCard.style.width = Math.max(280, Math.min(w0, wFit)) + 'px';");
+    lines.push('    }');
+    lines.push('');
+    lines.push('    // window.innerWidth/innerHeight (and therefore layout) aren\'t reliably');
+    lines.push('    // populated yet at the moment this synchronous script runs — wait a');
+    lines.push('    // couple of animation frames so a real paint has happened first.');
+    lines.push('    requestAnimationFrame(() => requestAnimationFrame(fitProjectPage));');
+    lines.push('    if (document.fonts && document.fonts.ready) {');
+    lines.push('      document.fonts.ready.then(fitProjectPage);');
+    lines.push('    }');
+    lines.push("    window.addEventListener('load', fitProjectPage);");
+    lines.push('');
+    lines.push('    let resizeTimer;');
+    lines.push("    window.addEventListener('resize', () => {");
+    lines.push('      clearTimeout(resizeTimer);');
+    lines.push('      resizeTimer = setTimeout(fitProjectPage, 80);');
+    lines.push('    });');
     lines.push('  }');
     lines.push('});');
     lines.push('');
