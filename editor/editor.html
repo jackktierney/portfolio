@@ -4,11 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Site Editor</title>
-<link rel="stylesheet" href="styles.css">
+<!-- ?v= is bumped on every deploy so browsers can't serve a cached copy
+     of an old render.js/app.js/styles.css after an update -->
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
   <div id="app"></div>
-  <script src="render.js"></script>
-  <script src="app.js"></script>
+  <script src="render.js?v=9"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>
