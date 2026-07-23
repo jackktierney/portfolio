@@ -84,8 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (landingImg) {
     const landingPhotos = [
       'assets/images/landing/000068780001-3.jpg',
-      'assets/images/landing/000068780007-3.jpg',
-      'assets/images/landing/000068780002-2.jpg',
+      'assets/images/landing/000065620005.jpg',
+      'assets/images/landing/000068780005.jpg',
+      'assets/images/landing/000068780003.jpg',
+      'assets/images/landing/IMG_3667.jpg',
     ];
     const pick = landingPhotos[Math.floor(Math.random() * landingPhotos.length)];
     landingImg.style.backgroundImage = `url('${pick}')`;
@@ -104,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'assets/images/contact/000068580005.jpg',
       'assets/images/contact/000068580006.jpg',
       'assets/images/contact/000068580007.jpg',
+      'assets/images/contact/000068580008.jpg',
     ];
     const pick = contactPhotos[Math.floor(Math.random() * contactPhotos.length)];
     contactImg.style.backgroundImage = `url('${pick}')`;
@@ -290,35 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
       switchToTab(tabButtons[nextIndex]);
       setTimeout(() => { wheelLocked = false; }, WHEEL_LOCK_MS);
     }, { passive: true });
-
-    // touch swipe steps through tabs the same way, for mobile — touch
-    // scrolling never fires wheel events, and this page has nothing else
-    // to scroll, so a vertical swipe becomes a tab step instead
-    let touchStartY = null;
-    const SWIPE_THRESHOLD = 40;
-    window.addEventListener('touchstart', (e) => {
-      if (document.querySelector('.modal-overlay.is-open')) return;
-      touchStartY = e.touches[0].clientY;
-    }, { passive: true });
-
-    window.addEventListener('touchmove', (e) => {
-      if (touchStartY === null || wheelLocked) return;
-      if (document.querySelector('.modal-overlay.is-open')) return;
-
-      const deltaY = touchStartY - e.touches[0].clientY;
-      if (Math.abs(deltaY) < SWIPE_THRESHOLD) return;
-
-      const currentIndex = tabButtons.findIndex((b) => b.classList.contains('active'));
-      const nextIndex = currentIndex + (deltaY > 0 ? 1 : -1);
-      touchStartY = null; // one swipe = one tab step
-      if (nextIndex < 0 || nextIndex >= tabButtons.length) return;
-
-      wheelLocked = true;
-      switchToTab(tabButtons[nextIndex]);
-      setTimeout(() => { wheelLocked = false; }, WHEEL_LOCK_MS);
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => { touchStartY = null; });
 
     // continues on to the currently-shown tab's project page, if it has
     // one — doc/commercial tabs don't yet, so they just flash. Shared by
