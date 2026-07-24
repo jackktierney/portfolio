@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     'bayefall.html': '#5f6a73',
     'cablestreet.html': '#57514a',
     'documentary-02.html': '#3a424c',
-    'documentary-03.html': '#3a424c',
     'childish.html': '#613b0d',
     'chaseandstatus.html': '#232a33',
     'commercial-03.html': '#3a424c',
@@ -317,6 +316,35 @@ document.addEventListener('DOMContentLoaded', () => {
       switchToTab(tabButtons[nextIndex]);
       setTimeout(() => { wheelLocked = false; }, WHEEL_LOCK_MS);
     }, { passive: true });
+
+    // touch swipe steps through tabs the same way, for mobile — touch
+    // scrolling never fires wheel events, and this page has nothing else
+    // to scroll, so a vertical swipe becomes a tab step instead
+    let touchStartY = null;
+    const SWIPE_THRESHOLD = 40;
+    window.addEventListener('touchstart', (e) => {
+      if (document.querySelector('.modal-overlay.is-open')) return;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (touchStartY === null || wheelLocked) return;
+      if (document.querySelector('.modal-overlay.is-open')) return;
+
+      const deltaY = touchStartY - e.touches[0].clientY;
+      if (Math.abs(deltaY) < SWIPE_THRESHOLD) return;
+
+      const currentIndex = tabButtons.findIndex((b) => b.classList.contains('active'));
+      const nextIndex = currentIndex + (deltaY > 0 ? 1 : -1);
+      touchStartY = null; // one swipe = one tab step
+      if (nextIndex < 0 || nextIndex >= tabButtons.length) return;
+
+      wheelLocked = true;
+      switchToTab(tabButtons[nextIndex]);
+      setTimeout(() => { wheelLocked = false; }, WHEEL_LOCK_MS);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => { touchStartY = null; });
 
     // continues on to the currently-shown tab's project page, if it has
     // one — doc/commercial tabs don't yet, so they just flash. Shared by

@@ -289,41 +289,6 @@
       "fg": "#e8e5cc"
     },
     {
-      "id": "documentary-03",
-      "file": "documentary-03.html",
-      "title": "Stories of Hope",
-      "role": "Incoming...",
-      "bg": "#3a424c",
-      "coverImage": "",
-      "grid": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
-      ],
-      "watch": {
-        "enabled": false,
-        "links": [
-          {
-            "label": "watch",
-            "provider": "youtube",
-            "youtubeId": "",
-            "bunnyEmbedUrl": "",
-            "instagramUrl": "",
-            "aspectRatio": "16:9"
-          }
-        ]
-      },
-      "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list.",
-      "fg": "#e8e5cc"
-    },
-    {
       "id": "childish",
       "file": "childish.html",
       "title": "CHILDISH",
