@@ -261,7 +261,7 @@
       "bg": "#3a424c",
       "coverImage": "assets/images/documentary-02/Screenshot-2026-07-22-at-13.52.00.jpg",
       "grid": [
-        "assets/images/documentary-02/Screenshot-2026-07-22-at-13.50.16.jpg",
+        "",
         "",
         "",
         "",
@@ -380,9 +380,25 @@
         "enabled": true,
         "links": [
           {
-            "label": "watch",
+            "label": "Pozer",
             "provider": "youtube",
             "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5_XDTCkfAYs?si=5B13vED89lZr12Yi\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          },
+          {
+            "label": "Blade",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/Xss8DEYN9sM?si=Yqr3FPY8-QHZhvOe\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          },
+          {
+            "label": "Lancey",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/y0Ob4Vz9Yh8?si=qwlKssZROS2Wt36v\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
             "bunnyEmbedUrl": "",
             "instagramUrl": "",
             "aspectRatio": "16:9"
