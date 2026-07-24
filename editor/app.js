@@ -1191,6 +1191,8 @@
     const wrap = h('div', {}, [panelHeader(cat.label || cat.id, cat.file + ' — a tabbed hub page linking to its projects')]);
 
     const card = h('div', { class: 'card' }, []);
+    card.appendChild(checkboxField('Shown in site navigation', cat.enabled !== false, (v) => { cat.enabled = v; }));
+    card.appendChild(h('div', { class: 'hint', style: 'margin-top:0;' }, ['Turn off while you\'re still filling this category out — the page stays put, it just won\'t be linked to from anywhere. Turn it back on when it\'s ready.']));
     card.appendChild(textField('Name (shown in the home page nav)', cat.label, (v) => { cat.label = v; }));
     card.appendChild(textField('Browser tab title', cat.browserTitle || '', (v) => { cat.browserTitle = v; }));
     wrap.appendChild(card);
@@ -1405,7 +1407,7 @@
     const addNav = confirm('Add "' + name + '" to the home page navigation?');
     const id = uniqueId(slugify(name), allEntityIds());
     const proj = makeProjectDefaults(firstProjectName);
-    const cat = { id, file: id + '.html', label: name, browserTitle: name, projects: [proj.id] };
+    const cat = { id, file: id + '.html', label: name, browserTitle: name, enabled: true, projects: [proj.id] };
     mutate(() => {
       state.content.projects.push(proj);
       state.content.categories.push(cat);

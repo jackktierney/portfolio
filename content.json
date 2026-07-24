@@ -123,7 +123,8 @@
         "alalake",
         "bones"
       ],
-      "browserTitle": "PERSONAL"
+      "browserTitle": "PERSONAL",
+      "enabled": true
     },
     {
       "id": "documentary",
@@ -133,7 +134,8 @@
         "cablestreet",
         "documentary-02"
       ],
-      "browserTitle": "DOCUMENTARY"
+      "browserTitle": "DOCUMENTARY",
+      "enabled": true
     },
     {
       "id": "commercial",
@@ -144,7 +146,8 @@
         "chaseandstatus",
         "commercial-03"
       ],
-      "browserTitle": "COMMERCIAL"
+      "browserTitle": "COMMERCIAL",
+      "enabled": true
     }
   ],
   "projects": [

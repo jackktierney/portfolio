@@ -4,6 +4,12 @@
 (function (root) {
   'use strict';
 
+  // set once per renderSite() call, to the .file of every category with
+  // enabled: false — linksRow drops any link pointing at one of these, so
+  // a disabled category simply has no way in from site navigation while
+  // it's still being filled out. The page itself still renders at its URL.
+  let disabledFiles = new Set();
+
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;')
@@ -93,7 +99,7 @@
   ].join('\n');
 
   function linksRow(links) {
-    return links.map((l) => {
+    return links.filter((l) => !disabledFiles.has(l.href)).map((l) => {
       if (l.modalTrigger) return '<a href="#" class="modal-trigger" id="' + l.id + '">' + esc(l.label) + '</a>';
       if (l.external) return '<a href="' + esc(l.href) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>';
       return '<a href="' + esc(l.href) + '">' + esc(l.label) + '</a>';
@@ -747,6 +753,8 @@
 
   function renderSite(content) {
     const files = {};
+
+    disabledFiles = new Set(content.categories.filter((c) => c.enabled === false).map((c) => c.file));
 
     files[content.landing.file] = renderLanding(content.landing);
 
