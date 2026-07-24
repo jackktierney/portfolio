@@ -31,8 +31,10 @@
     "bg": "#4a4e42",
     "images": [
       "assets/images/landing/000068780001-3.jpg",
-      "assets/images/landing/000068780007-3.jpg",
-      "assets/images/landing/000068780002-2.jpg"
+      "assets/images/landing/000065620005.jpg",
+      "assets/images/landing/000068780005.jpg",
+      "assets/images/landing/000068780003.jpg",
+      "assets/images/landing/IMG_3667.jpg"
     ],
     "links": [
       {
@@ -65,7 +67,7 @@
       "file": "about.html",
       "title": "about",
       "bg": "#3a4238",
-      "image": "assets/images/about/2-2.jpg",
+      "image": "assets/images/about/8-4-.jpg",
       "text": "",
       "links": [
         {
@@ -77,7 +79,7 @@
           "href": "contact.html"
         }
       ],
-      "fg": "#eedeac"
+      "fg": "#ffffff"
     }
   ],
   "contactPage": {
@@ -92,7 +94,8 @@
       "assets/images/contact/000068580002.jpg",
       "assets/images/contact/000068580005.jpg",
       "assets/images/contact/000068580006.jpg",
-      "assets/images/contact/000068580007.jpg"
+      "assets/images/contact/000068580007.jpg",
+      "assets/images/contact/000068580008.jpg"
     ],
     "email": "jack@murmurcollective.co.uk",
     "links": [
