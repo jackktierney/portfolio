@@ -781,8 +781,19 @@
       files[cat.file] = renderCategory(tabsData, firstProj, cat.browserTitle || cat.label || cat.id);
     });
 
+    // a project belonging to a disabled category is skipped over by "next" —
+    // same idea as the category page itself being unlinked, just applied to
+    // its projects too, so there's no back door into them from a neighbour
+    const isHidden = (proj) => {
+      const cat = content.categories.find((c) => c.projects.includes(proj.id));
+      return !!(cat && cat.enabled === false);
+    };
     content.projects.forEach((proj, i) => {
-      const next = content.projects[(i + 1) % content.projects.length];
+      let next = proj;
+      for (let step = 1; step <= content.projects.length; step += 1) {
+        const candidate = content.projects[(i + step) % content.projects.length];
+        if (!isHidden(candidate)) { next = candidate; break; }
+      }
       files[proj.file] = renderProject(proj, next.file);
     });
 
