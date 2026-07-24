@@ -399,7 +399,7 @@ a { color: inherit; }
 }
 
 #emailModal .modal-text,
-#numberModal .modal-text {
+#phoneModal .modal-text {
   font-size: 31.2px; /* 2x the shared modal-text size, for these two only */
 }
 
