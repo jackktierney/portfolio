@@ -207,7 +207,11 @@
     const homeLink = data.links.find((l) => l.label === 'home');
     const otherLinks = data.links.filter((l) => l.label !== 'home');
     const links = (homeLink ? [homeLink] : [])
-      .concat([{ label: 'email', modalTrigger: true, id: 'emailLink' }], otherLinks);
+      .concat(
+        [{ label: 'email', modalTrigger: true, id: 'emailLink' }],
+        [{ label: 'number', modalTrigger: true, id: 'numberLink' }],
+        otherLinks,
+      );
     const inner = '<div class="page">\n'
       + '  <p class="intro">' + esc(data.intro) + '</p>\n\n'
       + '  <div class="frame">\n'
@@ -218,7 +222,8 @@
       + '    ' + linksRow(links) + '\n'
       + '  </p>\n'
       + '</div>\n\n'
-      + textModal('emailModal', '<p>' + esc(data.email) + '</p>', false);
+      + textModal('emailModal', '<p>' + esc(data.email) + '</p>', false)
+      + '\n\n' + textModal('numberModal', '<p>' + esc(data.phone || '') + '</p>', false);
     return page('contact', data.bg, data.fg || '#e8e5cc', inner);
   }
 
@@ -471,6 +476,7 @@
     lines.push("  wireModal('aboutLink', 'aboutModal');");
     lines.push("  wireModal('creditsLink', 'creditsModal');");
     lines.push("  wireModal('emailLink', 'emailModal');");
+    lines.push("  wireModal('numberLink', 'numberModal');");
     lines.push('');
     lines.push('  // project-page grid — clicking any still opens the watch popup (same');
     lines.push('  // action as clicking "watch" in the polybar), for projects that have one');

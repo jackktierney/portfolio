@@ -186,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
   wireModal('aboutLink', 'aboutModal');
   wireModal('creditsLink', 'creditsModal');
   wireModal('emailLink', 'emailModal');
+  wireModal('numberLink', 'numberModal');
 
   // project-page grid — clicking any still opens the watch popup (same
   // action as clicking "watch" in the polybar), for projects that have one

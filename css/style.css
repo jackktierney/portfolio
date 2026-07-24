@@ -155,7 +155,7 @@ a { color: inherit; }
 =================================================================== */
 .intro {
   margin: 0 0 8px;
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.7;
   letter-spacing: 0.01em;
 }
@@ -396,6 +396,11 @@ a { color: inherit; }
   padding: 4px;
   font-size: 15.6px;
   line-height: 1.7;
+}
+
+#emailModal .modal-text,
+#numberModal .modal-text {
+  font-size: 31.2px; /* 2x the shared modal-text size, for these two only */
 }
 
 .modal-close {

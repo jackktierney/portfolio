@@ -1113,6 +1113,7 @@
     card.appendChild(colorField('Background colour', d.bg, (v) => { d.bg = v; }));
     card.appendChild(colorField('Element colour (font + border)', d.fg, (v) => { d.fg = v; }));
     card.appendChild(textField('Email address', d.email, (v) => { d.email = v; }));
+    card.appendChild(textField('Phone number', d.phone, (v) => { d.phone = v; }));
     wrap.appendChild(card);
 
     const imgCard = h('div', { class: 'card' }, []);
@@ -1121,7 +1122,7 @@
     wrap.appendChild(imgCard);
 
     const linksCard = h('div', { class: 'card' }, []);
-    linksCard.appendChild(h('div', { class: 'hint', style: 'margin-top:0;' }, ['"email" is always shown first and opens the address above in a popup — add any extra links (like instagram) below.']));
+    linksCard.appendChild(h('div', { class: 'hint', style: 'margin-top:0;' }, ['"email" and "number" are always shown first and open the details above in a popup — add any extra links (like instagram) below.']));
     linksCard.appendChild(linksListField('Extra links', d.links));
     wrap.appendChild(linksCard);
 
