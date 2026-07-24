@@ -398,8 +398,17 @@ a { color: inherit; }
   line-height: 1.7;
 }
 
+#emailModal .modal-box,
+#phoneModal .modal-box {
+  width: auto;
+  max-width: min(90vw, 500px);
+}
+
 #emailModal .modal-text,
 #phoneModal .modal-text {
+  width: auto;
+  aspect-ratio: auto;
+  overflow: visible;
   font-size: 31.2px; /* 2x the shared modal-text size, for these two only */
 }
 
