@@ -66,9 +66,9 @@
       "id": "about",
       "file": "about.html",
       "title": "about",
-      "bg": "#3a4238",
-      "image": "assets/images/about/8-4-.jpg",
-      "text": "",
+      "bg": "#423f38",
+      "image": "assets/images/about/8-4--2.jpg",
+      "text": "I've primarily worked as a Director, as well as an Editor and a Rollerblading Camera Operator.\n\nI love to explore the parts of life that seem to escape words. That's why I make strange films sometimes. Take a look at my work and feel free to reach out to me via any of the methods on my contact page. ",
       "links": [
         {
           "label": "home",
@@ -85,7 +85,7 @@
   "contactPage": {
     "file": "contact.html",
     "bg": "#5a5d61",
-    "intro": "gimme a shout",
+    "intro": "feel free to reach out",
     "images": [
       "assets/images/contact/000065630001.jpg",
       "assets/images/contact/000065630008.jpg",

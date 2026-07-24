@@ -154,8 +154,8 @@ a { color: inherit; }
    Intro text (top) + tagline links (bottom)
 =================================================================== */
 .intro {
-  margin: 0 0 16px;
-  font-size: 13px;
+  margin: 0 0 8px;
+  font-size: 17px;
   line-height: 1.7;
   letter-spacing: 0.01em;
 }

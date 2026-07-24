@@ -204,7 +204,10 @@
   }
 
   function renderContact(data) {
-    const links = [{ label: 'email', modalTrigger: true, id: 'emailLink' }].concat(data.links);
+    const homeLink = data.links.find((l) => l.label === 'home');
+    const otherLinks = data.links.filter((l) => l.label !== 'home');
+    const links = (homeLink ? [homeLink] : [])
+      .concat([{ label: 'email', modalTrigger: true, id: 'emailLink' }], otherLinks);
     const inner = '<div class="page">\n'
       + '  <p class="intro">' + esc(data.intro) + '</p>\n\n'
       + '  <div class="frame">\n'

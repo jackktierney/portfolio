@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const DEFAULT_BG = getComputedStyle(document.body).getPropertyValue('--bg').trim();
   const PAGE_BG = {
     'index.html': '#4a4e42',
-    'about.html': '#3a4238',
+    'about.html': '#423f38',
     'contact.html': '#5a5d61',
     'personal.html': '#2b3440',
     'documentary.html': '#57514a',
