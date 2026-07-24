@@ -173,16 +173,40 @@
         "enabled": true,
         "links": [
           {
-            "label": "watch",
+            "label": "The Film",
             "provider": "youtube",
             "youtubeId": "54SxblKJLVg",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          },
+          {
+            "label": "Bones",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/VWEVTCprNh0?si=wagz82ZZt9NckZ99\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          },
+          {
+            "label": "Once I'm Gone",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/C-wuxgvNqT8?si=FM332_-qV5hyhCtU\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          },
+          {
+            "label": "More",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/dVUfKZmF4Wo?si=ud2EA1iB2ujuENBH\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
             "bunnyEmbedUrl": "",
             "instagramUrl": "",
             "aspectRatio": "16:9"
           }
         ]
       },
-      "about": "This film means everything to me. My first time directing, and the project I loved the most from start to finish. It was a collaboration with my closest friend Finn, and an opportunity to do something completely honest and from the heart. \n\nWhilst we were describing it to people long before it was made, I would say sensation over sense, palpability over plausibility, and I've been blown away by how people responded to it. It didn't land well with most people, but that was always expected. \n\nIf you ever want to step into a strange reflective world of sound and light, then please indulge. ",
+      "about": "This film means everything to me. My first time directing, and the project I loved the most from start to finish. It was a collaboration with my closest friend Finn, and an opportunity to do something completely honest and from the heart. \n\nWe made a 30 minute short film and from that 3 music videos + visualisers to go with the album. Press 'watch' to take a look.\n\nWhilst we were describing it to people long before it was made, I would say sensation over sense, palpability over plausibility, and I've been blown away by how people responded to it. It didn't land well with most people, but that was always expected. \n\nIf you ever want to step into a strange reflective world of sound and light, then please indulge. ",
       "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters",
       "fg": "#e8e5cc"
     },
@@ -479,7 +503,7 @@
           }
         ]
       },
-      "about": "This was a music video (one of three) that I made for Finnegan Tui with the team from Murmur.\n\nI loved to explore the trajectory of growing up and growing old, to feel where life might take us and share this exploration with the crew. ",
+      "about": "This was a music video (one of three) that I made for Finnegan Tui with the team from Murmur. I've put it as it's own project because I like it.\n\nI loved to explore the trajectory of growing up and growing old, to feel where life might take us and share this exploration with the whole crew in the process.",
       "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters"
     }
   ]

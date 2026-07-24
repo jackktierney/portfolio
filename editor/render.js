@@ -177,7 +177,7 @@
           return '      <button type="button"' + (i === 0 ? ' class="active"' : '')
             + ' data-embed-src="' + esc(computeEmbedSrc(link)) + '"'
             + ' data-w="' + r.w + '" data-h="' + r.h + '">' + esc(link.label || 'watch') + '</button>';
-        }).join('\n')
+        }).join('\n      <span class="polybar-div">│</span>\n')
         + '\n    </div>\n\n'
       : '';
 
