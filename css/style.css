@@ -371,6 +371,35 @@ a { color: inherit; }
   max-width: 1038px;
 }
 
+/* watch popup tabs — only present when a project has more than one video;
+   same visual language as the documentary/commercial solo-page tabs, just
+   laid out as a horizontal row above the video instead of a side column */
+.watch-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 15.6px;
+  margin-bottom: 10px;
+}
+
+.watch-tabs button {
+  font: inherit;
+  color: var(--fg);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  opacity: 0.45;
+}
+
+.watch-tabs button.active {
+  opacity: 1;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
 .modal-video {
   position: relative;
   width: 100%;

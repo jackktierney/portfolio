@@ -1028,6 +1028,62 @@
     return wrap;
   }
 
+  // ---- watch popup videos (one card per video) — drag to reorder ----
+  function watchLinksField(links) {
+    const wrap = h('div', {}, []);
+    const list = h('div', {}, []);
+    links.forEach((link, i) => {
+      const row = h('div', { class: 'card', style: 'margin-bottom:8px;' }, []);
+      const labelInput = h('input', {
+        type: 'text', placeholder: 'tab label', style: 'width:140px;',
+        onchange: (e) => { mutate(() => { link.label = e.target.value; }); },
+      }, []);
+      labelInput.value = link.label || '';
+      const headerRow = h('div', { class: 'list-row no-drag', style: 'margin-bottom:8px;' }, [
+        dragHandle(), labelInput,
+        h('button', {
+          class: 'small danger', style: 'margin-left:auto;',
+          onclick: () => { mutate(() => links.splice(i, 1)); refreshPanel(); },
+        }, ['×']),
+      ]);
+      enableDrag(row, links, i);
+      row.appendChild(headerRow);
+
+      row.appendChild(selectField('Video source', link.provider || 'youtube', [
+        { value: 'youtube', label: 'YouTube' },
+        { value: 'bunny', label: 'Bunny Stream' },
+        { value: 'instagram', label: 'Instagram' },
+      ], (v) => { link.provider = v; }));
+      const provider = link.provider || 'youtube';
+      if (provider === 'youtube') {
+        row.appendChild(textField('YouTube video ID', link.youtubeId || '', (v) => { link.youtubeId = v; }, { hint: 'Paste the video ID, a normal youtube.com/watch or youtu.be link, or even the whole "embed" code from Share — any of them work.' }));
+      } else if (provider === 'bunny') {
+        row.appendChild(textField('Bunny Stream embed URL', link.bunnyEmbedUrl || '', (v) => { link.bunnyEmbedUrl = v; }, { hint: 'Paste the embed link from Bunny Stream\'s share panel (e.g. https://iframe.mediadelivery.net/embed/...).' }));
+      } else {
+        row.appendChild(textField('Instagram post/reel URL', link.instagramUrl || '', (v) => { link.instagramUrl = v; }, { hint: 'Paste the normal instagram.com/p/... or instagram.com/reel/... link — no need to find an embed link yourself.' }));
+      }
+      row.appendChild(selectField('Video shape', link.aspectRatio || '16:9', [
+        { value: '16:9', label: '16:9 — horizontal' },
+        { value: '4:3', label: '4:3 — classic' },
+        { value: '9:16', label: '9:16 — vertical / reels' },
+        { value: '4:5', label: '4:5 — portrait' },
+        { value: '1:1', label: '1:1 — square' },
+      ], (v) => { link.aspectRatio = v; }));
+
+      list.appendChild(row);
+    });
+    wrap.appendChild(list);
+    wrap.appendChild(h('button', {
+      class: 'small',
+      style: 'margin-top:6px;',
+      onclick: () => {
+        mutate(() => links.push({ label: 'watch', provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '', instagramUrl: '', aspectRatio: '16:9' }));
+        refreshPanel();
+      },
+    }, ['+ add video']));
+    return wrap;
+  }
+
   // ---- links list (label/href pairs) — drag to reorder ----
   function linksListField(label, arr) {
     const wrap = h('div', { class: 'field' }, [h('span', { class: 'field-label' }, [label])]);
@@ -1212,26 +1268,13 @@
     const watchCard = h('div', { class: 'card' }, []);
     watchCard.appendChild(checkboxField('Has a "watch" video popup', proj.watch.enabled, (v) => { proj.watch.enabled = v; }));
     if (proj.watch.enabled) {
-      watchCard.appendChild(selectField('Video source', proj.watch.provider || 'youtube', [
-        { value: 'youtube', label: 'YouTube' },
-        { value: 'bunny', label: 'Bunny Stream' },
-        { value: 'instagram', label: 'Instagram' },
-      ], (v) => { proj.watch.provider = v; }));
-      const provider = proj.watch.provider || 'youtube';
-      if (provider === 'youtube') {
-        watchCard.appendChild(textField('YouTube video ID', proj.watch.youtubeId || '', (v) => { proj.watch.youtubeId = v; }, { hint: 'Paste the video ID, a normal youtube.com/watch or youtu.be link, or even the whole "embed" code from Share — any of them work.' }));
-      } else if (provider === 'bunny') {
-        watchCard.appendChild(textField('Bunny Stream embed URL', proj.watch.bunnyEmbedUrl || '', (v) => { proj.watch.bunnyEmbedUrl = v; }, { hint: 'Paste the embed link from Bunny Stream\'s share panel (e.g. https://iframe.mediadelivery.net/embed/...).' }));
-      } else {
-        watchCard.appendChild(textField('Instagram post/reel URL', proj.watch.instagramUrl || '', (v) => { proj.watch.instagramUrl = v; }, { hint: 'Paste the normal instagram.com/p/... or instagram.com/reel/... link — no need to find an embed link yourself.' }));
+      if (!proj.watch.links || !proj.watch.links.length) {
+        proj.watch.links = [{ label: 'watch', provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '', instagramUrl: '', aspectRatio: '16:9' }];
       }
-      watchCard.appendChild(selectField('Video shape', proj.watch.aspectRatio || '16:9', [
-        { value: '16:9', label: '16:9 — horizontal' },
-        { value: '4:3', label: '4:3 — classic' },
-        { value: '9:16', label: '9:16 — vertical / reels' },
-        { value: '4:5', label: '4:5 — portrait' },
-        { value: '1:1', label: '1:1 — square' },
-      ], (v) => { proj.watch.aspectRatio = v; }));
+      watchCard.appendChild(h('div', { class: 'hint', style: 'margin-top:0;' }, [
+        'One video: the popup shows it directly, same as always. More than one: the popup gets a row of tabs in the order below, each its own source and shape.',
+      ]));
+      watchCard.appendChild(watchLinksField(proj.watch.links));
     }
     wrap.appendChild(watchCard);
 
@@ -1304,7 +1347,7 @@
       fg: '#e8e5cc',
       coverImage: '',
       grid: ['', '', '', '', '', '', '', '', ''],
-      watch: { enabled: false, provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '', instagramUrl: '', aspectRatio: '16:9' },
+      watch: { enabled: false, links: [{ label: 'watch', provider: 'youtube', youtubeId: '', bunnyEmbedUrl: '', instagramUrl: '', aspectRatio: '16:9' }] },
       about: 'About text placeholder — replace with the real project description.',
       credits: 'Credits placeholder — replace with the real crew/cast list.',
     };

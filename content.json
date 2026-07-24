@@ -98,7 +98,7 @@
       "assets/images/contact/000068580008.jpg"
     ],
     "email": "jack@murmurcollective.co.uk",
-    "phone": "+447384749305",
+    "phone": "+ 4 4 7 3 8 4 7 4 9 3 0 5",
     "links": [
       {
         "label": "instagram",
@@ -168,11 +168,16 @@
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "54SxblKJLVg",
-        "provider": "youtube",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "youtube",
+            "youtubeId": "54SxblKJLVg",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "This film means everything to me. My first time directing, and the project I loved the most from start to finish. It was a collaboration with my closest friend Finn, and an opportunity to do something completely honest and from the heart. \n\nWhilst we were describing it to people long before it was made, I would say sensation over sense, palpability over plausibility, and I've been blown away by how people responded to it. It didn't land well with most people, but that was always expected. \n\nIf you ever want to step into a strange reflective world of sound and light, then please indulge. ",
       "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters",
@@ -183,7 +188,7 @@
       "file": "bayefall.html",
       "title": "BAYE FALL",
       "role": "Director",
-      "bg": "#4a5259",
+      "bg": "#5f6a73",
       "coverImage": "assets/images/bayefall/thumb-1.jpg",
       "grid": [
         "assets/images/bayefall/Main_01_00_21_16.jpg",
@@ -198,11 +203,16 @@
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "",
-        "provider": "bunny",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "bunny",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/66c93e65-d38e-49ef-8711-11a8742794c7",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "This is an ongoing project, this short video is our initial teaser. \n\nIt's a documentation of one night of working for the fishermen in Kafountine, Casamance, Senegal. I'm working on it with a close friend Spike Adams - we are currently in the process of figuring out which way feels right to continue sharing this story, and which of the many faces of the story we want to share. \n\nThe core of it for me is the fisherman and their songs, their work, their faith, their boldness and love in the face of real hard work and the mounting pressures from globalisation and exploitation from other nations around the world. ",
       "credits": "Filmed by me\nEdited by me and Spike Adams\nSound design by Jasper Trim",
@@ -228,11 +238,16 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": "",
-        "provider": "youtube",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "youtube",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "This short documentary was made with Yis and Graeme from Novo and Unite - an anti-racist and anti-facist union in East London. \n\nThe Battle of Cable Street is such an important moment in our history, and Yis brings it forward into relevance with clarity and grace. ",
       "credits": "credits loading...",
@@ -258,11 +273,16 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": "",
-        "provider": "youtube",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "youtube",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "info coming soon",
       "credits": "credits loading...",
@@ -288,11 +308,16 @@
       ],
       "watch": {
         "enabled": false,
-        "youtubeId": "",
-        "provider": "youtube",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "youtube",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "About text placeholder — replace with the real project description.",
       "credits": "Credits placeholder — replace with the real crew/cast list.",
@@ -318,11 +343,16 @@
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "",
-        "provider": "bunny",
-        "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/1c44e422-eeb2-47ad-aaf9-5a47ca1d5280",
-        "instagramUrl": "",
-        "aspectRatio": "4:3"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "bunny",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/1c44e422-eeb2-47ad-aaf9-5a47ca1d5280",
+            "instagramUrl": "",
+            "aspectRatio": "4:3"
+          }
+        ]
       },
       "about": "Directing Planet Childish by TGFbros was a pleasure. \n\nSuch an amazing team all around (especially Abbey Valentina). They gave us free reign to create something bizarre, something free, and their audience responded really well to it. \n\nLong live Nathan and may he return to earth some day to pick up some more Aveeno. ",
       "credits": "Credits Loading...",
@@ -348,11 +378,16 @@
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5_XDTCkfAYs?si=5B13vED89lZr12Yi\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-        "provider": "youtube",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/5_XDTCkfAYs?si=5B13vED89lZr12Yi\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "I produced these videos (we made three of them) for Chase and Status, directed by the one and only Spike Adams. ",
       "credits": "Director - Spike Adams (@spikeadamss)  \nProducer - Jack Tierney (@jackktierney)  \nProduction Company - Murmur Collective LTD (@murmurcollectiveuk)  \nExecutive Producer - Abbey Valentina (@abbey_valentina)  \nCreative Directors - SHOTLIKETHIS (@shotlikethis), Ben Carden-Jones (@bencardenjones)  \nLiDAR R&D - Eduardo Guida (@edguida)  \nDP - Carl Matthews (@carlmatthews_dp)  \nEditor - Samuel Sutherland (@longboijumps)  \n2nd Camera (LiDAR) - Luke Harrison-Darby (@l.kehd)  \nGaffer - Dylan Schultz-Soo (@dylansschultz), David Witchell (@david_witchell_dop)  \n1st AC - Onur Özen (@onur.oezden), Francois Earp (@fexefilming)  \nSpark - Ernie Dix (@ernied06), Jack White (@jackwhite2803), Myles Wilkinson-Gayle (@mgthedp)  \nProduction Assistant - Leopold Sandro (@theswedishman6), Charlie Repp (@charliereppo)  \nVideo Commissioner - Francesca Costa  \nS/A - Gardener Gagham, Ruby Storey, Angus Brown, Ruby Bastin, Iyare Kwei-Armah, Favian John-Kamen, Samuel Sutherland  \nLighting Rental - Matte Black London (@matteblacklondon)  \nLiDAR Rental - Yellow Cactus (@weareyellowcactus)  \nStudio - Metal Craft Studios  \nMedic - Anthony Hatton",
@@ -378,11 +413,16 @@
       ],
       "watch": {
         "enabled": true,
-        "youtubeId": "",
-        "provider": "instagram",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "https://www.instagram.com/p/DXXNpxPsjvJ/",
-        "aspectRatio": "1:1"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "instagram",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "https://www.instagram.com/p/DXXNpxPsjvJ/",
+            "aspectRatio": "1:1"
+          }
+        ]
       },
       "about": "A short commercial from the wonderful Sophia, DP'd by Max Brunner. \nI was rollerblading and operating to achieve some of the faster paced sequences in central London. ",
       "credits": "Director – @sophia_ogilvie\nCreative Director – @francesco__loybell\n \nCreative Studio @milkmachine__\n \nProducer – @georgie.wesson\nExecutive Producer – @madcowpete\n \nDOP – @max__brunner__\nRoller Blade Op – @jackktierney\nFocus Puller – @tomadop\n2nd AC – @sebastianvjfilm\nCamera Trainee – @siennaunswortth\n \nCast\nHero – @georgesmale\nAIM Agent – @lukeseewhy\nAIM Agent – @ivetadrulyte\nTraffic Warden – @itsmesharea\n1st AD – @penelopezgnl\n3rd AD – @jonas1999\nSound Recordist – @alexander_audio_trench\nGaffer – @charlie_lodge\nSpark – @jampatboo\nSpark – @samuel___saunders\nSpark Trainee – @paul_adea\n \nCostume Designer – @emmawells__\nHMUA – @by.chautran\nHMUA – @vincasartistry\nRunner – @itsjackgood\nDriver – Mathew Hampton\n \nEditor – @amandaldn at @doma.works\nEdit Producer – @cree_buttercup\nColourist – @colourbymegan at @harborpictureco_uk\nHead of Colour Production – @charlesedmorris\nColour Producer – @sarahlbanksx\n \nMusic Producer – @empara_mi\nAdditional Music Production & Arrangement – @finnclarkson.wav\nSound Designer – James Saunders\n \nPhotographer – @oliver_jvbelll\nBTS – @lucyeva_\n \nExtras\n@lawrencechoto @brahmananda__",
@@ -409,11 +449,16 @@
       ],
       "watch": {
         "enabled": true,
-        "provider": "youtube",
-        "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0Emnq2U6Kg?si=FAcn5C8-iHurpx5h\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "links": [
+          {
+            "label": "watch",
+            "provider": "youtube",
+            "youtubeId": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/n0Emnq2U6Kg?si=FAcn5C8-iHurpx5h\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>",
+            "bunnyEmbedUrl": "",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
       "about": "Alalake is a collaborative album by Jasper Trim and Mafu Conteh, alongside Musa Filly Jobarteh, Mariam Cham, Sidia Susso and many others. \n\nWe had a chance to shoot one music video for their song Monayeh, which translates roughly to 'let's not fight' ",
       "credits": "Directed and edited by Jack Tierney\nColour Grade by Myth Shah"
@@ -423,30 +468,35 @@
       "file": "bones.html",
       "title": "Bones",
       "role": "Director",
-      "bg": "#3a424c",
+      "bg": "#7c8c88",
       "fg": "#e8e5cc",
-      "coverImage": "",
+      "coverImage": "assets/images/bones/BONES-MAIN-TL.00_34_51_22.Still013.jpg",
       "grid": [
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "assets/images/bones/BONES-MAIN-TL.00_35_40_23.Still016.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_34_53_01.Still014.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_37_02_22.Still023.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_34_48_18.Still012.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_36_57_23.Still022.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_35_01_01.Still015.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_37_54_20.Still029.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_37_14_19.Still026.jpg",
+        "assets/images/bones/BONES-MAIN-TL.00_36_19_00.Still019.jpg"
       ],
       "watch": {
-        "enabled": false,
-        "provider": "youtube",
-        "youtubeId": "",
-        "bunnyEmbedUrl": "",
-        "instagramUrl": "",
-        "aspectRatio": "16:9"
+        "enabled": true,
+        "links": [
+          {
+            "label": "watch",
+            "provider": "bunny",
+            "youtubeId": "",
+            "bunnyEmbedUrl": "https://player.mediadelivery.net/play/710034/51fc7752-e8f4-486f-9d0e-8cdee1268254",
+            "instagramUrl": "",
+            "aspectRatio": "16:9"
+          }
+        ]
       },
-      "about": "About text placeholder — replace with the real project description.",
-      "credits": "Credits placeholder — replace with the real crew/cast list."
+      "about": "This was a music video (one of three) that I made for Finnegan Tui with the team from Murmur.\n\nI loved to explore the trajectory of growing up and growing old, to feel where life might take us and share this exploration with the crew. ",
+      "credits": "A PROJECT BY MURMUR COLLECTIVE — www.murmurcollective.co.uk\n\nWriter, Director, Editor — Jack Tierney\nProducer — Abbey Valentina\nDirector of Photography — Lasse Tolboll\nExecutive Producer — Billy Abbott\nAssistant Director — Josh Barnes\nHead of Art Department / Production Designer — Olive Jenkins\nArtist and Composer — Finnegan Tui\nComposer, Sound Artist, Mix Engineer — Jasper Trim\nSound Design — Guy Newland\nMix Engineer — Mike Trim\nBehind the Scenes and Production Assistant — Lily Bognuda\n1st Assistant Camera — Austen Lane\n2nd Assistant Camera and Gaffer — Sam Oxton\nArt Director — Lydia Martin\nSound Recordist — Amber Amare, Dajain Daley\nScript Development — Rohanna Starling, Finnegan Tui\nColourist — Jonny Tully\nGraphics and Artwork — Rob Shuttz\nSupporting Co-Producer — Giuseppe Floridia\nSupporting Executive Producers — Paolo Pome, Giuseppe, Simon Burgess, Alessandro Floridia\nDIT and Production Assistant — Luke Harrison-Derby\nB-Cam and Production Assistant — Sebastian Pinkham\nHead Chef — Rosie Nevill\nOff-Road Driver — Dom Rott\nLocation Scout — Lowenna Banfield-Earp\nProduction Assistants — Paul \"Boggy\" Bognuda, Jhett Smart, Sam Sutherland, Tom Adams\nAdvert Editor — Sam Sutherland\n\nCast:\nParmenides — Finnegan Tui\nSunyata — Rubymoon Hilliard\nYoung Parmenides — Caspian Ember Watson\nOld Parmenides — Paul \"Boggy\" Bognuda\nYoung Sunyata — Isis Marie Carney\nZephyr — Jhett Smart\nFriends — Tom Adams, Alex Morton\nChildhood Friends — Elisha Reuben Carney, Frankie, Mickey and Ziggy Mascarenhas\nMother — Emily Fawcett\nGrandmother — Nelly Minnema\n\nVery Special Thanks To:\nEmanuele Floridia of Eywa Music Video Europe\nPanavision Cardiff\nYHA Accommodation\nJoseph Goldman of Film Co.\nPaul \"Boggy\" Bognuda\nEmily Fawcett\nMike Trim\nBariş Baliç\nAlice and Hetty Fruer Denham\nDavid and Judy Starling\nAll of our generous Kickstarter supporters"
     }
   ]
 }

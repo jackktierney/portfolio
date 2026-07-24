@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'documentary.html': '#57514a',
     'commercial.html': '#613b0d',
     'zephyr.html': '#2b3440',
-    'bayefall.html': '#4a5259',
+    'bayefall.html': '#5f6a73',
     'cablestreet.html': '#57514a',
     'documentary-02.html': '#3a424c',
     'documentary-03.html': '#3a424c',
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'chaseandstatus.html': '#232a33',
     'commercial-03.html': '#3a424c',
     'alalake.html': '#9a4d17',
-    'bones.html': '#3a424c',
+    'bones.html': '#7c8c88',
   };
 
   // ramps up to peak here, then navigates — the next page picks up the
@@ -172,8 +172,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // watch popup tabs (only present when a project has more than one
+  // video) — clicking one swaps the iframe source and the box shape to
+  // that tab's, same as a single-video popup but picked at will
+  const watchTabButtons = Array.from(document.querySelectorAll('#watchModal .watch-tabs button'));
+  const watchIframeEl = document.getElementById('watchIframe');
+  const watchVideoBox = document.getElementById('watchVideoBox');
+  function selectWatchTab(btn) {
+    if (!btn) return;
+    watchTabButtons.forEach((b) => b.classList.toggle('active', b === btn));
+    if (watchVideoBox) {
+      watchVideoBox.style.aspectRatio = btn.dataset.w + ' / ' + btn.dataset.h;
+      watchVideoBox.style.width = 'min(100%, calc(80vh * ' + btn.dataset.w + ' / ' + btn.dataset.h + '))';
+    }
+    if (watchIframeEl) watchIframeEl.dataset.embedSrc = btn.dataset.embedSrc;
+  }
+  watchTabButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      selectWatchTab(btn);
+      if (watchIframeEl) watchIframeEl.src = btn.dataset.embedSrc; // swap while open = instant switch
+    });
+  });
+
   wireModal('watchLink', 'watchModal', {
     onOpen: () => {
+      selectWatchTab(watchTabButtons[0]); // always opens on the first tab
       const iframe = document.getElementById('watchIframe');
       if (iframe) iframe.src = iframe.dataset.embedSrc || iframe.src;
     },

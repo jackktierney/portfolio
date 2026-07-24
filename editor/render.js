@@ -146,18 +146,40 @@
     return { w: parseFloat(match[1]), h: parseFloat(match[2]) };
   }
 
+  // width is normally the modal's full 100%, but for taller-than-wide
+  // videos (portrait, reels) that would make the popup absurdly tall —
+  // capping the height to 80% of the viewport and deriving width from
+  // that instead keeps every shape's popup on-screen and undistorted
+  function videoBoxStyle(r) {
+    return 'aspect-ratio: ' + r.w + ' / ' + r.h + '; width: min(100%, calc(80vh * ' + r.w + ' / ' + r.h + '));';
+  }
+
   function watchModal(title, watch) {
-    const embedSrc = computeEmbedSrc(watch);
-    const r = parseRatio(watch && watch.aspectRatio);
-    // width is normally the modal's full 100%, but for taller-than-wide
-    // videos (portrait, reels) that would make the popup absurdly tall —
-    // capping the height to 80% of the viewport and deriving width from
-    // that instead keeps every shape's popup on-screen and undistorted
-    const videoStyle = 'aspect-ratio: ' + r.w + ' / ' + r.h + '; width: min(100%, calc(80vh * ' + r.w + ' / ' + r.h + '));';
+    const links = (watch && watch.links && watch.links.length) ? watch.links : [{}];
+    const first = links[0];
+    const firstEmbed = computeEmbedSrc(first);
+    const firstRatio = parseRatio(first.aspectRatio);
+
+    // one video: no tabs, renders exactly as a single watch popup always has.
+    // more than one: a row of tabs above the video, each swapping the
+    // iframe's source and the box's shape — same interaction as the
+    // documentary/commercial solo-page tabs, just for videos in a popup
+    const tabsHtml = links.length > 1
+      ? '    <div class="watch-tabs">\n'
+        + links.map((link, i) => {
+          const r = parseRatio(link.aspectRatio);
+          return '      <button type="button"' + (i === 0 ? ' class="active"' : '')
+            + ' data-embed-src="' + esc(computeEmbedSrc(link)) + '"'
+            + ' data-w="' + r.w + '" data-h="' + r.h + '">' + esc(link.label || 'watch') + '</button>';
+        }).join('\n')
+        + '\n    </div>\n\n'
+      : '';
+
     return '<div class="modal-overlay" id="watchModal">\n'
       + '  <div class="modal-box is-large">\n'
-      + '    <div class="modal-video" style="' + videoStyle + '">\n'
-      + '      <iframe id="watchIframe" src="" data-embed-src="' + esc(embedSrc) + '" title="' + esc(title) + ' — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n'
+      + tabsHtml
+      + '    <div class="modal-video" id="watchVideoBox" style="' + videoBoxStyle(firstRatio) + '">\n'
+      + '      <iframe id="watchIframe" src="" data-embed-src="' + esc(firstEmbed) + '" title="' + esc(title) + ' — watch" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>\n'
       + '    </div>\n'
       + '    <button type="button" class="modal-close">close</button>\n'
       + '  </div>\n'
@@ -462,8 +484,31 @@
     lines.push('    });');
     lines.push('  }');
     lines.push('');
+    lines.push('  // watch popup tabs (only present when a project has more than one');
+    lines.push('  // video) — clicking one swaps the iframe source and the box shape to');
+    lines.push('  // that tab\'s, same as a single-video popup but picked at will');
+    lines.push("  const watchTabButtons = Array.from(document.querySelectorAll('#watchModal .watch-tabs button'));");
+    lines.push("  const watchIframeEl = document.getElementById('watchIframe');");
+    lines.push("  const watchVideoBox = document.getElementById('watchVideoBox');");
+    lines.push('  function selectWatchTab(btn) {');
+    lines.push('    if (!btn) return;');
+    lines.push("    watchTabButtons.forEach((b) => b.classList.toggle('active', b === btn));");
+    lines.push('    if (watchVideoBox) {');
+    lines.push('      watchVideoBox.style.aspectRatio = btn.dataset.w + \' / \' + btn.dataset.h;');
+    lines.push("      watchVideoBox.style.width = 'min(100%, calc(80vh * ' + btn.dataset.w + ' / ' + btn.dataset.h + '))';");
+    lines.push('    }');
+    lines.push('    if (watchIframeEl) watchIframeEl.dataset.embedSrc = btn.dataset.embedSrc;');
+    lines.push('  }');
+    lines.push('  watchTabButtons.forEach((btn) => {');
+    lines.push("    btn.addEventListener('click', () => {");
+    lines.push('      selectWatchTab(btn);');
+    lines.push('      if (watchIframeEl) watchIframeEl.src = btn.dataset.embedSrc; // swap while open = instant switch');
+    lines.push('    });');
+    lines.push('  });');
+    lines.push('');
     lines.push("  wireModal('watchLink', 'watchModal', {");
     lines.push('    onOpen: () => {');
+    lines.push('      selectWatchTab(watchTabButtons[0]); // always opens on the first tab');
     lines.push("      const iframe = document.getElementById('watchIframe');");
     lines.push('      if (iframe) iframe.src = iframe.dataset.embedSrc || iframe.src;');
     lines.push('    },');
